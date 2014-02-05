@@ -19,10 +19,6 @@ public class Main {
     
     public static void main(String[] args) {
         Fenetre fenetre = new Fenetre("Lecteur MP3");
-        System.out.println("enculer");
-        System.out.println("test");
-        System.out.println("detrfyuhoikpazstyrdfsyugdijokp");
-        System.out.println("ol");
     }
     
 }
