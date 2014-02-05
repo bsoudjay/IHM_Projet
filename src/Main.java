@@ -21,6 +21,7 @@ public class Main {
         Fenetre fenetre = new Fenetre("Lecteur MP3");
         System.out.println("enculer");
         System.out.println("test");
+        System.out.println("detrfyuhoikpazstyrdfsyugdijokp");
     }
     
 }
