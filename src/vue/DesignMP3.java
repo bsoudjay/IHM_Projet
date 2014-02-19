@@ -21,17 +21,25 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import model.Observateur;
 
 
 /**
  *
  * @author ilanmalka
  */
-public class DesignMP3 extends Applet {
+public class DesignMP3 extends Applet implements Observateur{
 
     private JPanel monPanel = new JPanel();
+    private Operations operations ;
+    
+    public DesignMP3(){
+        this.operations = new Operations();
+        this.operations.ajouterObs(this);
+    }
 
     public JPanel initialisation() {
+        this.operations.ajouterObs(this);
         monPanel.setLayout(new BorderLayout());
         monPanel.setBackground(Color.WHITE);
         this.panelSud();
@@ -105,7 +113,7 @@ public class DesignMP3 extends Applet {
         JButton ajouterMusique = new JButton(new ImageIcon("Design/Boutons/ajoutMusique.png"));
         ajouterMusique.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Operations.ouvrirFenetre();
+                operations.ouvrirFenetre();
             }
         });
         
@@ -213,6 +221,7 @@ public class DesignMP3 extends Applet {
         JLabel titre = new JLabel();
         titre.setText("  Titre:  " );
         titre.setFont(fontBoldG);
+        titre.setText(operations.getTitre());
         est.add(titre);
         
         /*
@@ -232,23 +241,33 @@ public class DesignMP3 extends Applet {
          */
          
         JLabel auteur = new JLabel();
-        auteur.setText("  Auteur:  " );
+        //auteur.setText("  Auteur:  " );
         auteur.setFont(fontBold);
+        auteur.setText(operations.getAuteur());
         est.add(auteur);
         
         JLabel duree = new JLabel();
-        duree.setText("  Durée:  " );
+        //duree.setText("  Durée:  " );
         duree.setFont(fontBold);
+        duree.setText(operations.getDuree());
         est.add(duree);
         
         JLabel album = new JLabel();
-        album.setText("  Album:  " );
+        //album.setText("  Album:  " );
         album.setFont(fontBold);
+        album.setText(operations.getAlbum());
         est.add(album);
          
        
         this.monPanel.add(est, BorderLayout.EAST);
-        
+        System.out.println("titre: " + operations.getTitre() + " " + operations.getAlbum());
+    }
+    
+    
+    
+    public void actualiserInformations() {
+        this.coteEst();
+        System.out.println("coucou c'est moi");
     }
 
 }
