@@ -4,6 +4,7 @@
  */
 package vue;
 
+import controller.Operations;
 import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -104,15 +105,7 @@ public class DesignMP3 extends Applet {
         JButton ajouterMusique = new JButton(new ImageIcon("Design/Boutons/ajoutMusique.png"));
         ajouterMusique.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fc = new JFileChooser();
-                fc.setDialogTitle("Ajouter une musique");
-                fc.setApproveButtonText("Ajouter une musique");
-                int returnVal = fc.showOpenDialog(null);
-//                if (returnVal == JFileChooser.APPROVE_OPTION) {
-//                    File fichierMP3 = fc.getSelectedFile();
-//                    Musique musique = new Musique(fichierMP3);
-//                    System.out.println("L'auteur est " + musique.getAuteur() + " et le titre est " + musique.getTitre());
-//                }
+                Operations.ouvrirFenetre();
             }
         });
         
