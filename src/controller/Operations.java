@@ -6,8 +6,8 @@ package controller;
 
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Musique;
-import vues.Fenetre;
 
 /**
  *
@@ -21,6 +21,7 @@ public class Operations {
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Ajouter une musique");
         fc.setApproveButtonText("Ajouter une musique");
+        fc.setFileFilter(new FileNameExtensionFilter("Fichier MP3 (.mp3)", "mp3"));
         int returnVal = fc.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File fichierMP3 = fc.getSelectedFile();
