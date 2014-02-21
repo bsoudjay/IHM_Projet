@@ -33,11 +33,19 @@ public class DesignMP3 extends Applet implements Observateur{
     private JPanel monPanel = new JPanel();
     private Operations operations ;
     private JLabel affichageVolume;
+    private JLabel auteur;
+    private JLabel duree;
+    private JLabel album;
+    private JLabel titre;
     
     public DesignMP3(){
         this.operations = new Operations();
         this.operations.ajouterObservateur(this);
         this.affichageVolume = new JLabel();
+        this.auteur = new JLabel();
+        this.duree = new JLabel();
+        this.album = new JLabel();
+        this.titre = new JLabel();
     }
 
     public JPanel initialisation() {
@@ -245,10 +253,10 @@ public class DesignMP3 extends Applet implements Observateur{
          *-------------------------------------------------------------------------------------------------------
          */
         
-        JLabel titre = new JLabel();
-        titre.setText("  Titre:  " );
-        titre.setFont(fontBoldG);
-        titre.setText(operations.getTitre());
+        actualiserPanelCoteEst(titre, auteur, duree, album, fontBold, fontBoldG);
+        //titre.setText("  Titre:  \n" );
+        //titre.setFont(fontBoldG);
+        //titre.setText(operations.getTitre());
         est.add(titre);
         
         /*
@@ -267,22 +275,20 @@ public class DesignMP3 extends Applet implements Observateur{
          *-------------------------------------------------------------------------------------------------------
          */
          
-        JLabel auteur = new JLabel();
+        
         //auteur.setText("  Auteur:  " );
-        auteur.setFont(fontBold);
-        auteur.setText(operations.getAuteur());
+        //auteur.setFont(fontBold);
+        //auteur.setText(operations.getAuteur());
         est.add(auteur);
         
-        JLabel duree = new JLabel();
         //duree.setText("  Durée:  " );
-        duree.setFont(fontBold);
-        duree.setText(operations.getDuree());
+        //duree.setFont(fontBold);
+        //duree.setText(operations.getDuree());
         est.add(duree);
         
-        JLabel album = new JLabel();
         //album.setText("  Album:  " );
-        album.setFont(fontBold);
-        album.setText(operations.getAlbum());
+        //album.setFont(fontBold);
+        //album.setText(operations.getAlbum());
         est.add(album);
          
        
@@ -290,7 +296,19 @@ public class DesignMP3 extends Applet implements Observateur{
         System.out.println("titre: " + operations.getTitre() + " " + operations.getAlbum());
     }
     
-      private void afficherVolume() {
+     private void actualiserPanelCoteEst(JLabel titre, JLabel auteur, JLabel duree, JLabel album, Font fontBold, Font fontBoldG) {
+        titre.setFont(fontBoldG);
+        titre.setText(operations.getTitre());
+        auteur.setFont(fontBold);
+        auteur.setText(operations.getAuteur());
+        duree.setFont(fontBold);
+        duree.setText(operations.getDuree());
+        album.setFont(fontBold);
+        album.setText(operations.getAlbum());
+        
+     }
+     
+     private void afficherVolume() {
         StringBuilder barresVolume = new StringBuilder();
         for (int i=0 ; i< this.operations.getVolume() ; i++) {
             barresVolume.append('|');
@@ -302,6 +320,7 @@ public class DesignMP3 extends Applet implements Observateur{
     @Override
     public void actualiserInformations() {
         afficherVolume();
+        actualiserPanelCoteEst(titre, auteur, duree, album, new Font("Times New Roman", Font.PLAIN,16), new Font("Times New Roman", Font.BOLD, 24));
         this.monPanel.revalidate();
         System.out.println("mis a jour du panel");
         
