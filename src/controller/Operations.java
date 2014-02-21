@@ -20,9 +20,14 @@ public class Operations {
     private String album;
     private String duree;
     private String titre;
-    private ArrayList<Observateur> listeObs = new ArrayList<Observateur>();
+    private int volume;
+    private ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
     
     public void ouvrirFenetre() {
+        
+        
+        this.observateurs = new ArrayList<Observateur>();
+        this.volume=0;
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Ajouter une musique");
         fc.setApproveButtonText("Ajouter une musique");
@@ -30,11 +35,45 @@ public class Operations {
         int returnVal = fc.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File fichierMP3 = fc.getSelectedFile();
-            musique = new Musique(fichierMP3);
+             musique = new Musique(fichierMP3);
             album = musique.getAlbum();
             duree = musique.getDuree();
             titre = musique.getTitre();
             System.out.println("L'auteur est " + musique.getAuteur() + " et le titre est " + musique.getTitre());
+        }
+    }
+    
+    public int getVolume(){
+        
+        
+        return this.volume;
+    }
+    
+    
+    public void setVolume(int volume){
+        
+        this.volume=volume;
+    }
+    
+    public void augmenterVolume() {
+        if (this.volume < 100) {
+            this.volume++;
+            this.notifierObservateursNouveauVolume();
+        }
+    }
+    
+    public void diminuerVolume() {
+        if (this.volume > 0) {
+            this.volume--;
+            this.notifierObservateursNouveauVolume();
+        }
+    }
+    
+    
+    public void silence() {
+        if (this.volume != 0) {
+            this.volume = 0;
+            this.notifierObservateursNouveauVolume();
         }
     }
 
@@ -71,19 +110,7 @@ public class Operations {
         }
     }
     
-    public void ajouterObs (Observateur obs) {
-        this.listeObs.add(obs);
-    }
-
-    public void notifierObs () {
-        for (int i=0; i < this.listeObs.size(); i++){
-            this.listeObs.get(i).actualiserInformations();
-        }
-    }
-
-    public void supprimerObs (Observateur obs) {
-        this.listeObs.remove(obs);
-    }
+    
 
     public void setAlbum(String album) {
         this.album = album;
@@ -96,4 +123,21 @@ public class Operations {
     public void setTitre(String titre) {
         this.titre = titre;
     }
+
+
+    public void ajouterObservateur(Observateur o) {
+        this.observateurs.add(o);
+    }
+
+    public void supprimerObservateur(Observateur o) {
+        this.observateurs.remove(o);
+    }
+
+    public void notifierObservateursNouveauVolume() {
+        for (int i = 0; i < this.observateurs.size(); i++) {
+            this.observateurs.get(i).actualiserInformations();
+        }
+    }
+
+
 }

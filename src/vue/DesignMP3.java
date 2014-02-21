@@ -32,14 +32,15 @@ public class DesignMP3 extends Applet implements Observateur{
 
     private JPanel monPanel = new JPanel();
     private Operations operations ;
+    private JLabel affichageVolume;
     
     public DesignMP3(){
         this.operations = new Operations();
-        this.operations.ajouterObs(this);
+        this.operations.ajouterObservateur(this);
+        this.affichageVolume = new JLabel();
     }
 
     public JPanel initialisation() {
-        this.operations.ajouterObs(this);
         monPanel.setLayout(new BorderLayout());
         monPanel.setBackground(Color.WHITE);
         this.panelSud();
@@ -69,13 +70,37 @@ public class DesignMP3 extends Applet implements Observateur{
          */
         JPanel lesBoutons = new JPanel();
         lesBoutons.setLayout((new BoxLayout(lesBoutons, BoxLayout.LINE_AXIS)));
-        lesBoutons.add(new JButton(new ImageIcon("Design/Boutons/precedent.png")));
-        lesBoutons.add(new JButton(new ImageIcon("Design/Boutons/lecture.png")));
-        lesBoutons.add(new JButton(new ImageIcon("Design/Boutons/suivant.png")));
-        lesBoutons.add(new JButton(new ImageIcon("Design/Boutons/baisserSon.png")));
+        
+        JButton precedent = new JButton (new ImageIcon("Design/Boutons/precedent.png"));
+        JButton lecture = new JButton(new ImageIcon("Design/Boutons/lecture.png"));
+        JButton suivant = new JButton(new ImageIcon("Design/Boutons/suivant.png"));
+        JButton diminuer = new JButton(new ImageIcon("Design/Boutons/baisserSon.png"));
+        JButton augmenter = new JButton(new ImageIcon("Design/Boutons/augmenterSon.png"));
+        
+        lesBoutons.add(precedent);
+        lesBoutons.add(lecture);
+        lesBoutons.add(suivant);
+        lesBoutons.add(diminuer);
+        lesBoutons.add(augmenter);
+        lesBoutons.add(affichageVolume);
+        
+        diminuer.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                operations.diminuerVolume();
+                actualiserInformations();
+            }
+        });
+        
+        augmenter.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               
+                actualiserInformations();
+                operations.augmenterVolume();
+            }
+        });
+        
         //lesBoutons.add(new JButton("barre Son"));
-        lesBoutons.add(new JButton(new ImageIcon("Design/Boutons/augmenterSon.png")));
-
+        
         /*
          *-------------------------------------------------------------------------------------------------------
          *                          Création du BoxLayout -- superposition des icones  
@@ -85,6 +110,7 @@ public class DesignMP3 extends Applet implements Observateur{
         panneauBas.setLayout((new BoxLayout(panneauBas, BoxLayout.PAGE_AXIS)));
         panneauBas.add(barreMusique);
         panneauBas.add(lesBoutons);
+        panneauBas.add(affichageVolume);
 
         /*
          *-------------------------------------------------------------------------------------------------------
@@ -114,6 +140,7 @@ public class DesignMP3 extends Applet implements Observateur{
         ajouterMusique.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 operations.ouvrirFenetre();
+                actualiserInformations();
             }
         });
         
@@ -263,11 +290,21 @@ public class DesignMP3 extends Applet implements Observateur{
         System.out.println("titre: " + operations.getTitre() + " " + operations.getAlbum());
     }
     
+      private void afficherVolume() {
+        StringBuilder barresVolume = new StringBuilder();
+        for (int i=0 ; i< this.operations.getVolume() ; i++) {
+            barresVolume.append('|');
+        }
+        this.affichageVolume.setText(barresVolume.toString());
+    }
     
     
+    @Override
     public void actualiserInformations() {
-        this.coteEst();
-        System.out.println("coucou c'est moi");
+        afficherVolume();
+        this.monPanel.revalidate();
+        System.out.println("mis a jour du panel");
+        
     }
 
 }

@@ -4,6 +4,7 @@
  */
 package vues;
 
+import controller.Operations;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -15,16 +16,20 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import model.Observateur;
 import vue.DesignMP3;
 /**
  *
  * @author ilanmalka
  */
-public class Fenetre extends JFrame {
+public class Fenetre extends JFrame{
     
     DesignMP3 leDesign = new DesignMP3();
     
     public Fenetre(String text){
+        
+   
+        
         this.setTitle(text);
         this.setSize(1150,700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,5 +38,8 @@ public class Fenetre extends JFrame {
         this.getContentPane().add(leDesign.initialisation());
        
         this.setVisible(true);  
+        
     }    
+
+ 
 }
