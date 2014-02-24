@@ -5,7 +5,7 @@
 
 
 import vue.DesignMP3;
-import vues.Fenetre;
+import vue.Fenetre;
 
 /**
  *
