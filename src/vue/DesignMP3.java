@@ -23,6 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import model.Observateur;
 
+
 /**
  *
  * @author ilanmalka
@@ -159,7 +160,7 @@ public class DesignMP3 extends Applet implements Observateur {
          */
 
         final JPanel card1 = new JPanel();
-        card1.setBackground(Color.blue);
+        card1.setBackground(Color.BLUE);
 
         JButton musiqueEnCours = new JButton(new ImageIcon("Design/Boutons/lectureEnCours.png"));
 
