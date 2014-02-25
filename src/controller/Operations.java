@@ -22,12 +22,10 @@ public class Operations {
     private String titre;
     private int volume;
     private ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
-    
+
     public void ouvrirFenetre() {
-        
-        
         this.observateurs = new ArrayList<Observateur>();
-        this.volume=0;
+        this.volume = 0;
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Ajouter une musique");
         fc.setApproveButtonText("Ajouter une musique");
@@ -35,41 +33,39 @@ public class Operations {
         int returnVal = fc.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File fichierMP3 = fc.getSelectedFile();
-             musique = new Musique(fichierMP3);
+            musique = new Musique(fichierMP3);
             album = musique.getAlbum();
             duree = musique.getDuree();
             titre = musique.getTitre();
             System.out.println("L'auteur est " + musique.getAuteur() + " et le titre est " + musique.getTitre());
         }
     }
-    
-    public int getVolume(){
-        
-        
+
+    public int getVolume() {
+
+
         return this.volume;
     }
-    
-    
-    public void setVolume(int volume){
-        
-        this.volume=volume;
+
+    public void setVolume(int volume) {
+
+        this.volume = volume;
     }
-    
+
     public void augmenterVolume() {
-        if (this.volume < 100) {
+        if (this.volume < 10) {
             this.volume++;
             this.notifierObservateursNouveauVolume();
         }
     }
-    
+
     public void diminuerVolume() {
         if (this.volume > 0) {
             this.volume--;
             this.notifierObservateursNouveauVolume();
         }
     }
-    
-    
+
     public void silence() {
         if (this.volume != 0) {
             this.volume = 0;
@@ -109,8 +105,6 @@ public class Operations {
             return "inconnu";
         }
     }
-    
-    
 
     public void setAlbum(String album) {
         this.album = album;
@@ -123,7 +117,6 @@ public class Operations {
     public void setTitre(String titre) {
         this.titre = titre;
     }
-
 
     public void ajouterObservateur(Observateur o) {
         this.observateurs.add(o);
@@ -138,6 +131,4 @@ public class Operations {
             this.observateurs.get(i).actualiserInformations();
         }
     }
-
-
 }
