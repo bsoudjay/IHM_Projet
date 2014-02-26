@@ -4,7 +4,7 @@
  */
 package vue;
 
-import controller.Operations;
+import controller.*;
 import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -13,6 +13,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import model.Musique;
 import model.Observateur;
 
 
@@ -37,6 +40,8 @@ public class DesignMP3 extends Applet implements Observateur {
     private JLabel duree;
     private JLabel album;
     private JLabel titre;
+    private Sound monSon;
+    private Musique maMusique;
 
     public DesignMP3() {
         this.operations = new Operations();
@@ -93,6 +98,19 @@ public class DesignMP3 extends Applet implements Observateur {
         lesBoutons.add(this.affichageVolume);
         lesBoutons.add(augmenter);
 
+        lecture.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try { 
+                    monSon = new Sound(maMusique.getChemin().getPath());
+//                    monSon = new Sound("mario.mp3");
+                    monSon.play();
+                } catch (Exception ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                actualiserInformations();
+            }
+        });
+        
         diminuer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 operations.diminuerVolume();

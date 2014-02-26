@@ -34,6 +34,7 @@ public class Operations {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File fichierMP3 = fc.getSelectedFile();
             musique = new Musique(fichierMP3);
+            musique.setChemin(fichierMP3);
             album = musique.getAlbum();
             duree = musique.getDuree();
             titre = musique.getTitre();

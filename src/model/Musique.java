@@ -18,12 +18,14 @@ import org.farng.mp3.id3.ID3v1;
 public class Musique {
 
     private MP3File fichier;
+    private File chemin;
     private String titre;
     private String auteur;
     private String duree = "à définir" ;
     private String album;
 
     public Musique(File chemin) {
+        this.chemin = chemin;
         try {
            MP3File fichierMP3 = new MP3File(chemin.getPath());
            this.fichier = fichierMP3;
@@ -38,6 +40,14 @@ public class Musique {
         }
     }
 
+    public File getChemin(){
+        return this.chemin;
+    }
+    
+    public void setChemin(File chemin){
+        this.chemin = chemin;
+    }
+    
     public MP3File getFichier() {
         return fichier;
     }
