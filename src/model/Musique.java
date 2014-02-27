@@ -15,7 +15,7 @@ import org.farng.mp3.id3.ID3v1;
  *
  * @author Bahia
  */
-public class Musique {
+public class Musique implements Comparable<Musique>{
 
     private MP3File fichier;
     private File chemin;
@@ -86,6 +86,14 @@ public class Musique {
 
     public void setAuteur(String auteur) {
         this.auteur = auteur;
+    }
+
+
+    @Override
+    public int compareTo(Musique m) {
+       
+       return this.album.compareTo(m.getAlbum());
+        
     }
 
 }

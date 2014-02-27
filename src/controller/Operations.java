@@ -39,7 +39,13 @@ public class Operations {
             duree = musique.getDuree();
             titre = musique.getTitre();
             System.out.println("L'auteur est " + musique.getAuteur() + " et le titre est " + musique.getTitre());
+            
         }
+    }
+    
+    public Musique getMusique(){
+        
+        return this.musique;
     }
 
     public int getVolume() {

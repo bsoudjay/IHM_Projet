@@ -23,9 +23,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import model.Bibliotheque;
 import model.Musique;
 import model.Observateur;
-
 
 /**
  *
@@ -42,8 +42,11 @@ public class DesignMP3 extends Applet implements Observateur {
     private JLabel titre;
     private Sound monSon;
     private Musique maMusique;
+    private Bibliotheque biblio;
 
     public DesignMP3() {
+
+        this.biblio = new Bibliotheque("test");
         this.operations = new Operations();
         this.operations.ajouterObservateur(this);
         this.affichageVolume = new JLabel();
@@ -89,7 +92,7 @@ public class DesignMP3 extends Applet implements Observateur {
         JButton suivant = new JButton(new ImageIcon("Design/Boutons/suivant.png"));
         JButton diminuer = new JButton(new ImageIcon("Design/Boutons/baisserSon.png"));
         JButton augmenter = new JButton(new ImageIcon("Design/Boutons/augmenterSon.png"));
-        
+
 
         lesBoutons.add(precedent);
         lesBoutons.add(lecture);
@@ -100,17 +103,27 @@ public class DesignMP3 extends Applet implements Observateur {
 
         lecture.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                try { 
+
+
+                System.out.println(maMusique.getChemin().getPath());
+
+
+                try {
                     monSon = new Sound(maMusique.getChemin().getPath());
-//                    monSon = new Sound("mario.mp3");
-                    monSon.play();
+
+                    // monSon = new Sound("mario.mp3");
+                    if (monSon.isPlaying() == false) {
+                        monSon.play();
+                    } else {
+                        monSon.stop();
+                    }
                 } catch (Exception ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 actualiserInformations();
             }
         });
-        
+
         diminuer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 operations.diminuerVolume();
@@ -166,6 +179,7 @@ public class DesignMP3 extends Applet implements Observateur {
         ajouterMusique.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 operations.ouvrirFenetre();
+                biblio.ajouterMusique(operations.getMusique());
                 actualiserInformations();
             }
         });
@@ -209,10 +223,26 @@ public class DesignMP3 extends Applet implements Observateur {
         txtBibliothèque.setToolTipText(txtBibliothèque.getText());
         txtBibliothèque.setFont(font);
         card2.add(txtBibliothèque);
+
+        final JLabel liste = new JLabel();
+        liste.setText(biblio.toString());
+
+
+        card2.add(liste);
+
         bibliothèqe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+
+
+                System.out.println("tessssssssssssssssssss"+" "+biblio.toString());
+
                 cl.show(content, listContent[1]);
+                liste.setText(biblio.toString());
+                
+
+                actualiserInformations();
+
             }
         });
 
