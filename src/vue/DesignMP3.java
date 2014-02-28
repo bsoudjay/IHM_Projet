@@ -111,8 +111,7 @@ public class DesignMP3 extends Applet implements Observateur {
                 
                 
                 try {
-                    
-                 
+
                      monSon = new Sound(chemin.getPath());
                     
                     if (monSon.isPlaying() == false) {
@@ -195,7 +194,7 @@ public class DesignMP3 extends Applet implements Observateur {
          */
 
         final JPanel card1 = new JPanel();
-        card1.setBackground(Color.BLUE);
+        card1.setBackground(Color.RED);
 
         JButton musiqueEnCours = new JButton(new ImageIcon("Design/Boutons/lectureEnCours.png"));
 
@@ -217,36 +216,53 @@ public class DesignMP3 extends Applet implements Observateur {
          *-------------------------------------------------------------------------------------------------------
          */
         JPanel card2 = new JPanel();
-        card2.setBackground(Color.BLUE);
+        card2.setBackground(Color.GREEN);
 
         JButton bibliothèqe = new JButton(new ImageIcon("Design/Boutons/MaBibli.png"));
 
         JLabel txtBibliothèque = new JLabel();
-        txtBibliothèque.setText("<html><body><font color='white'>Bibliothèque ererere</body></html>");
+        txtBibliothèque.setLayout(new BoxLayout(txtBibliothèque, BoxLayout.LINE_AXIS));
+        txtBibliothèque.setText("<html><body><font color='white'>Bibliothèque</body></html>");
         txtBibliothèque.setToolTipText(txtBibliothèque.getText());
         txtBibliothèque.setFont(font);
         card2.add(txtBibliothèque);
 
+        
+        
+        JPanel maBibli = new JPanel();
+        maBibli.setLayout(new BoxLayout(maBibli, BoxLayout.LINE_AXIS));
+
+        Font fontBold = new Font("Times New Roman", Font.PLAIN, 16);
+
+        maBibli.setFont(fontBold);
+        //titre.setText(operations.getTitre());
+        maBibli.add(new JLabel("toto de merde"));
+        
         ArrayList<Musique> test = new ArrayList<Musique>();
         test = biblio.label();
         
         for(int i=0;i<test.size();i++){
             
-                JLabel txtBibliothèque2 = new JLabel();
-                txtBibliothèque2.setText("<html><body><font color='white'>Bibliothèque</body></html>");
-                txtBibliothèque2.setToolTipText(txtBibliothèque.getText());
-                txtBibliothèque2.setFont(font);
-                card2.add(txtBibliothèque2);
+        
+            maBibli.add(new JLabel("toto de merde"));
+        
                 
         }
+        
+        
+        JPanel bibli = new JPanel();
+        bibli.setLayout(new BoxLayout(bibli, BoxLayout.PAGE_AXIS));
+        
+        bibli.add(txtBibliothèque);
+        bibli.add(maBibli);
+        
+        card2.add(bibli);
 
         bibliothèqe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 cl.show(content, listContent[1]);
-          
-                
-                actualiserInformations();
+//                actualiserInformations();
 
             }
         });
