@@ -44,25 +44,11 @@ public class Bibliotheque {
         return this.bibliotheque.size();
     }
 
-    public ArrayList<JLabel> label() {
+    public ArrayList<Musique> label() {
 
         trierBibliothequeOrdreAlpha();
 
-
-        System.out.println(bibliotheque.size());
-
-        ArrayList<JLabel> labels = new ArrayList();
-
-        for (int i = 0; i < this.bibliotheque.size(); i++) {
-
-            JLabel test = new JLabel();
-            test.setText("" + this.bibliotheque.get(i).getTitre());
-            labels.add(test);
-
-        }
-
-
-        return labels;
+        return this.bibliotheque;
 
     }
 

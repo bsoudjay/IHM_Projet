@@ -106,8 +106,7 @@ public class DesignMP3 extends Applet implements Observateur {
             
             public void actionPerformed(ActionEvent e) {
 
-                System.out.println("tototoototo");
-                
+             
                 File chemin = operations.getMusique().getChemin();
                 
                 
@@ -223,27 +222,24 @@ public class DesignMP3 extends Applet implements Observateur {
         JButton bibliothèqe = new JButton(new ImageIcon("Design/Boutons/MaBibli.png"));
 
         JLabel txtBibliothèque = new JLabel();
-        txtBibliothèque.setText("<html><body><font color='white'>Bibliothèque</body></html>");
+        txtBibliothèque.setText("<html><body><font color='white'>Bibliothèque ererere</body></html>");
         txtBibliothèque.setToolTipText(txtBibliothèque.getText());
         txtBibliothèque.setFont(font);
         card2.add(txtBibliothèque);
 
-        final JLabel liste = new JLabel();
-        liste.setText(biblio.toString());
-
-        ArrayList<JLabel> labels = new ArrayList();
+        ArrayList<Musique> test = new ArrayList<Musique>();
+        test = biblio.label();
+        
+        for(int i=0;i<test.size();i++){
+            
+                JLabel txtBibliothèque2 = new JLabel();
+                txtBibliothèque2.setText("<html><body><font color='white'>Bibliothèque</body></html>");
+                txtBibliothèque2.setToolTipText(txtBibliothèque.getText());
+                txtBibliothèque2.setFont(font);
+                card2.add(txtBibliothèque2);
                 
-        labels=biblio.label();
-        
-        System.out.println("toto"+labels.size());
-        
-        for(int i=0;i<labels.size();i++){
-            
-            System.out.println("pk sa marche pas");
-            card2.add(labels.get(i));
-            
         }
-        
+
         bibliothèqe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -364,6 +360,7 @@ public class DesignMP3 extends Applet implements Observateur {
         album.setText(operations.getAlbum());
 
     }
+
 
     private void afficherVolume() {
         StringBuilder barresVolume = new StringBuilder();
