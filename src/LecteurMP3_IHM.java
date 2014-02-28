@@ -19,7 +19,7 @@ public class LecteurMP3_IHM {
      */
     public static void main(String[] args) throws Exception {
         Fenetre f = new Fenetre("Lecteur MP3");
-//        Sound s= new Sound("mario.mp3");
+//    Sound s= new Sound("mario.mp3");
 //        s.play();
     }
 }

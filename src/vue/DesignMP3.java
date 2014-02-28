@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -102,16 +103,19 @@ public class DesignMP3 extends Applet implements Observateur {
         lesBoutons.add(augmenter);
 
         lecture.addActionListener(new ActionListener() {
+            
             public void actionPerformed(ActionEvent e) {
 
-
-                System.out.println(maMusique.getChemin().getPath());
-
-
+                System.out.println("tototoototo");
+                
+                File chemin = operations.getMusique().getChemin();
+                
+                
                 try {
-                    monSon = new Sound(maMusique.getChemin().getPath());
-
-                    // monSon = new Sound("mario.mp3");
+                    
+                 
+                     monSon = new Sound(chemin.getPath());
+                    
                     if (monSon.isPlaying() == false) {
                         monSon.play();
                     } else {
@@ -227,20 +231,25 @@ public class DesignMP3 extends Applet implements Observateur {
         final JLabel liste = new JLabel();
         liste.setText(biblio.toString());
 
-
-        card2.add(liste);
-
+        ArrayList<JLabel> labels = new ArrayList();
+                
+        labels=biblio.label();
+        
+        System.out.println("toto"+labels.size());
+        
+        for(int i=0;i<labels.size();i++){
+            
+            System.out.println("pk sa marche pas");
+            card2.add(labels.get(i));
+            
+        }
+        
         bibliothèqe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-
-
-                System.out.println("tessssssssssssssssssss"+" "+biblio.toString());
-
                 cl.show(content, listContent[1]);
-                liste.setText(biblio.toString());
+          
                 
-
                 actualiserInformations();
 
             }
@@ -367,6 +376,7 @@ public class DesignMP3 extends Applet implements Observateur {
     @Override
     public void actualiserInformations() {
         afficherVolume();
+        lesOnglets();
         actualiserPanelCoteEst(titre, auteur, duree, album, new Font("Times New Roman", Font.PLAIN, 16), new Font("Times New Roman", Font.BOLD, 24));
         this.monPanel.revalidate();
         System.out.println("mis a jour du panel");

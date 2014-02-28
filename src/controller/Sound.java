@@ -1,11 +1,15 @@
 package controller;
 
 import javazoom.jl.player.advanced.*;
-        import java.io.*;
+import java.io.*;
+
         
         // MP3, WMA, MPEG, WAV compatible
         
         public class Sound {
+            private Thread playerThread;	
+               
+
             //constructeur
                 public Sound(String path) throws Exception {
                         InputStream in = (InputStream)new BufferedInputStream(new FileInputStream(new File(path)));
@@ -24,6 +28,8 @@ import javazoom.jl.player.advanced.*;
                         if (player != null) {
                                 isPlaying = true;
                                 player.play();
+                                this.playerThread = new Thread((Runnable) this, "AudioPlayerThread");
+                                this.playerThread.start();
                         }
                 }
                 
@@ -38,6 +44,8 @@ import javazoom.jl.player.advanced.*;
                         if (player != null) {
                                 isPlaying = false;
                                 player.stop();
+                                this.playerThread.stop();
+                        
                         }
                 }
                 
