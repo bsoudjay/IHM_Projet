@@ -4,10 +4,9 @@
  */
 package model;
 
+import controller.Sound;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import javax.swing.JLabel;
 
 /**
  *
@@ -15,7 +14,7 @@ import javax.swing.JLabel;
  */
 public class Bibliotheque {
 
-    private ArrayList<Musique> bibliotheque;
+    private ArrayList<Sound> bibliotheque;
     private String nom;
     private ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 
@@ -23,11 +22,11 @@ public class Bibliotheque {
 
         this.observateurs = new ArrayList<Observateur>();
         this.nom = nom;
-        this.bibliotheque = new ArrayList<Musique>();
+        this.bibliotheque = new ArrayList<Sound>();
 
     }
 
-    public void ajouterMusique(Musique m) {
+    public void ajouterMusique(Sound m) {
 
         this.bibliotheque.add(m);
         this.notifierObservateursNouveauVolume();
@@ -44,7 +43,7 @@ public class Bibliotheque {
         return this.bibliotheque.size();
     }
 
-    public ArrayList<Musique> label() {
+    public ArrayList<Sound> label() {
 
         trierBibliothequeOrdreAlpha();
 

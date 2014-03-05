@@ -6,9 +6,12 @@ package controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.*;
+import vue.DesignMP3;
 
 /**
  *
@@ -16,14 +19,15 @@ import model.*;
  */
 public class Operations {
 
-    private Musique musique;
+    private Sound sound;
+    //private Musique musique;
     private String album;
     private String duree;
     private String titre;
     private int volume;
     private ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 
-    public void ouvrirFenetre() {
+    public void ouvrirFenetre() throws Exception {
         this.observateurs = new ArrayList<Observateur>();
         this.volume = 0;
         JFileChooser fc = new JFileChooser();
@@ -33,19 +37,23 @@ public class Operations {
         int returnVal = fc.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File fichierMP3 = fc.getSelectedFile();
-            musique = new Musique(fichierMP3);
-            musique.setChemin(fichierMP3);
-            album = musique.getAlbum();
-            duree = musique.getDuree();
-            titre = musique.getTitre();
-            System.out.println("L'auteur est " + musique.getAuteur() + " et le titre est " + musique.getTitre());
-            
+            sound = new Sound(fichierMP3.getPath());
+            //musique = new Musique(fichierMP3);
+            /*musique.setChemin(fichierMP3);            
+             album = musique.getAlbum();
+             duree = musique.getDuree();
+             titre = musique.getTitre();*/
+            album = sound.getAlbum();
+            duree = sound.getDuree().toString();
+            titre = sound.getTitre();
+            System.out.println("L'auteur est " + sound.getAuteur() + " et le titre est " + sound.getTitre());
+
         }
     }
-    
-    public Musique getMusique(){
-        
-        return this.musique;
+
+    public Sound getSound() {
+
+        return this.sound;
     }
 
     public int getVolume() {
@@ -81,16 +89,16 @@ public class Operations {
     }
 
     public String getAuteur() {
-        if (musique != null) {
-            return musique.getAuteur();
+        if (sound != null) {
+            return sound.getAuteur();
         } else {
             return "inconnu";
         }
     }
 
     public String getDuree() {
-        if (musique != null) {
-            return musique.getDuree();
+        if (sound != null) {
+            return sound.getDuree().toString();
         } else {
             return "inconnu";
         }
@@ -98,16 +106,16 @@ public class Operations {
 
     public String getAlbum() {
         //notifierObs();
-        if (musique != null) {
-            return musique.getAlbum();
+        if (sound != null) {
+            return sound.getAlbum();
         } else {
             return "inconnu";
         }
     }
 
     public String getTitre() {
-        if (musique != null) {
-            return musique.getTitre();
+        if (sound != null) {
+            return sound.getTitre();
         } else {
             return "inconnu";
         }
@@ -123,6 +131,23 @@ public class Operations {
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+
+    public void lire() {
+
+        if (sound != null) {
+            try {
+
+                if (sound.isPlaying() == false) {
+                    sound.play();
+                } else {
+                    sound.stop();
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 
     public void ajouterObservateur(Observateur o) {

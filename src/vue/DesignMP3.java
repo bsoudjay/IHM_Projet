@@ -25,7 +25,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import model.Bibliotheque;
-import model.Musique;
 import model.Observateur;
 
 /**
@@ -42,7 +41,6 @@ public class DesignMP3 extends Applet implements Observateur {
     private JLabel album;
     private JLabel titre;
     private Sound monSon;
-    private Musique maMusique;
     private Bibliotheque biblio;
 
     public DesignMP3() {
@@ -106,22 +104,7 @@ public class DesignMP3 extends Applet implements Observateur {
             
             public void actionPerformed(ActionEvent e) {
 
-             
-                File chemin = operations.getMusique().getChemin();
-                
-                
-                try {
-
-                     monSon = new Sound(chemin.getPath());
-                    
-                    if (monSon.isPlaying() == false) {
-                        monSon.play();
-                    } else {
-                        monSon.stop();
-                    }
-                } catch (Exception ex) {
-                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                operations.lire();
                 actualiserInformations();
             }
         });
@@ -180,8 +163,12 @@ public class DesignMP3 extends Applet implements Observateur {
         JButton ajouterMusique = new JButton(new ImageIcon("Design/Boutons/ajoutMusique.png"));
         ajouterMusique.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                operations.ouvrirFenetre();
-                biblio.ajouterMusique(operations.getMusique());
+                try {
+                    operations.ouvrirFenetre();
+                } catch (Exception ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                biblio.ajouterMusique(operations.getSound());
                 actualiserInformations();
             }
         });
@@ -238,7 +225,7 @@ public class DesignMP3 extends Applet implements Observateur {
         //titre.setText(operations.getTitre());
         maBibli.add(new JLabel("toto de merde"));
         
-        ArrayList<Musique> test = new ArrayList<Musique>();
+        ArrayList<Sound> test = new ArrayList<Sound>();
         test = biblio.label();
         
         for(int i=0;i<test.size();i++){
