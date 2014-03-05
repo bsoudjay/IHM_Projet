@@ -42,6 +42,7 @@ public class DesignMP3 extends Applet implements Observateur {
     private JLabel titre;
     private Sound monSon;
     private Bibliotheque biblio;
+    public Thread threadLecture;
 
     public DesignMP3() {
 
@@ -104,7 +105,8 @@ public class DesignMP3 extends Applet implements Observateur {
             
             public void actionPerformed(ActionEvent e) {
 
-                operations.lire();
+                threadLecture = new Thread(new PlaySound());
+                threadLecture.start();
                 actualiserInformations();
             }
         });
@@ -352,6 +354,16 @@ public class DesignMP3 extends Applet implements Observateur {
         System.out.println("titre: " + operations.getTitre() + " " + operations.getAlbum());
     }
 
+    class PlaySound implements Runnable{
+
+        @Override
+        public void run() {
+                operations.lire();
+                System.out.println("threadd");
+        }
+        
+    }
+    
     private void actualiserPanelCoteEst(JLabel titre, JLabel auteur, JLabel duree, JLabel album, Font fontBold, Font fontBoldG) {
         titre.setFont(fontBoldG);
         titre.setText(operations.getTitre());

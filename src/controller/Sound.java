@@ -11,7 +11,6 @@ import org.tritonus.share.sampled.file.TAudioFileFormat;
 // MP3, WMA, MPEG, WAV compatible
 public class Sound implements Comparable<Sound> {
 
-    private Thread playerThread;
     private File chemin;
     private String titre;
     private String auteur;
@@ -94,8 +93,6 @@ public class Sound implements Comparable<Sound> {
         if (player != null) {
             isPlaying = true;
             player.play();
-            this.playerThread = new Thread((Runnable) this, "AudioPlayerThread");
-            this.playerThread.start();
         }
     }
 
@@ -110,8 +107,6 @@ public class Sound implements Comparable<Sound> {
         if (player != null) {
             isPlaying = false;
             player.stop();
-            this.playerThread.stop();
-
         }
     }
 
