@@ -2,6 +2,8 @@ package controller;
 
 import javazoom.jl.player.advanced.*;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.Map;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
@@ -12,6 +14,7 @@ import org.tritonus.share.sampled.file.TAudioFileFormat;
 public class Sound implements Comparable<Sound> {
 
     private File chemin;
+    private Connection con;
     private String titre;
     private String auteur;
     private Long duree;
@@ -31,7 +34,7 @@ public class Sound implements Comparable<Sound> {
         
         AudioFileFormat baseFileFormat = AudioSystem.getAudioFileFormat(chemin);
         
-// TAudioFileFormat properties
+    // TAudioFileFormat properties
         if (baseFileFormat instanceof TAudioFileFormat) {
             Map properties = baseFileFormat.properties();
             titre = (String) properties.get("title");
@@ -48,6 +51,26 @@ public class Sound implements Comparable<Sound> {
         
     }
 
+    public void ajouterBDD(){
+        String query = "INSERT INTO musique (nom,artiste,album,duree,nbecoute) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "'," + this.duree + ",'" + this.nbEcoute() + "')";
+            System.out.println("etape 1");
+            try {
+                System.out.println("etape 2r");
+                Statement requete = con.createStatement();
+                System.out.println("etape 2rprme");
+                requete.executeUpdate(query);
+                System.out.println("etape 3r");
+            } catch (Exception e1) {
+                System.out.println("etape 2m");
+                e1.printStackTrace();
+            }
+    }
+    
+        public int nbEcoute(){
+        //String query = "SELECT nbecoute FROM musique WHERE nom = ";
+        return 0;
+    }
+    
     public File getChemin() {
         return chemin;
     }

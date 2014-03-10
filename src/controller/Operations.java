@@ -5,6 +5,8 @@
 package controller;
 
 import java.io.File;
+
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -51,6 +53,7 @@ public class Operations {
             System.out.println("L'auteur est " + sound.getAuteur() + " et le titre est " + sound.getTitre());
 
         }
+        sound.ajouterBDD();
     }
 
     public Sound getSound() {
@@ -188,6 +191,7 @@ public class Operations {
                 if (sound.isPlaying() == false) {
                     sound.play();
                 } else {
+                    System.out.println("stop");
                     sound.stop();
                 }
             } catch (Exception ex) {
