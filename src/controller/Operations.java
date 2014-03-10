@@ -25,6 +25,9 @@ public class Operations {
     private String album;
     private String duree;
     private String titre;
+    private String annee;
+    private String genre;
+    private String qualite;
     private int volume;
     private ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 
@@ -39,14 +42,12 @@ public class Operations {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File fichierMP3 = fc.getSelectedFile();
             sound = new Sound(fichierMP3.getPath());
-            //musique = new Musique(fichierMP3);
-            /*musique.setChemin(fichierMP3);            
-             album = musique.getAlbum();
-             duree = musique.getDuree();
-             titre = musique.getTitre();*/
             album = sound.getAlbum();
             duree = sound.getDuree().toString();
             titre = sound.getTitre();
+            annee = sound.getAnnee();
+            genre = sound.getGenre();
+            qualite = sound.getQualite();
             System.out.println("L'auteur est " + sound.getAuteur() + " et le titre est " + sound.getTitre());
 
         }
@@ -93,7 +94,7 @@ public class Operations {
         if (sound != null) {
             return sound.getAuteur();
         } else {
-            return "inconnu";
+            return "";
         }
     }
 
@@ -106,7 +107,7 @@ public class Operations {
                     TimeUnit.MICROSECONDS.toSeconds(duree) - (TimeUnit.MICROSECONDS.toMinutes(duree) * 60)
             );
         } else {
-            return "inconnu";
+            return "";
         }
     }
 
@@ -115,7 +116,7 @@ public class Operations {
         if (sound != null) {
             return sound.getAlbum();
         } else {
-            return "inconnu";
+            return "";
         }
     }
 
@@ -123,9 +124,49 @@ public class Operations {
         if (sound != null) {
             return sound.getTitre();
         } else {
-            return "inconnu";
+            return "";
         }
     }
+
+    public String getAnnee() {
+        if (sound != null) {
+            return sound.getAnnee();
+        } else {
+            return "";
+        }
+    }
+
+    public String getGenre() {
+        if (sound != null) {
+            return sound.getGenre();
+        } else {
+            return "";
+        }
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getQualite() {
+        if (sound != null) {
+            return sound.getQualite();
+        } else {
+            return "";
+        }
+    }
+
+    public void setQualite(String qualite) {
+        this.qualite = qualite;
+    }
+    
+    
+
+    public void setAnnee(String annee) {
+        this.annee = annee;
+    }
+    
+    
 
     public void setAlbum(String album) {
         this.album = album;

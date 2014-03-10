@@ -16,6 +16,9 @@ public class Sound implements Comparable<Sound> {
     private String auteur;
     private Long duree;
     private String album;
+    private String annee;
+    private String qualite;
+    private String genre;
     private boolean isPlaying = false;
     private AdvancedPlayer player = null;
     
@@ -35,6 +38,9 @@ public class Sound implements Comparable<Sound> {
             auteur = (String) properties.get("author");
             duree = (Long) properties.get("duration");
             album = (String) properties.get("album");
+            annee = (String) properties.get("date");
+            qualite = ((Integer) properties.get("mp3.bitrate.nominal.bps")).toString();
+            genre = (String) properties.get("mp3.id3tag.genre");
         } else {
             throw new UnsupportedAudioFileException();
         }
@@ -81,6 +87,32 @@ public class Sound implements Comparable<Sound> {
     public void setAlbum(String album) {
         this.album = album;
     }
+
+    public String getAnnee() {
+        return annee;
+    }
+
+    public void setAnnee(String annee) {
+        this.annee = annee;
+    }
+
+    public String getQualite() {
+        return qualite;
+    }
+
+    public void setQualite(String qualite) {
+        this.qualite = qualite;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+    
+    
 
     public Sound(String path, PlaybackListener listener) throws Exception {
         InputStream in = (InputStream) new BufferedInputStream(new FileInputStream(new File(path)));
