@@ -6,6 +6,7 @@ package controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -98,7 +99,12 @@ public class Operations {
 
     public String getDuree() {
         if (sound != null) {
-            return sound.getDuree().toString();
+            long duree = sound.getDuree();
+            int day = (int) TimeUnit.MICROSECONDS.toDays(duree);
+            long hours = TimeUnit.MICROSECONDS.toHours(duree) - (day * 24);
+            long minute = TimeUnit.MICROSECONDS.toMinutes(duree) - (TimeUnit.MICROSECONDS.toHours(duree) * 60);
+            long second = TimeUnit.MICROSECONDS.toSeconds(duree) - (TimeUnit.MICROSECONDS.toMinutes(duree) * 60);
+            return hours + ":" + minute + ":" + second;
         } else {
             return "inconnu";
         }
