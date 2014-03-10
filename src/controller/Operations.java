@@ -117,6 +117,7 @@ public class Operations {
             ResultSet result = requete.executeQuery(query);
             while (result.next()) {
                 int i = result.getInt("nbecoute");
+                System.out.println("incrementation");
                 return i;
             }
         } catch (Exception e1) {
