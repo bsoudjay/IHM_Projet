@@ -100,11 +100,11 @@ public class Operations {
     public String getDuree() {
         if (sound != null) {
             long duree = sound.getDuree();
-            int day = (int) TimeUnit.MICROSECONDS.toDays(duree);
-            long hours = TimeUnit.MICROSECONDS.toHours(duree) - (day * 24);
-            long minute = TimeUnit.MICROSECONDS.toMinutes(duree) - (TimeUnit.MICROSECONDS.toHours(duree) * 60);
-            long second = TimeUnit.MICROSECONDS.toSeconds(duree) - (TimeUnit.MICROSECONDS.toMinutes(duree) * 60);
-            return hours + ":" + minute + ":" + second;
+            return String.format("%02d:%02d:%02d",
+                    TimeUnit.MICROSECONDS.toHours(duree) - ((int) TimeUnit.MICROSECONDS.toDays(duree) * 24),
+                    TimeUnit.MICROSECONDS.toMinutes(duree) - (TimeUnit.MICROSECONDS.toHours(duree) * 60),
+                    TimeUnit.MICROSECONDS.toSeconds(duree) - (TimeUnit.MICROSECONDS.toMinutes(duree) * 60)
+            );
         } else {
             return "inconnu";
         }
