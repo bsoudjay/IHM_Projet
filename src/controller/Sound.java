@@ -20,7 +20,7 @@ public class Sound implements Comparable<Sound> {
     private Long duree;
     private String album;
     private String annee;
-    private String qualite;
+    private Integer qualite;
     private String genre;
     private boolean isPlaying = false;
     private AdvancedPlayer player = null;
@@ -42,7 +42,7 @@ public class Sound implements Comparable<Sound> {
             duree = (Long) properties.get("duration");
             album = (String) properties.get("album");
             annee = (String) properties.get("date");
-            qualite = ((Integer) properties.get("mp3.bitrate.nominal.bps")).toString();
+            qualite = (Integer) properties.get("mp3.bitrate.nominal.bps")/1000;
             genre = (String) properties.get("mp3.id3tag.genre");
         } else {
             throw new UnsupportedAudioFileException();
@@ -119,11 +119,11 @@ public class Sound implements Comparable<Sound> {
         this.annee = annee;
     }
 
-    public String getQualite() {
+    public Integer getQualite() {
         return qualite;
     }
 
-    public void setQualite(String qualite) {
+    public void setQualite(Integer qualite) {
         this.qualite = qualite;
     }
 
