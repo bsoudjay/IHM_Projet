@@ -8,7 +8,9 @@ import controller.Operations;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Panel;
+import java.awt.Toolkit;
 import java.awt.image.ImageProducer;
 import java.io.File;
 import javax.swing.ImageIcon;
@@ -28,13 +30,15 @@ public class Fenetre extends JFrame{
     
     public Fenetre(String text){
         
-   
-        
+      
+
         this.setTitle(text);
-        this.setSize(1150,700);
+        this.setSize(1300,700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
-        
+        this.setResizable(true);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+      
         this.getContentPane().add(leDesign.initialisation());
        
         this.setVisible(true);  
