@@ -43,6 +43,7 @@ public class DesignMP3 extends Applet implements Observateur {
     private JLabel annee;
     private JLabel qualite;
     private JLabel genre;
+    private JLabel tempsTotal;
     private Sound monSon;
     private int enCoursDeLecture = 0;
     private Bibliotheque biblio;
@@ -60,6 +61,7 @@ public class DesignMP3 extends Applet implements Observateur {
         this.annee = new JLabel();
         this.genre = new JLabel();
         this.qualite = new JLabel();
+        this.tempsTotal = new JLabel("Temps total");
     }
 
     public JPanel initialisation() {
@@ -83,7 +85,7 @@ public class DesignMP3 extends Applet implements Observateur {
         barreMusique.setLayout((new BoxLayout(barreMusique, BoxLayout.LINE_AXIS)));
         barreMusique.add(new JLabel("Temps déroulant"));
         barreMusique.add(new JButton("Barre de Musique"));
-        barreMusique.add(new JLabel("Temps total"));
+        barreMusique.add(tempsTotal);
 
         /*
          *-------------------------------------------------------------------------------------------------------
@@ -400,6 +402,7 @@ public class DesignMP3 extends Applet implements Observateur {
     public void actualiserInformations() {
         afficherVolume();
         lesOnglets();
+        tempsTotal.setText(operations.getDuree());
         actualiserPanelCoteEst(titre, auteur, duree, album, annee, genre, qualite, new Font("Times New Roman", Font.PLAIN, 16), new Font("Times New Roman", Font.BOLD, 24));
         this.monPanel.revalidate();
         System.out.println("mis a jour du panel");
