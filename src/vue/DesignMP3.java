@@ -41,6 +41,7 @@ public class DesignMP3 extends Applet implements Observateur {
     private JLabel album;
     private JLabel titre;
     private Sound monSon;
+    private int enCoursDeLecture = 0;
     private Bibliotheque biblio;
     public Thread threadLecture;
 
@@ -104,7 +105,7 @@ public class DesignMP3 extends Applet implements Observateur {
         lecture.addActionListener(new ActionListener() {
             
             public void actionPerformed(ActionEvent e) {
-
+               // operations.ajouterBDD();
                 threadLecture = new Thread(new PlaySound());
                 threadLecture.start();
                 actualiserInformations();
@@ -169,6 +170,14 @@ public class DesignMP3 extends Applet implements Observateur {
                     operations.ouvrirFenetre();
                 } catch (Exception ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if(enCoursDeLecture == 1){
+                    try {
+                        threadLecture.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    enCoursDeLecture = 0;
                 }
                 biblio.ajouterMusique(operations.getSound());
                 actualiserInformations();
@@ -359,7 +368,8 @@ public class DesignMP3 extends Applet implements Observateur {
         @Override
         public void run() {
                 operations.lire();
-                System.out.println("threadd");
+                enCoursDeLecture = 1;
+                System.out.println("thread");
         }
         
     }
