@@ -8,6 +8,7 @@ import BDD.DOA;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.sql.Statement;
@@ -71,8 +72,32 @@ public class Operations {
         
     }
 
+    public boolean verifier() {
+        String query = "SELECT * FROM musique WHERE nom = '" + this.getTitre() + "'";
+        try {
+            Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ResultSet result = requete.executeQuery(query);
+            while (result.next()) {
+                String nom = result.getString(1);
+                if (nom != "") {
+                    return true;
+                }
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return false;
+    }
+
     public void ajouterBDD() {
-        String query = "INSERT INTO musique (nom,artiste,album,duree,nbecoute) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "'," + this.duree + ",'" + this.nbEcoute() + "')";
+        String query = null;
+        if (!this.verifier()) {
+            query = "INSERT INTO musique (nom,artiste,album,duree,nbecoute) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "'," + this.duree + ",'" + 1 + "')";
+            System.out.println("insertion");
+        } else {
+            query = "UPDATE musique SET nbecoute = " + (this.nbEcoute()+1) + " WHERE nom = '" + this.getTitre() + "'";  
+            System.out.println("mise à jour");
+        }
         System.out.println("etape 1");
         try {
             System.out.println("etape 2r");
@@ -87,7 +112,18 @@ public class Operations {
     }
 
     public int nbEcoute() {
-        //String query = "SELECT nbecoute FROM musique WHERE nom = ";
+        String query = "SELECT nbecoute FROM musique WHERE nom = '" + this.getTitre() +"'" ;
+         try {
+            Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ResultSet result = requete.executeQuery(query);
+            while (result.next()) {
+                int i = result.getInt("nbecoute");
+                System.out.println("incrementation");
+                return i;
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
         return 0;
     }
 
