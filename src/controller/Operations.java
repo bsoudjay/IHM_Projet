@@ -49,7 +49,7 @@ public class Operations {
             titre = sound.getTitre();
             annee = sound.getAnnee();
             genre = sound.getGenre();
-            qualite = sound.getQualite();
+            qualite = sound.getQualite().toString();
             System.out.println("L'auteur est " + sound.getAuteur() + " et le titre est " + sound.getTitre());
 
         }
@@ -153,7 +153,7 @@ public class Operations {
 
     public String getQualite() {
         if (sound != null) {
-            return sound.getQualite();
+            return sound.getQualite() + " Kbps/s";
         } else {
             return "";
         }
