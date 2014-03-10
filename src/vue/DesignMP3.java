@@ -241,7 +241,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         JLabel txtBibliothèque = new JLabel();
         txtBibliothèque.setLayout(new BoxLayout(txtBibliothèque, BoxLayout.LINE_AXIS));
-        txtBibliothèque.setText("<html><body><font color='white'>Bibliothèque</body></html>");
+        txtBibliothèque.setText("<html><body><font color='black'>Bibliothèque</body></html>");
         txtBibliothèque.setToolTipText(txtBibliothèque.getText());
         txtBibliothèque.setFont(font);
         card2.add(txtBibliothèque);
@@ -395,20 +395,23 @@ public class DesignMP3 extends Applet implements Observateur {
     
     
     private void actualiserBiblio(Bibliotheque b) {
+        
         maBibli.removeAll();
         ArrayList<Sound> test = new ArrayList<Sound>();
         test = biblio.label();
         
         for(int i=0;i<test.size();i++){
             
-            maBibli.add(new JButton("Lire"));
-            maBibli.add(new JLabel(test.get(i).getTitre().toString()));
+                
+                maBibli.add(new JButton(test.get(i).getTitre().toString()+" - "+test.get(i).getAuteur().toString()));
+           
+            }
       
         }
         
       
         
-    }
+    
     
     
     

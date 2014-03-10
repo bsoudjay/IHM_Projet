@@ -195,9 +195,16 @@ public class Operations {
 
     public String getTitre() {
         if (sound != null) {
+            
+           if(sound.getTitre().isEmpty()){
+               this.setTitre("Sans Titre");
+               return "Sans Titre";
+           }
+           
             return sound.getTitre();
         } else {
-            return "";
+            this.setTitre("Sans Titre");
+            return "Sans Titre";
         }
     }
 
