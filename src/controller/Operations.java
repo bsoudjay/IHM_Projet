@@ -68,6 +68,7 @@ public class Operations {
         }
         doa.connexion();
         this.ajouterBDD();
+        
     }
 
     public void ajouterBDD() {
