@@ -50,26 +50,7 @@ public class Sound implements Comparable<Sound> {
 
         
     }
-
-    public void ajouterBDD(){
-        String query = "INSERT INTO musique (nom,artiste,album,duree,nbecoute) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "'," + this.duree + ",'" + this.nbEcoute() + "')";
-            System.out.println("etape 1");
-            try {
-                System.out.println("etape 2r");
-                Statement requete = con.createStatement();
-                System.out.println("etape 2rprme");
-                requete.executeUpdate(query);
-                System.out.println("etape 3r");
-            } catch (Exception e1) {
-                System.out.println("etape 2m");
-                e1.printStackTrace();
-            }
-    }
     
-        public int nbEcoute(){
-        //String query = "SELECT nbecoute FROM musique WHERE nom = ";
-        return 0;
-    }
     
     public File getChemin() {
         return chemin;

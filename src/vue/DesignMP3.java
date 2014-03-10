@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +52,11 @@ public class DesignMP3 extends Applet implements Observateur {
     public DesignMP3() {
 
         this.biblio = new Bibliotheque("test");
-        this.operations = new Operations();
+        try {
+            this.operations = new Operations();
+        } catch (SQLException ex) {
+            Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.operations.ajouterObservateur(this);
         this.affichageVolume = new JLabel();
         this.auteur = new JLabel();

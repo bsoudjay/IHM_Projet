@@ -4,7 +4,11 @@
  */
 package controller;
 
+import BDD.DOA;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -30,8 +34,17 @@ public class Operations {
     private String annee;
     private String genre;
     private String qualite;
+    private Connection con;
     private int volume;
+    private DOA doa;
     private ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
+
+    public Operations() throws SQLException {
+        this.doa = new DOA("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
+        if (this.doa.connexion()) {
+            this.con = DriverManager.getConnection(doa.getURL(), doa.getUser(), doa.getPassword());
+        }
+    }
 
     public void ouvrirFenetre() throws Exception {
         this.observateurs = new ArrayList<Observateur>();
@@ -53,7 +66,28 @@ public class Operations {
             System.out.println("L'auteur est " + sound.getAuteur() + " et le titre est " + sound.getTitre());
 
         }
-        sound.ajouterBDD();
+        doa.connexion();
+        this.ajouterBDD();
+    }
+
+    public void ajouterBDD() {
+        String query = "INSERT INTO musique (nom,artiste,album,duree,nbecoute) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "'," + this.duree + ",'" + this.nbEcoute() + "')";
+        System.out.println("etape 1");
+        try {
+            System.out.println("etape 2r");
+            Statement requete = con.createStatement();
+            System.out.println("etape 2rprme");
+            requete.executeUpdate(query);
+            System.out.println("etape 3r");
+        } catch (Exception e1) {
+            System.out.println("etape 2m");
+            e1.printStackTrace();
+        }
+    }
+
+    public int nbEcoute() {
+        //String query = "SELECT nbecoute FROM musique WHERE nom = ";
+        return 0;
     }
 
     public Sound getSound() {
@@ -107,8 +141,7 @@ public class Operations {
             return String.format("%02d:%02d:%02d",
                     TimeUnit.MICROSECONDS.toHours(duree) - ((int) TimeUnit.MICROSECONDS.toDays(duree) * 24),
                     TimeUnit.MICROSECONDS.toMinutes(duree) - (TimeUnit.MICROSECONDS.toHours(duree) * 60),
-                    TimeUnit.MICROSECONDS.toSeconds(duree) - (TimeUnit.MICROSECONDS.toMinutes(duree) * 60)
-            );
+                    TimeUnit.MICROSECONDS.toSeconds(duree) - (TimeUnit.MICROSECONDS.toMinutes(duree) * 60));
         } else {
             return "";
         }
@@ -162,14 +195,10 @@ public class Operations {
     public void setQualite(String qualite) {
         this.qualite = qualite;
     }
-    
-    
 
     public void setAnnee(String annee) {
         this.annee = annee;
     }
-    
-    
 
     public void setAlbum(String album) {
         this.album = album;
