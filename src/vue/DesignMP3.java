@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -50,9 +51,19 @@ public class DesignMP3 extends Applet implements Observateur {
     private int enCoursDeLecture = 0;
     private Bibliotheque biblio;
     public Thread threadLecture;
+    public JPanel maBibli;
+    
     public DesignMP3() {
 
         this.biblio = new Bibliotheque("test");
+        this.maBibli = new JPanel();
+        
+        GridLayout gl = new GridLayout(20, 1);
+        gl.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
+        gl.setVgap(5);
+        this.maBibli.setLayout(gl);
+        
+        
         try {
             this.operations = new Operations();
         } catch (SQLException ex) {
@@ -187,7 +198,7 @@ public class DesignMP3 extends Applet implements Observateur {
                 }
                 if(enCoursDeLecture == 1){
                     try {
-                        threadLecture.sleep(1000);
+                        threadLecture.sleep(1);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -241,30 +252,18 @@ public class DesignMP3 extends Applet implements Observateur {
 
         
         
-        JPanel maBibli = new JPanel();
-        maBibli.setLayout(new BoxLayout(maBibli, BoxLayout.LINE_AXIS));
+        
+       
+        
 
         Font fontBold = new Font("Times New Roman", Font.PLAIN, 16);
 
         maBibli.setFont(fontBold);
-        //titre.setText(operations.getTitre());
-        maBibli.add(new JLabel("toto de merde"));
-        
-        ArrayList<Sound> test = new ArrayList<Sound>();
-        test = biblio.label();
-        
-        for(int i=0;i<test.size();i++){
-            
-        
-            maBibli.add(new JLabel("toto de merde"));
-        
-                
-        }
-        
-        
+ 
         JPanel bibli = new JPanel();
         bibli.setLayout(new BoxLayout(bibli, BoxLayout.PAGE_AXIS));
         
+     
         bibli.add(txtBibliothèque);
         bibli.add(maBibli);
         
@@ -398,6 +397,26 @@ public class DesignMP3 extends Applet implements Observateur {
     }
 
 
+    
+    
+    private void actualiserBiblio(Bibliotheque b) {
+        maBibli.removeAll();
+        ArrayList<Sound> test = new ArrayList<Sound>();
+        test = biblio.label();
+        
+        for(int i=0;i<test.size();i++){
+            
+            maBibli.add(new JButton("Lire"));
+            maBibli.add(new JLabel(test.get(i).getTitre().toString()));
+      
+        }
+        
+      
+        
+    }
+    
+    
+    
     private void afficherVolume() {
         StringBuilder barresVolume = new StringBuilder();
         for (int i = 0; i < this.operations.getVolume(); i++) {
@@ -409,9 +428,7 @@ public class DesignMP3 extends Applet implements Observateur {
     @Override
     public void actualiserInformations() {
         afficherVolume();
-        lesOnglets();
-        tempsTotal.setText(operations.getDuree());
-        tempsRestant.setText(operations.calculTempsRestant()+"");
+        actualiserBiblio(biblio);
         actualiserPanelCoteEst(titre, auteur, duree, album, annee, genre, qualite, new Font("Times New Roman", Font.PLAIN, 16), new Font("Times New Roman", Font.BOLD, 24));
         this.monPanel.revalidate();
         System.out.println("mis a jour du panel");
