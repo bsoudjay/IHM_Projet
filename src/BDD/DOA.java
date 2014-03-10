@@ -1,13 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package controller;
+package BDD;
 
-/**
- *
- * @author ilanmalka
- */
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -63,9 +55,8 @@ public class DOA {
             cnfe.printStackTrace();
             return false;
         }
-
         try {
-//          java.sql.Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
+//            java.sql.Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:8889/bdd_kir?zeroDateTimeBehavior=convertToNull", "root", "root");
             java.sql.Connection connection = DriverManager.getConnection(this.URL, this.user, this.password);
             return true;
         } catch (SQLException ex) {

@@ -24,7 +24,7 @@ import vue.DesignMP3;
  *
  * @author ilanmalka
  */
-public class Fenetre extends JFrame{
+public class Fenetre extends JFrame {
     
     DesignMP3 leDesign = new DesignMP3();
     
