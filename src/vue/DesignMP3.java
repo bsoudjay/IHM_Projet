@@ -429,6 +429,7 @@ public class DesignMP3 extends Applet implements Observateur {
     public void actualiserInformations() {
         afficherVolume();
         actualiserBiblio(biblio);
+        tempsTotal.setText(operations.getDuree());
         actualiserPanelCoteEst(titre, auteur, duree, album, annee, genre, qualite, new Font("Times New Roman", Font.PLAIN, 16), new Font("Times New Roman", Font.BOLD, 24));
         this.monPanel.revalidate();
         System.out.println("mis a jour du panel");
