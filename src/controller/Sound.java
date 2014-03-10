@@ -5,6 +5,9 @@ import java.io.*;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -24,6 +27,7 @@ public class Sound implements Comparable<Sound> {
     private String genre;
     private boolean isPlaying = false;
     private AdvancedPlayer player = null;
+    private long tempsRestant;
     
     //constructeur
     public Sound(String path) throws Exception {
@@ -44,6 +48,7 @@ public class Sound implements Comparable<Sound> {
             annee = (String) properties.get("date");
             qualite = (Integer) properties.get("mp3.bitrate.nominal.bps")/1000;
             genre = (String) properties.get("mp3.id3tag.genre");
+            tempsRestant = 0;
         } else {
             throw new UnsupportedAudioFileException();
         }
@@ -115,6 +120,16 @@ public class Sound implements Comparable<Sound> {
     public void setGenre(String genre) {
         this.genre = genre;
     }
+
+    public long getTempsRestant() {
+        return tempsRestant;
+    }
+
+    public void setTempsRestant(long tempsRestant) {
+        this.tempsRestant = tempsRestant;
+    }
+    
+    
     
     
 
@@ -129,6 +144,10 @@ public class Sound implements Comparable<Sound> {
         if (player != null) {
             isPlaying = true;
             player.play();
+            while (tempsRestant != duree) {
+                calculerTempsRestant();
+                Thread.sleep(100);
+            }
         }
     }
 
@@ -148,6 +167,10 @@ public class Sound implements Comparable<Sound> {
 
     public boolean isPlaying() {
         return isPlaying;
+    }
+    
+    public long calculerTempsRestant() {
+        return tempsRestant += System.currentTimeMillis();
     }
 
     

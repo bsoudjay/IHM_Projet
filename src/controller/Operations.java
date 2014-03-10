@@ -34,6 +34,7 @@ public class Operations {
     private String annee;
     private String genre;
     private String qualite;
+    private String tempsRestant;
     private Connection con;
     private int volume;
     private DOA doa;
@@ -63,6 +64,7 @@ public class Operations {
             annee = sound.getAnnee();
             genre = sound.getGenre();
             qualite = sound.getQualite().toString();
+            tempsRestant = sound.calculerTempsRestant() + "";
             System.out.println("L'auteur est " + sound.getAuteur() + " et le titre est " + sound.getTitre());
 
         }
@@ -196,6 +198,14 @@ public class Operations {
         this.qualite = qualite;
     }
 
+    public String getTempsRestant() {
+        return tempsRestant;
+    }
+
+    public void setTempsRestant(String tempsRestant) {
+        this.tempsRestant = tempsRestant;
+    }
+
     public void setAnnee(String annee) {
         this.annee = annee;
     }
@@ -210,6 +220,14 @@ public class Operations {
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+    
+    public String calculTempsRestant() {
+        long duree = sound.getTempsRestant();
+        return String.format("%02d:%02d:%02d",
+                    TimeUnit.MICROSECONDS.toHours(duree) - ((int) TimeUnit.MICROSECONDS.toDays(duree) * 24),
+                    TimeUnit.MICROSECONDS.toMinutes(duree) - (TimeUnit.MICROSECONDS.toHours(duree) * 60),
+                    TimeUnit.MICROSECONDS.toSeconds(duree) - (TimeUnit.MICROSECONDS.toMinutes(duree) * 60));
     }
 
     public void lire() {
