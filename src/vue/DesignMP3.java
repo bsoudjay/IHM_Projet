@@ -9,6 +9,7 @@ import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -36,7 +37,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
     private JPanel monPanel = new JPanel();
     private final JSlider slide = new JSlider();
-    private final JSlider barreMusique = new JSlider();
+    public  JSlider barreMusique = new JSlider();
     private Operations operations;
     private JLabel affichageVolume;
     private JLabel auteur;
@@ -140,7 +141,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         //lesBoutons.add(this.affichageVolume);
 
-        barreSon.setSize(2, 20);
+        barreSon.setSize(20, 2);
 
         slide.setMaximum(100);
         slide.setMinimum(0);
@@ -180,11 +181,6 @@ public class DesignMP3 extends Applet implements Observateur {
                 // operations.ajouterBDD();
                 threadLecture = new Thread(new PlaySound());
                 threadLecture.start();
-                if (monSon.isPlaying()) {
-                    barreMusique.setMaximum(monSon.getDureeInt() + 1);
-                    System.out.println(barreMusique.getValue());
-                    System.out.println(barreMusique.getMaximum());
-                }
                 actualiserInformations();
             }
         });
@@ -376,6 +372,7 @@ public class DesignMP3 extends Applet implements Observateur {
     public void coteEst() {
 
         JPanel est = new JPanel();
+        est.setMaximumSize(new Dimension(100, 100));
         est.setLayout(new BoxLayout(est, BoxLayout.PAGE_AXIS));
 
         Font fontBoldG = new Font("Times New Roman", Font.BOLD, 24);
@@ -425,12 +422,13 @@ public class DesignMP3 extends Applet implements Observateur {
 
         @Override
         public void run() {
+//            enCoursDeLecture = 1;
+//            System.out.println("totototototto");
+//            if (monSon.isPlaying()) {
+//                barreMusique.setValue((barreMusique.getValue() + 1));
+//                System.out.println("j'avance avec la musique");
+//            }
             operations.lire();
-            enCoursDeLecture = 1;
-            if (monSon.isPlaying()) {
-                barreMusique.setValue((barreMusique.getValue() + 1));
-                System.out.println("j'avance avec la musique");
-            }
             actualiserInformations();
             System.out.println("thread");
         }
@@ -473,7 +471,7 @@ public class DesignMP3 extends Applet implements Observateur {
     }
 
     private void modifBarreSon() {
-        this.barreMusique.setValue(this.slide.getValue());
+        this.barreMusique.setValue(this.barreMusique.getValue());
     }
 
 //    private void afficherVolume() {
@@ -490,6 +488,7 @@ public class DesignMP3 extends Applet implements Observateur {
         modifVolume();
         //afficherVolume();
         actualiserBiblio(biblio);
+        this.barreMusique.setValue(WIDTH);
         tempsTotal.setText(operations.getDuree());
         actualiserPanelCoteEst(titre, auteur, duree, album, annee, genre, qualite, new Font("Times New Roman", Font.PLAIN, 16), new Font("Times New Roman", Font.BOLD, 24));
         this.monPanel.revalidate();

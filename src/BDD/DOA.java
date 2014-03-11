@@ -56,7 +56,6 @@ public class DOA {
             return false;
         }
         try {
-//            java.sql.Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:8889/bdd_kir?zeroDateTimeBehavior=convertToNull", "root", "root");
             java.sql.Connection connection = DriverManager.getConnection(this.URL, this.user, this.password);
             return true;
         } catch (SQLException ex) {
