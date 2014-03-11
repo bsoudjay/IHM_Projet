@@ -84,7 +84,11 @@ public class Sound implements Comparable<Sound> {
     public Long getDuree() {
         return duree;
     }
-
+    
+    public int getDureeInt() {
+        return duree.intValue();
+    }
+    
     public void setDuree(Long duree) {
         this.duree = duree;
     }

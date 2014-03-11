@@ -13,7 +13,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -21,11 +20,11 @@ import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import model.Bibliotheque;
 import model.Observateur;
 
@@ -36,6 +35,8 @@ import model.Observateur;
 public class DesignMP3 extends Applet implements Observateur {
 
     private JPanel monPanel = new JPanel();
+    private final JSlider slide = new JSlider();
+    private final JSlider barreMusique = new JSlider();
     private Operations operations;
     private JLabel affichageVolume;
     private JLabel auteur;
@@ -52,18 +53,18 @@ public class DesignMP3 extends Applet implements Observateur {
     private Bibliotheque biblio;
     public Thread threadLecture;
     public JPanel maBibli;
-    
+
     public DesignMP3() {
 
         this.biblio = new Bibliotheque("test");
         this.maBibli = new JPanel();
-        
+
         GridLayout gl = new GridLayout(20, 1);
         gl.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
         gl.setVgap(5);
         this.maBibli.setLayout(gl);
-        
-        
+
+
         try {
             this.operations = new Operations();
         } catch (SQLException ex) {
@@ -99,11 +100,23 @@ public class DesignMP3 extends Applet implements Observateur {
          *-------------------------------------------------------------------------------------------------------
          */
 
-        JPanel barreMusique = new JPanel();
-        barreMusique.setLayout((new BoxLayout(barreMusique, BoxLayout.LINE_AXIS)));
-        barreMusique.add(tempsRestant);
-        barreMusique.add(new JButton("Barre de Musique"));
-        barreMusique.add(tempsTotal);
+
+        JPanel barreMusiq = new JPanel();
+       // barreMusique.setSize(400, 400);
+        barreMusiq.setLayout((new BoxLayout(barreMusiq, BoxLayout.LINE_AXIS)));
+        barreMusiq.add(tempsRestant);
+
+        JPanel barreSon = new JPanel();
+        //barreSon.setSize(2, 20);
+
+        this.barreMusique.setMaximum(100);
+        this.barreMusique.setMinimum(0);
+        this.barreMusique.setValue(0);
+        this.barreMusique.setPaintTicks(false);
+        this.barreMusique.setPaintLabels(false);
+
+        barreMusiq.add(this.barreMusique);
+        barreMusiq.add(tempsTotal);
 
         /*
          *-------------------------------------------------------------------------------------------------------
@@ -124,33 +137,74 @@ public class DesignMP3 extends Applet implements Observateur {
         lesBoutons.add(lecture);
         lesBoutons.add(suivant);
         lesBoutons.add(diminuer);
-        lesBoutons.add(this.affichageVolume);
+
+        //lesBoutons.add(this.affichageVolume);
+
+        barreSon.setSize(2, 20);
+
+        slide.setMaximum(100);
+        slide.setMinimum(0);
+        slide.setValue(50);
+        slide.setPaintTicks(true);
+        slide.setPaintLabels(true);
+        slide.setMinorTickSpacing(10);
+        slide.setMajorTickSpacing(20);
+        slide.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent event) {
+            }
+        });
+        barreSon.add(slide);
+        lesBoutons.add(barreSon);
+
         lesBoutons.add(augmenter);
 
-        lecture.addActionListener(new ActionListener() {
-            
+        augmenter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               // operations.ajouterBDD();
-                threadLecture = new Thread(new PlaySound());
-                threadLecture.start();
+                slide.setValue((slide.getValue() + 10));
+                System.out.println(slide.getValue());
                 actualiserInformations();
             }
         });
 
         diminuer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                operations.diminuerVolume();
+                slide.setValue((slide.getValue() - 10));
+                System.out.println(slide.getValue());
                 actualiserInformations();
             }
         });
 
-        augmenter.addActionListener(new ActionListener() {
+
+        lecture.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                // operations.ajouterBDD();
+                threadLecture = new Thread(new PlaySound());
+                threadLecture.start();
+                if (monSon.isPlaying()) {
+                    barreMusique.setMaximum(monSon.getDureeInt() + 1);
+                    System.out.println(barreMusique.getValue());
+                    System.out.println(barreMusique.getMaximum());
+                }
                 actualiserInformations();
-                operations.augmenterVolume();
             }
         });
+
+//        diminuer.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                operations.diminuerVolume();
+//                actualiserInformations();
+//            }
+//        });
+//
+//        augmenter.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//
+//                actualiserInformations();
+//                operations.augmenterVolume();
+//            }
+//        });
+
+
 
         //lesBoutons.add(new JButton("barre Son"));
 
@@ -161,7 +215,7 @@ public class DesignMP3 extends Applet implements Observateur {
          */
         JPanel panneauBas = new JPanel();
         panneauBas.setLayout((new BoxLayout(panneauBas, BoxLayout.PAGE_AXIS)));
-        panneauBas.add(barreMusique);
+        panneauBas.add(barreMusiq);
         panneauBas.add(lesBoutons);
 
         /*
@@ -196,9 +250,9 @@ public class DesignMP3 extends Applet implements Observateur {
                 } catch (Exception ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                if(enCoursDeLecture == 1){
+                if (enCoursDeLecture == 1) {
                     try {
-                        threadLecture.sleep(1);
+                        threadLecture.sleep(1000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -217,7 +271,7 @@ public class DesignMP3 extends Applet implements Observateur {
          */
 
         final JPanel card1 = new JPanel();
-        card1.setBackground(Color.RED);
+        card1.setBackground(Color.RED);//kvn image
 
         JButton musiqueEnCours = new JButton(new ImageIcon("Design/Boutons/lectureEnCours.png"));
 
@@ -250,23 +304,23 @@ public class DesignMP3 extends Applet implements Observateur {
         txtBibliothèque.setFont(font);
         card2.add(txtBibliothèque);
 
-        
-        
-        
-       
-        
+
+
+
+
+
 
         Font fontBold = new Font("Times New Roman", Font.PLAIN, 16);
 
         maBibli.setFont(fontBold);
- 
+
         JPanel bibli = new JPanel();
         bibli.setLayout(new BoxLayout(bibli, BoxLayout.PAGE_AXIS));
-        
-     
+
+
         bibli.add(txtBibliothèque);
         bibli.add(maBibli);
-        
+
         card2.add(bibli);
 
         bibliothèqe.addActionListener(new ActionListener() {
@@ -358,7 +412,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         est.add(auteur);
         est.add(duree);
-        est.add(album);        
+        est.add(album);
         est.add(annee);
         est.add(genre);
         est.add(qualite);
@@ -367,70 +421,74 @@ public class DesignMP3 extends Applet implements Observateur {
         this.monPanel.add(est, BorderLayout.EAST);
     }
 
-    class PlaySound implements Runnable{
+    class PlaySound implements Runnable {
 
         @Override
         public void run() {
-                operations.lire();
-                enCoursDeLecture = 1;
-                actualiserInformations();
-                System.out.println("thread");
+            operations.lire();
+            enCoursDeLecture = 1;
+            if (monSon.isPlaying()) {
+                barreMusique.setValue((barreMusique.getValue() + 1));
+                System.out.println("j'avance avec la musique");
+            }
+            actualiserInformations();
+            System.out.println("thread");
         }
-        
     }
-    
+
     private void actualiserPanelCoteEst(JLabel titre, JLabel auteur, JLabel duree, JLabel album, JLabel annee, JLabel genre, JLabel qualite, Font fontBold, Font fontBoldG) {
         titre.setFont(fontBoldG);
         titre.setText(operations.getTitre());
         auteur.setFont(fontBold);
-        auteur.setText("Auteur : " +operations.getAuteur());
+        auteur.setText("Auteur : " + operations.getAuteur());
         duree.setFont(fontBold);
-        duree.setText("Durée : " +operations.getDuree());
+        duree.setText("Durée : " + operations.getDuree());
         album.setFont(fontBold);
-        album.setText("Album : " +operations.getAlbum());
+        album.setText("Album : " + operations.getAlbum());
         annee.setFont(fontBold);
-        annee.setText("Année : " +operations.getAnnee());
+        annee.setText("Année : " + operations.getAnnee());
         genre.setFont(fontBold);
-        genre.setText("Genre : " +operations.getGenre());
+        genre.setText("Genre : " + operations.getGenre());
         qualite.setFont(fontBold);
-        qualite.setText("Qualité : " +operations.getQualite());
+        qualite.setText("Qualité : " + operations.getQualite());
     }
 
-
-    
-    
     private void actualiserBiblio(Bibliotheque b) {
-        
+
         maBibli.removeAll();
         ArrayList<Sound> test = new ArrayList<Sound>();
         test = biblio.label();
-        
-        for(int i=0;i<test.size();i++){
-            
-                
-                maBibli.add(new JButton(test.get(i).getTitre().toString()+" - "+test.get(i).getAuteur().toString()));
-           
-            }
-      
+
+        for (int i = 0; i < test.size(); i++) {
+
+
+            maBibli.add(new JButton(test.get(i).getTitre().toString() + " - " + test.get(i).getAuteur().toString()));
+
         }
-        
-      
-        
-    
-    
-    
-    
-    private void afficherVolume() {
-        StringBuilder barresVolume = new StringBuilder();
-        for (int i = 0; i < this.operations.getVolume(); i++) {
-            barresVolume.append('|');
-        }
-        this.affichageVolume.setText(barresVolume.toString());
+
     }
+
+    private void modifVolume() {
+        this.slide.setValue(this.slide.getValue());
+    }
+
+    private void modifBarreSon() {
+        this.barreMusique.setValue(this.slide.getValue());
+    }
+
+//    private void afficherVolume() {
+//        StringBuilder barresVolume = new StringBuilder();
+//        for (int i = 0; i < this.operations.getVolume(); i++) {
+//            barresVolume.append('|');
+//        }
+//        this.affichageVolume.setText(barresVolume.toString());
+//    }
 
     @Override
     public void actualiserInformations() {
-        afficherVolume();
+        modifBarreSon();
+        modifVolume();
+        //afficherVolume();
         actualiserBiblio(biblio);
         tempsTotal.setText(operations.getDuree());
         actualiserPanelCoteEst(titre, auteur, duree, album, annee, genre, qualite, new Font("Times New Roman", Font.PLAIN, 16), new Font("Times New Roman", Font.BOLD, 24));
