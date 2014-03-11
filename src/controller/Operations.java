@@ -35,6 +35,7 @@ public class Operations {
     private String annee;
     private String genre;
     private String qualite;
+    private File chemin;
     private String tempsRestant;
     private Connection con;
     private int volume;
@@ -42,7 +43,7 @@ public class Operations {
     private ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 
     public Operations() throws SQLException {
-        this.doa = new DOA("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
+        this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
         if (this.doa.connexion()) {
             this.con = DriverManager.getConnection(doa.getURL(), doa.getUser(), doa.getPassword());
         }
@@ -60,6 +61,7 @@ public class Operations {
             File fichierMP3 = fc.getSelectedFile();
             sound = new Sound(fichierMP3.getPath());
             album = sound.getAlbum();
+            chemin = sound.getChemin();
             duree = sound.getDuree().toString();
             titre = sound.getTitre();
             annee = sound.getAnnee();
@@ -71,17 +73,17 @@ public class Operations {
         }
         doa.connexion();
         this.ajouterBDD();
-        
+
     }
 
     public boolean verifier() {
-        String query = "SELECT * FROM musique WHERE nom = '" + this.getTitre() + "'";
+        String query = "SELECT * FROM musique WHERE titre = '" + this.getTitre() + "'";
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet result = requete.executeQuery(query);
             while (result.next()) {
-                String nom = result.getString(1);
-                if (nom != "") {
+                String titre = result.getString(1);
+                if (titre != "") {
                     return true;
                 }
             }
@@ -94,10 +96,10 @@ public class Operations {
     public void ajouterBDD() {
         String query = null;
         if (!this.verifier()) {
-            query = "INSERT INTO musique (nom,artiste,album,duree,nbecoute) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "'," + this.duree + ",'" + 1 + "')";
+            query = "INSERT INTO musique (titre,auteur,album,duree,chemin,genre) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "','" + this.getDuree() + "','" + this.getGenre() + "','" + this.getChemin() + "')";
             System.out.println("insertion");
-        } else {
-            query = "UPDATE musique SET nbecoute = " + (this.nbEcoute()+1) + " WHERE nom = '" + this.getTitre() + "'";  
+        } else{
+            query = "UPDATE musique SET nbecoute = " + (this.nbEcoute() + 1) + " WHERE titre = '" + this.getTitre() + "'";
             System.out.println("mise à jour");
         }
         System.out.println("etape 1");
@@ -114,8 +116,8 @@ public class Operations {
     }
 
     public int nbEcoute() {
-        String query = "SELECT nbecoute FROM musique WHERE nom = '" + this.getTitre() +"'" ;
-         try {
+        String query = "SELECT nbecoute FROM musique WHERE titre = '" + this.getTitre() + "'";
+        try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet result = requete.executeQuery(query);
             while (result.next()) {
@@ -135,7 +137,6 @@ public class Operations {
     }
 
     public int getVolume() {
-
 
         return this.volume;
     }
@@ -195,14 +196,22 @@ public class Operations {
         }
     }
 
+    public File getChemin() {
+        if (sound != null) {
+            return sound.getChemin();
+        } else {
+            return null;
+        }
+    }
+
     public String getTitre() {
         if (sound != null) {
-            
-           if(sound.getTitre().isEmpty()){
-               this.setTitre("Sans Titre");
-               return "Sans Titre";
-           }
-           
+
+            if (sound.getTitre().isEmpty()) {
+                this.setTitre("Sans Titre");
+                return "Sans Titre";
+            }
+
             return sound.getTitre();
         } else {
             this.setTitre("Sans Titre");
@@ -265,13 +274,13 @@ public class Operations {
     public void setTitre(String titre) {
         this.titre = titre;
     }
-    
+
     public String calculTempsRestant() {
         long duree = sound.getTempsRestant();
         return String.format("%02d:%02d:%02d",
-                    TimeUnit.MICROSECONDS.toHours(duree) - ((int) TimeUnit.MICROSECONDS.toDays(duree) * 24),
-                    TimeUnit.MICROSECONDS.toMinutes(duree) - (TimeUnit.MICROSECONDS.toHours(duree) * 60),
-                    TimeUnit.MICROSECONDS.toSeconds(duree) - (TimeUnit.MICROSECONDS.toMinutes(duree) * 60));
+                TimeUnit.MICROSECONDS.toHours(duree) - ((int) TimeUnit.MICROSECONDS.toDays(duree) * 24),
+                TimeUnit.MICROSECONDS.toMinutes(duree) - (TimeUnit.MICROSECONDS.toHours(duree) * 60),
+                TimeUnit.MICROSECONDS.toSeconds(duree) - (TimeUnit.MICROSECONDS.toMinutes(duree) * 60));
     }
 
     public void lire() {
