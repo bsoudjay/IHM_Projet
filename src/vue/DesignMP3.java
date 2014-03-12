@@ -68,10 +68,10 @@ public class DesignMP3 extends Applet implements Observateur {
         this.biblio = new Bibliotheque("test");
         this.maBibli = new JPanel();
 
-        GridLayout gl = new GridLayout(20, 1);
-        gl.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
-        gl.setVgap(5);
-        this.maBibli.setLayout(gl);
+//        GridLayout gl = new GridLayout(20, 1);
+//        gl.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
+//        gl.setVgap(5);
+        this.maBibli.setLayout((new BoxLayout(maBibli, BoxLayout.PAGE_AXIS)));
 
         try {
             this.operations = new Operations();
@@ -436,7 +436,7 @@ public class DesignMP3 extends Applet implements Observateur {
          */
         content.setLayout(cl);
         content.add(card1, listContent[0]);
-        content.add(card2, listContent[1]);
+        content.add(scroll, listContent[1]);
         content.add(card3, listContent[2]);
 
 
@@ -539,9 +539,11 @@ public class DesignMP3 extends Applet implements Observateur {
         test = operations.bibliothequeComplete();
         
         for (int i = 0; i < test.size(); i += 3) {
+            maBibli.add(new JLabel(" "));
             maBibli.add(new JButton(test.get(i)));
             maBibli.add(new JLabel("Artiste: " + test.get(i + 1)));
             maBibli.add(new JLabel("Duree: " + test.get(i + 2)));
+            maBibli.add(new JLabel("  ___________________________________ "));
         }
         
         /*ArrayList<Musique> test = new ArrayList<Musique>();
@@ -602,5 +604,4 @@ public class DesignMP3 extends Applet implements Observateur {
         System.out.println("mis a jour du panel");
 
     }
-    
 }
