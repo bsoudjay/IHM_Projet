@@ -25,6 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
@@ -335,6 +336,7 @@ public class DesignMP3 extends Applet implements Observateur {
          *-------------------------------------------------------------------------------------------------------
          */
         JPanel card2 = new JPanel();
+        JScrollPane scroll = new JScrollPane(card2);
         card2.setBackground(Color.GRAY);
 
         JButton bibliothèqe = new JButton(new ImageIcon("Design/Boutons/MaBibli.png"));
@@ -360,7 +362,7 @@ public class DesignMP3 extends Applet implements Observateur {
         bibli.setLayout(new BoxLayout(bibli, BoxLayout.PAGE_AXIS));
 
         bibli.add(txtBibliothèque);
-        maBibli.setLayout(new GridLayout(20, 3));
+        //maBibli.setLayout(new GridLayout(20, 3));
         bibli.add(maBibli);
 
         card2.add(bibli);
@@ -600,4 +602,5 @@ public class DesignMP3 extends Applet implements Observateur {
         System.out.println("mis a jour du panel");
 
     }
+    
 }
