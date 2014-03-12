@@ -310,7 +310,7 @@ public class DesignMP3 extends Applet implements Observateur {
          *-------------------------------------------------------------------------------------------------------
          */
         final JPanel card1 = new JPanel();
-        card1.setBackground(Color.RED);//kvn image
+        card1.setBackground(Color.GRAY);//kvn image
 
         JButton musiqueEnCours = new JButton(new ImageIcon("Design/Boutons/lectureEnCours.png"));
 
@@ -393,7 +393,7 @@ public class DesignMP3 extends Applet implements Observateur {
          *-------------------------------------------------------------------------------------------------------
          */
         JPanel card3 = new JPanel();
-        card3.setBackground(Color.BLUE);
+        card3.setBackground(Color.GRAY);
         JButton statistiques = new JButton(new ImageIcon("Design/Boutons/MesStat.png"));
 
         statistiques.setOpaque(false);
