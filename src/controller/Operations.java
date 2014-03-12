@@ -7,9 +7,7 @@ package controller;
 import model.Sound;
 import BDD.DOA;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -43,8 +41,13 @@ public class Operations {
         
       
         // Ilan  
+
         //this.doa = new DOA( "jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
         
+
+        //this.doa = new DOA( "jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
+
+
         //kevin
         this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
         if (this.doa.connexion()) {
