@@ -7,6 +7,9 @@ package controller;
 import model.Sound;
 import BDD.DOA;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -98,10 +101,13 @@ public class Operations {
         return false;
     }
 
-    public void ajouterBDD() {
+    public void ajouterBDD() throws FileNotFoundException {
         String query = null;
+         String chemin_tmp=this.getChemin().toString();
+         chemin_tmp=chemin_tmp.replace("\\", "\\\\"); 
         if (!this.verifier()) {
-            query = "INSERT INTO musique (titre,auteur,album,duree,chemin,genre) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "','" + this.getDuree() + "','" + this.getGenre() + "','" + this.getChemin() + "')";
+           
+            query = "INSERT INTO musique (titre,auteur,album,duree,genre,chemin) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "','" + this.getDuree() + "','" + this.getGenre() + "','" + chemin_tmp + "')";
             System.out.println("insertion");
         } else{
             query = "UPDATE musique SET nbecoute = " + (this.nbEcoute() + 1) + " WHERE titre = '" + this.getTitre() + "'";
@@ -119,7 +125,27 @@ public class Operations {
             e1.printStackTrace();
         }
     }
-
+    
+    public void reecouterMusic(String titre) {
+        String query = null;
+            query = "SELECT chemin FROM musique WHERE titre = '"+titre+"'";
+            System.out.println("mise à jour");
+        System.out.println("etape 1");
+        try {
+            Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            System.out.println("test");
+            ResultSet result = requete.executeQuery(query);
+            while (result.next()) {
+                String chemin = result.getString(1);
+                System.out.println(chemin);
+                Sound s = new Sound ("chemin");
+            }
+        } catch (Exception e1) {
+            System.out.println("etape 2m");
+            e1.printStackTrace();
+        }
+    }
+    
     public int nbEcoute() {
         String query = "SELECT nbecoute FROM musique WHERE titre = '" + this.getTitre() + "'";
         try {

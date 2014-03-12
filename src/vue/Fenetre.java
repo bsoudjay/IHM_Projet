@@ -13,6 +13,8 @@ import java.awt.Panel;
 import java.awt.Toolkit;
 import java.awt.image.ImageProducer;
 import java.io.File;
+import java.rmi.server.Operation;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,12 +30,14 @@ public class Fenetre extends JFrame {
     
     DesignMP3 leDesign = new DesignMP3();
     
-    public Fenetre(String text){
+    public Fenetre(String text) throws SQLException{
         
       
 
         this.setTitle(text);
-        this.setSize(1300,700);
+        this.setSize(1300,700);       
+        Operations op=new Operations();
+        op.reecouterMusic("Black And Yellow");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -41,7 +45,7 @@ public class Fenetre extends JFrame {
       
         this.getContentPane().add(leDesign.initialisation());
        
-        this.setVisible(true);  
+        this.setVisible(true); 
         
     }    
 
