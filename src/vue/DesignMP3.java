@@ -399,7 +399,7 @@ public class DesignMP3 extends Applet implements Observateur {
          *-------------------------------------------------------------------------------------------------------
          */
         JPanel card3 = new JPanel();
-        card3.setBackground(Color.BLUE);
+        card3.setBackground(Color.GRAY);
         JButton statistiques = new JButton(new ImageIcon("Design/Boutons/MesStat.png"));
 
         statistiques.setOpaque(false);
@@ -539,18 +539,31 @@ public class DesignMP3 extends Applet implements Observateur {
     private void actualiserPanelCoteEst(JLabel titre, JLabel auteur, JLabel duree, JLabel album, JLabel annee, JLabel genre, JLabel qualite, Font fontBold, Font fontBoldG) {
         titre.setFont(fontBoldG);
         titre.setText(operations.getTitre());
+        titre.setPreferredSize(new Dimension(230, 40));
+        
         auteur.setFont(fontBold);
         auteur.setText("Auteur : " + operations.getAuteur());
+        auteur.setPreferredSize(new Dimension(230, 40));
+        
         duree.setFont(fontBold);
         duree.setText("Durée : " + operations.getDuree());
+        duree.setPreferredSize(new Dimension(230, 40));
+        
         album.setFont(fontBold);
         album.setText("Album : " + operations.getAlbum());
+        album.setPreferredSize(new Dimension(230, 40));
+        
         annee.setFont(fontBold);
         annee.setText("Année : " + operations.getAnnee());
+        annee.setPreferredSize(new Dimension(230, 40));
+        
         genre.setFont(fontBold);
         genre.setText("Genre : " + operations.getGenre());
+        genre.setPreferredSize(new Dimension(230, 40));
+        
         qualite.setFont(fontBold);
         qualite.setText("Qualité : " + operations.getQualite());
+        qualite.setPreferredSize(new Dimension(230, 20));
     }
 
     private void actualiserBiblio(Bibliotheque b) {
