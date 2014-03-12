@@ -48,10 +48,10 @@ public class Operations {
 
     public Operations() throws SQLException {
         // Ilan  
-        this.doa = new DOA( "jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
+        //this.doa = new DOA( "jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
         
         //kevin
-       // this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
+        this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
         if (this.doa.connexion()) {
             this.con = DriverManager.getConnection(doa.getURL(), doa.getUser(), doa.getPassword());
         }
@@ -150,24 +150,21 @@ public class Operations {
     
       public ArrayList<String> bibliotheque() {
         String query = null;
-        query = "SELECT title FROM musique";
+        query = "SELECT titre,auteur FROM musique";
        ArrayList<String> biblio = new ArrayList<String>();
-        
-        
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-            System.out.println("test");
             ResultSet result = requete.executeQuery(query);
             while (result.next()) {
                 String title = result.getString(1);
-                biblio.add(title);
-                
+                String auteur = result.getString(2);
+                String chanson=title+" de "+auteur;
+                biblio.add(chanson);
             }
         } catch (Exception e1) {
             System.out.println("etape 2m");
             e1.printStackTrace();
         }
-        
         return biblio;
     }
 

@@ -38,7 +38,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
     private JPanel monPanel = new JPanel();
     private final JSlider slide = new JSlider();
-    public  JSlider barreMusique = new JSlider();
+    public JSlider barreMusique = new JSlider();
     private Operations operations;
     private JLabel affichageVolume;
     private JLabel auteur;
@@ -65,7 +65,6 @@ public class DesignMP3 extends Applet implements Observateur {
         gl.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
         gl.setVgap(5);
         this.maBibli.setLayout(gl);
-
 
         try {
             this.operations = new Operations();
@@ -101,10 +100,8 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                      Barre Musique
          *-------------------------------------------------------------------------------------------------------
          */
-
-
         JPanel barreMusiq = new JPanel();
-       // barreMusique.setSize(400, 400);
+        // barreMusique.setSize(400, 400);
         barreMusiq.setLayout((new BoxLayout(barreMusiq, BoxLayout.LINE_AXIS)));
         barreMusiq.add(tempsRestant);
 
@@ -134,14 +131,12 @@ public class DesignMP3 extends Applet implements Observateur {
         JButton diminuer = new JButton(new ImageIcon("Design/Boutons/baisserSon.png"));
         JButton augmenter = new JButton(new ImageIcon("Design/Boutons/augmenterSon.png"));
 
-
         lesBoutons.add(precedent);
         lesBoutons.add(lecture);
         lesBoutons.add(suivant);
         lesBoutons.add(diminuer);
 
         //lesBoutons.add(this.affichageVolume);
-
         barreSon.setSize(20, 2);
 
         slide.setMaximum(100);
@@ -176,7 +171,6 @@ public class DesignMP3 extends Applet implements Observateur {
             }
         });
 
-
         lecture.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // operations.ajouterBDD();
@@ -200,9 +194,6 @@ public class DesignMP3 extends Applet implements Observateur {
 //                operations.augmenterVolume();
 //            }
 //        });
-
-
-
         //lesBoutons.add(new JButton("barre Son"));
 
         /*
@@ -220,7 +211,6 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                  Création du BorderLayout  
          *-------------------------------------------------------------------------------------------------------
          */
-
         monPanel.add(panneauBas, BorderLayout.SOUTH);
     }
 
@@ -238,7 +228,6 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                     Ajout de musique
          *-------------------------------------------------------------------------------------------------------
          */
-
         JButton ajouterMusique = new JButton(new ImageIcon("Design/Boutons/ajoutMusique.png"));
         ajouterMusique.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -255,8 +244,18 @@ public class DesignMP3 extends Applet implements Observateur {
                     }
                     enCoursDeLecture = 0;
                 }
-                
+
+                try {
+                    biblio.recupererMusique();
+//             actualiserInformations();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                actualiserBiblio(biblio);
                 actualiserInformations();
+                monPanel.revalidate();
+
             }
         });
 
@@ -266,7 +265,6 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                     Onglet Musique en cours
          *-------------------------------------------------------------------------------------------------------
          */
-
         final JPanel card1 = new JPanel();
         card1.setBackground(Color.RED);//kvn image
 
@@ -301,19 +299,12 @@ public class DesignMP3 extends Applet implements Observateur {
         txtBibliothèque.setFont(font);
         card2.add(txtBibliothèque);
 
-
-
-
-
-
-
         Font fontBold = new Font("Times New Roman", Font.PLAIN, 16);
 
         maBibli.setFont(fontBold);
 
         JPanel bibli = new JPanel();
         bibli.setLayout(new BoxLayout(bibli, BoxLayout.PAGE_AXIS));
-
 
         bibli.add(txtBibliothèque);
         bibli.add(maBibli);
@@ -324,7 +315,16 @@ public class DesignMP3 extends Applet implements Observateur {
             @Override
             public void actionPerformed(ActionEvent event) {
                 cl.show(content, listContent[1]);
-//                actualiserInformations();
+
+                try {
+                    biblio.recupererMusique();
+//             actualiserInformations();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                actualiserBiblio(biblio);
+                actualiserInformations();
+                monPanel.revalidate();
 
             }
         });
@@ -355,7 +355,6 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                  Finalisation  
          *-------------------------------------------------------------------------------------------------------
          */
-
         content.setLayout(cl);
         content.add(card1, listContent[0]);
         content.add(card2, listContent[1]);
@@ -384,7 +383,6 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                          Titre
          *-------------------------------------------------------------------------------------------------------
          */
-
         actualiserPanelCoteEst(titre, auteur, duree, album, annee, genre, qualite, fontBold, fontBoldG);
         //titre.setText("  Titre:  \n" );
         //titre.setFont(fontBoldG);
@@ -396,7 +394,6 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                          Photo
          *-------------------------------------------------------------------------------------------------------
          */
-
         JLabel img = new JLabel(new ImageIcon("Design/Boutons/imgSon.png"));
         est.add(img);
 
@@ -406,15 +403,12 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                      Informations musique
          *-------------------------------------------------------------------------------------------------------
          */
-
-
         est.add(auteur);
         est.add(duree);
         est.add(album);
         est.add(annee);
         est.add(genre);
         est.add(qualite);
-
 
         this.monPanel.add(est, BorderLayout.EAST);
     }
@@ -453,15 +447,15 @@ public class DesignMP3 extends Applet implements Observateur {
     }
 
     private void actualiserBiblio(Bibliotheque b) {
-
+        System.out.println("actualiserBiblio(Bibliotheque b)");
         maBibli.removeAll();
-        
+
         ArrayList<String> test = new ArrayList<String>();
         test = biblio.label();
 
         for (int i = 0; i < test.size(); i++) {
 
-
+            System.out.println("sa marche");
             maBibli.add(new JButton(test.get(i)));
 
         }
@@ -483,13 +477,13 @@ public class DesignMP3 extends Applet implements Observateur {
 //        }
 //        this.affichageVolume.setText(barresVolume.toString());
 //    }
-
     @Override
     public void actualiserInformations() {
         modifBarreSon();
         modifVolume();
         //afficherVolume();
-        actualiserBiblio(biblio);
+        System.out.println("zerty");
+
         this.barreMusique.setValue(WIDTH);
         tempsTotal.setText(operations.getDuree());
         actualiserPanelCoteEst(titre, auteur, duree, album, annee, genre, qualite, new Font("Times New Roman", Font.PLAIN, 16), new Font("Times New Roman", Font.BOLD, 24));

@@ -30,6 +30,7 @@ public class Bibliotheque {
     }
 
     public void recupererMusique() throws SQLException {
+        this.bibliotheque.clear();
         Operations op = new Operations();
         this.bibliotheque=op.bibliotheque();
         this.notifierObservateursNouveauVolume();
