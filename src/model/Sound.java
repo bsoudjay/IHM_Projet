@@ -30,7 +30,22 @@ public class Sound implements Comparable<Sound> {
     private long tempsRestant;
     
     //constructeur
+    public Sound() {
+        this.titre = "";
+        this.duree = 0L;
+        this.album = "";
+        this.auteur = "";
+        this.qualite = 0;
+        this.annee = "";
+        this.genre = "";
+        
+    }
     public Sound(String path) throws Exception {
+        if(path==null){
+         
+            System.out.println("PROBLEMEEEEEE");
+            
+        }else
         chemin = new File(path);
         //File file = new File(filename);
         InputStream in = (InputStream) new BufferedInputStream(new FileInputStream(chemin));
@@ -54,6 +69,8 @@ public class Sound implements Comparable<Sound> {
         }
 
         
+        
+       
     }
     
     

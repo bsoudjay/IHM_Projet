@@ -30,7 +30,7 @@ public class Fenetre extends JFrame {
     
     DesignMP3 leDesign = new DesignMP3();
     
-    public Fenetre(String text) throws SQLException{
+    public Fenetre(String text) throws SQLException, Exception{
         
         
         this.setTitle(text);
