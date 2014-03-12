@@ -167,6 +167,28 @@ public class Operations {
         }
         return biblio;
     }
+      
+      public ArrayList<String> bibliothequeComplete() {
+        String query = null;
+        query = "SELECT titre, auteur, duree FROM musique";
+       ArrayList<String> biblio = new ArrayList<String>();
+        try {
+            Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ResultSet result = requete.executeQuery(query);
+            while (result.next()) {
+                String title = result.getString(1);
+                String author = result.getString(2);
+                String duration = result.getString(3);
+                biblio.add(title);
+                biblio.add(author);
+                biblio.add(duration);
+            }
+        } catch (Exception e1) {
+            System.out.println("etape 2m2");
+            e1.printStackTrace();
+        }
+        return biblio;
+    }
 
     public int nbEcoute() {
         String query = "SELECT nbecoute FROM musique WHERE titre = '" + this.getTitre() + "'";

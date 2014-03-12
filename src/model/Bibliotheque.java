@@ -35,6 +35,13 @@ public class Bibliotheque {
         this.bibliotheque=op.bibliotheque();
         this.notifierObservateursNouveauVolume();
     }
+    
+    public void recupererMusiqueComplete() throws SQLException {
+        this.bibliotheque.clear();
+        Operations op = new Operations();
+        this.bibliotheque=op.bibliothequeComplete();
+        this.notifierObservateursNouveauVolume();
+    }
 
     public void trierBibliothequeOrdreAlpha() {
 
