@@ -32,6 +32,7 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import model.Bibliotheque;
+import model.Musique;
 import model.Observateur;
 
 /**
@@ -523,14 +524,28 @@ public class DesignMP3 extends Applet implements Observateur {
         System.out.println("actualiserBiblio(Bibliotheque b)");
         maBibli.removeAll();
 
-        ArrayList<String> test = new ArrayList<String>();
+        ArrayList<Musique> test = new ArrayList<Musique>();
         test = biblio.label();
 
         for (int i = 0; i < test.size(); i++) {
 
             System.out.println("sa marche");
-            maBibli.add(new JButton(test.get(i)));
             
+                    
+                    final JButton bou = new JButton(test.get(i).getTitre()+" de "+test.get(i).getAuteur()+" nbEcoute "+test.get(i).getNbEcoute());
+
+                bou.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent event) {
+
+                    System.out.println(bou.getText());
+                    
+                    actualiserInformations();
+                    
+                }
+            
+             });
+            maBibli.add(bou);
         }
 
     }

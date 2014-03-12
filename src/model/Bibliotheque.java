@@ -16,7 +16,7 @@ import java.sql.SQLException;
  */
 public class Bibliotheque {
 
-    private ArrayList<String> bibliotheque;
+    private ArrayList<Musique> bibliotheque;
     private String nom;
     private ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 
@@ -25,7 +25,7 @@ public class Bibliotheque {
        
         this.observateurs = new ArrayList<Observateur>();
         this.nom = nom;
-        this.bibliotheque = new ArrayList<String>();
+        this.bibliotheque = new ArrayList<Musique>();
 
     }
 
@@ -36,20 +36,15 @@ public class Bibliotheque {
         this.notifierObservateursNouveauVolume();
     }
 
-    public void trierBibliothequeOrdreAlpha() {
-
-        Collections.sort(this.bibliotheque);
-
-    }
 
     public int size() {
 
         return this.bibliotheque.size();
     }
 
-    public ArrayList<String> label() {
+    public ArrayList<Musique> label() {
 
-        trierBibliothequeOrdreAlpha();
+      
 
         return this.bibliotheque;
 

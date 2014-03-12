@@ -148,18 +148,24 @@ public class Operations {
         }
     }
     
-      public ArrayList<String> bibliotheque() {
+      public ArrayList<Musique> bibliotheque() {
         String query = null;
-        query = "SELECT titre,auteur FROM musique";
-       ArrayList<String> biblio = new ArrayList<String>();
+        query = "SELECT titre,auteur,album,duree,nbEcoute,genre,chemin FROM musique";
+       ArrayList<Musique> biblio = new ArrayList<Musique>();
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet result = requete.executeQuery(query);
             while (result.next()) {
-                String title = result.getString(1);
-                String auteur = result.getString(2);
-                String chanson=title+" de "+auteur;
-                biblio.add(chanson);
+                String titre2 = result.getString(1);
+                String auteur2 = result.getString(2);
+                String album2 = result.getString(3);
+                String duree2 = result.getString(4);
+                int nbEcoute2 = result.getInt(5);
+                String genre2 = result.getString(6);
+                String chemin2 = result.getString(7);
+               
+                biblio.add(new Musique(titre2,auteur2,album2,duree2,nbEcoute2,genre2,new File(chemin2)));
+                
             }
         } catch (Exception e1) {
             System.out.println("etape 2m");
