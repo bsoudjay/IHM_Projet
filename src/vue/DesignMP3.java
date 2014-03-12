@@ -32,6 +32,7 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import model.Bibliotheque;
+import model.Musique;
 import model.Observateur;
 
 /**
@@ -59,9 +60,14 @@ public class DesignMP3 extends Applet implements Observateur {
     private Bibliotheque biblio;
     public Thread threadLecture;
     public JPanel maBibli;
+    public ArrayList<Musique> test;
+    public int i;
 
-    public DesignMP3() {
 
+    public DesignMP3() throws Exception {
+
+        this.i=0;
+        this.test = new ArrayList<Musique>();
         this.biblio = new Bibliotheque("test");
         this.maBibli = new JPanel();
 
@@ -289,6 +295,8 @@ public class DesignMP3 extends Applet implements Observateur {
 //             actualiserInformations();
                 } catch (SQLException ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 actualiserBiblio(biblio);
@@ -369,6 +377,8 @@ public class DesignMP3 extends Applet implements Observateur {
                     biblio.recupererMusique();
 //             actualiserInformations();
                 } catch (SQLException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 actualiserBiblio(biblio);
@@ -524,17 +534,36 @@ public class DesignMP3 extends Applet implements Observateur {
     }
 
     private void actualiserBiblio(Bibliotheque b) {
-        System.out.println("actualiserBiblio(Bibliotheque b)");
+  
         maBibli.removeAll();
 
-        ArrayList<String> test = new ArrayList<String>();
         test = biblio.label();
 
-        for (int i = 0; i < test.size(); i++) {
+        for (i = 0; i < test.size(); i++) {
 
-            System.out.println("sa marche");
-            maBibli.add(new JButton(test.get(i)));
+   
+                final JButton bou = new JButton(test.get(i).getTitre()+" ---- "+test.get(i).getAuteur()+" --- nbEcoute "+test.get(i).getNbEcoute());
 
+                                 bou.setIconTextGap(i);
+                bou.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent event) {
+
+                   
+                    System.out.println(bou.getIconTextGap());
+                    operations.setTitre(test.get(bou.getIconTextGap()).getTitre());
+                    operations.setAuteur(test.get(bou.getIconTextGap()).getAuteur());
+                    operations.setAlbum(test.get(bou.getIconTextGap()).getAlbum());
+                    operations.setDuree(test.get(bou.getIconTextGap()).getDuree());
+                    operations.setGenre(test.get(bou.getIconTextGap()).getGenre());
+                    operations.setChemin(test.get(bou.getIconTextGap()).getChemin());
+                    
+                    actualiserInformations();
+                    
+                }
+            
+             });
+            maBibli.add(bou);
         }
 
     }
@@ -559,7 +588,6 @@ public class DesignMP3 extends Applet implements Observateur {
         modifBarreSon();
         modifVolume();
         //afficherVolume();
-        System.out.println("zerty");
 
         this.barreMusique.setValue(WIDTH);
         tempsTotal.setText(operations.getDuree());
