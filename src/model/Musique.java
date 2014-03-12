@@ -13,7 +13,7 @@ import java.io.File;
 public class Musique {
     
     private String album;
-    private Long duree;
+    private String duree;
     private String titre;
     private String annee;
     private String genre;
@@ -21,7 +21,7 @@ public class Musique {
     private File chemin;
     private int nbEcoute;
 
-    public Musique(String titre, String auteur, String album, Long duree, int nbEcoute, String genre, File chemin) {
+    public Musique(String titre, String auteur, String album, String duree, int nbEcoute, String genre, File chemin) {
         this.album = album;
         this.duree = duree;
         this.titre = titre;
@@ -40,11 +40,12 @@ public class Musique {
         this.album = album;
     }
 
-    public Long getDuree() {
+    public String getDuree() {
+   
         return duree;
     }
 
-    public void setDuree(Long duree) {
+    public void setDuree(String duree) {
         this.duree = duree;
     }
 

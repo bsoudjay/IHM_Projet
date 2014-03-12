@@ -373,7 +373,7 @@ public class DesignMP3 extends Applet implements Observateur {
                 cl.show(content, listContent[1]);
 
                 try {
-                    biblio.recupererMusiqueComplete();
+                    biblio.recupererMusique();
 //             actualiserInformations();
                 } catch (SQLException ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
@@ -535,33 +535,32 @@ public class DesignMP3 extends Applet implements Observateur {
     private void actualiserBiblio(Bibliotheque b) {
 
         maBibli.removeAll();
-        ArrayList<String> test = new ArrayList<String>();
+         /* ArrayList<String> test = new ArrayList<String>();
         test = operations.bibliothequeComplete();
         
-        for (int i = 0; i < test.size(); i += 3) {
+      for (int i = 0; i < test.size(); i += 3) {
             maBibli.add(new JButton(test.get(i)));
             maBibli.add(new JLabel("Artiste: " + test.get(i + 1)));
             maBibli.add(new JLabel("Duree: " + test.get(i + 2)));
         }
-        
-        /*ArrayList<Musique> test = new ArrayList<Musique>();
-        test = biblio.label();
+         */
+       
+         test = biblio.label();
+         
         for (i = 0; i < test.size(); i++) {
-
-
-            final JButton bou = new JButton(test.get(i).getTitre() + " ---- " + test.get(i).getAuteur() + " --- nbEcoute " + test.get(i).getNbEcoute());
+       
+            final JButton bou = new JButton(test.get(i).getTitre());
 
             bou.setIconTextGap(i);
             bou.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
 
-
-                    System.out.println(bou.getIconTextGap());
                     operations.setTitre(test.get(bou.getIconTextGap()).getTitre());
                     operations.setAuteur(test.get(bou.getIconTextGap()).getAuteur());
-                    operations.setAlbum(test.get(bou.getIconTextGap()).getAlbum());
-                    operations.setDuree(test.get(bou.getIconTextGap()).getDuree());
+                   operations.setAlbum(test.get(bou.getIconTextGap()).getAlbum());
+                    
+                    operations.setDuree(test.get(bou.getIconTextGap()).getDuree()); 
                     operations.setGenre(test.get(bou.getIconTextGap()).getGenre());
                     operations.setChemin(test.get(bou.getIconTextGap()).getChemin());
 
@@ -569,10 +568,14 @@ public class DesignMP3 extends Applet implements Observateur {
 
                 }
             });
-            maBibli.add(bou);*/
+            
+            maBibli.add(bou);
+            maBibli.add(new JLabel("Artiste: " + test.get(bou.getIconTextGap()).getAuteur()));
+            maBibli.add(new JLabel("Duree: " + (test.get(bou.getIconTextGap()).getDuree())));
+
         }
 
-    
+    }
 
     private void modifVolume() {
         this.slide.setValue(this.slide.getValue());
