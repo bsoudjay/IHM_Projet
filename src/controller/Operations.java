@@ -133,7 +133,7 @@ public class Operations {
             while (result.next()) {
                 String chemin = result.getString(1);
                 System.out.println(chemin);
-                Sound s = new Sound("chemin");
+                Sound s = new Sound(chemin);
             }
         } catch (Exception e1) {
 
