@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -189,6 +190,11 @@ public class DesignMP3 extends Applet implements Observateur {
             public void actionPerformed(ActionEvent e) {
                 slide.setValue((slide.getValue() + 10));
                 System.out.println(slide.getValue());
+                try {
+                    operations.augmenterSon();
+                } catch (LineUnavailableException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 actualiserInformations();
             }
         });
@@ -197,6 +203,11 @@ public class DesignMP3 extends Applet implements Observateur {
             public void actionPerformed(ActionEvent e) {
                 slide.setValue((slide.getValue() - 10));
                 System.out.println(slide.getValue());
+                try {
+                    operations.diminuerSon();
+                } catch (LineUnavailableException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 actualiserInformations();
             }
         });

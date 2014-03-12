@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.*;
@@ -31,19 +32,19 @@ public class Operations {
 
     private Sound sound;
     //private Musique musique;
-   private String tempsRestant;
+    private String tempsRestant;
     private Connection con;
     private int volume;
     private DOA doa;
     private ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 
     public Operations() throws SQLException, Exception {
-        
-      
+
+
         // Ilan  
 
         //this.doa = new DOA( "jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
-        
+
 
         //this.doa = new DOA( "jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
 
@@ -100,8 +101,8 @@ public class Operations {
         if (!this.verifier()) {
 
             query = "INSERT INTO musique (titre,auteur,album,duree,genre,chemin) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "','" + this.getDuree() + "','" + this.getGenre() + "','" + chemin_tmp + "')";
-            
-            
+
+
             System.out.println("insertion");
         } else {
             query = "UPDATE musique SET nbecoute = " + (this.nbEcoute() + 1) + " WHERE titre = '" + this.getTitre() + "'";
@@ -139,11 +140,11 @@ public class Operations {
             e1.printStackTrace();
         }
     }
-    
-      public ArrayList<Musique> bibliotheque() {
+
+    public ArrayList<Musique> bibliotheque() {
         String query = null;
         query = "SELECT titre,auteur,album,duree,nbEcoute,genre,chemin FROM musique";
-       ArrayList<Musique> biblio = new ArrayList<Musique>();
+        ArrayList<Musique> biblio = new ArrayList<Musique>();
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet result = requete.executeQuery(query);
@@ -155,9 +156,9 @@ public class Operations {
                 int nbEcoute2 = result.getInt(5);
                 String genre2 = result.getString(6);
                 String chemin2 = result.getString(7);
-               
-                biblio.add(new Musique(titre2,auteur2,album2,duree2,nbEcoute2,genre2,new File(chemin2)));
-                
+
+                biblio.add(new Musique(titre2, auteur2, album2, duree2, nbEcoute2, genre2, new File(chemin2)));
+
             }
         } catch (Exception e1) {
             System.out.println("etape 2m");
@@ -165,11 +166,11 @@ public class Operations {
         }
         return biblio;
     }
-      
-      public ArrayList<String> bibliothequeComplete() {
+
+    public ArrayList<String> bibliothequeComplete() {
         String query = null;
         query = "SELECT titre, auteur, duree FROM musique";
-       ArrayList<String> biblio = new ArrayList<String>();
+        ArrayList<String> biblio = new ArrayList<String>();
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet result = requete.executeQuery(query);
@@ -203,9 +204,14 @@ public class Operations {
         }
         return 0;
     }
-    
-    
- 
+
+    public void augmenterSon() throws LineUnavailableException {
+        sound.augmenterSon();
+    }
+
+    public void diminuerSon() throws LineUnavailableException {
+        sound.diminuerSon();
+    }
 
     public Sound getSound() {
 
@@ -322,11 +328,11 @@ public class Operations {
             return "";
         }
     }
-    
-    public void setChemin(File chemin){
-        
+
+    public void setChemin(File chemin) {
+
         sound.setChemin(chemin);
-        
+
     }
 
     public void setQualite(Integer qualite) {
@@ -346,8 +352,9 @@ public class Operations {
     }
 
     public void setAlbum(String album) {
-            sound.setAlbum(album);
+        sound.setAlbum(album);
     }
+
     public void setAuteur(String auteur) {
         sound.setAuteur(auteur);
     }
