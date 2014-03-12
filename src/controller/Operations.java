@@ -108,6 +108,8 @@ public class Operations {
         if (!this.verifier()) {
 
             query = "INSERT INTO musique (titre,auteur,album,duree,genre,chemin) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "','" + this.getDuree() + "','" + this.getGenre() + "','" + chemin_tmp + "')";
+            
+            
             System.out.println("insertion");
         } else {
             query = "UPDATE musique SET nbecoute = " + (this.nbEcoute() + 1) + " WHERE titre = '" + this.getTitre() + "'";

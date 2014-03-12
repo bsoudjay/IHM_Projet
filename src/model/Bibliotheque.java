@@ -22,6 +22,7 @@ public class Bibliotheque {
 
     public Bibliotheque(String nom) {
 
+       
         this.observateurs = new ArrayList<Observateur>();
         this.nom = nom;
         this.bibliotheque = new ArrayList<String>();

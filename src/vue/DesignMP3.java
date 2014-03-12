@@ -455,6 +455,7 @@ public class DesignMP3 extends Applet implements Observateur {
     private void actualiserBiblio(Bibliotheque b) {
 
         maBibli.removeAll();
+        
         ArrayList<String> test = new ArrayList<String>();
         test = biblio.label();
 
