@@ -33,28 +33,24 @@ public class Operations {
 
     private Sound sound;
     //private Musique musique;
-    private String album;
-    private String duree;
-    private String titre;
-    private String annee;
-    private String genre;
-    private String qualite;
-    private File chemin;
-    private String tempsRestant;
+   private String tempsRestant;
     private Connection con;
     private int volume;
     private DOA doa;
     private ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 
-    public Operations() throws SQLException {
+    public Operations() throws SQLException, Exception {
+        
+      
         // Ilan  
         //this.doa = new DOA( "jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
-
+        
         //kevin
         this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
         if (this.doa.connexion()) {
             this.con = DriverManager.getConnection(doa.getURL(), doa.getUser(), doa.getPassword());
         }
+        sound = new Sound();
     }
 
     public void ouvrirFenetre() throws Exception {
@@ -68,13 +64,6 @@ public class Operations {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File fichierMP3 = fc.getSelectedFile();
             sound = new Sound(fichierMP3.getPath());
-            album = sound.getAlbum();
-            chemin = sound.getChemin();
-            duree = sound.getDuree().toString();
-            titre = sound.getTitre();
-            annee = sound.getAnnee();
-            genre = sound.getGenre();
-            qualite = sound.getQualite().toString();
             tempsRestant = sound.calculerTempsRestant() + "";
             System.out.println("L'auteur est " + sound.getAuteur() + " et le titre est " + sound.getTitre());
 
@@ -159,7 +148,7 @@ public class Operations {
                 String titre2 = result.getString(1);
                 String auteur2 = result.getString(2);
                 String album2 = result.getString(3);
-                String duree2 = result.getString(4);
+                Long duree2 = result.getLong(4);
                 int nbEcoute2 = result.getInt(5);
                 String genre2 = result.getString(6);
                 String chemin2 = result.getString(7);
@@ -189,6 +178,9 @@ public class Operations {
         }
         return 0;
     }
+    
+    
+ 
 
     public Sound getSound() {
 
@@ -267,13 +259,13 @@ public class Operations {
         if (sound != null) {
 
             if (sound.getTitre().isEmpty()) {
-                this.setTitre("Sans Titre");
+                sound.setTitre("Sans Titre");
                 return "Sans Titre";
             }
 
             return sound.getTitre();
         } else {
-            this.setTitre("Sans Titre");
+            sound.setTitre("Sans Titre");
             return "Sans Titre";
         }
     }
@@ -295,7 +287,7 @@ public class Operations {
     }
 
     public void setGenre(String genre) {
-        this.genre = genre;
+        sound.setGenre(genre);
     }
 
     public String getQualite() {
@@ -305,9 +297,15 @@ public class Operations {
             return "";
         }
     }
+    
+    public void setChemin(File chemin){
+        
+        sound.setChemin(chemin);
+        
+    }
 
-    public void setQualite(String qualite) {
-        this.qualite = qualite;
+    public void setQualite(Integer qualite) {
+        sound.setQualite(qualite);
     }
 
     public String getTempsRestant() {
@@ -315,23 +313,26 @@ public class Operations {
     }
 
     public void setTempsRestant(String tempsRestant) {
-        this.tempsRestant = tempsRestant;
+        tempsRestant = tempsRestant;
     }
 
     public void setAnnee(String annee) {
-        this.annee = annee;
+        sound.setAnnee(annee);
     }
 
     public void setAlbum(String album) {
-        this.album = album;
+            sound.setAlbum(album);
+    }
+    public void setAuteur(String auteur) {
+        sound.setAuteur(auteur);
     }
 
-    public void setDuree(String duree) {
-        this.duree = duree;
+    public void setDuree(Long duree) {
+        sound.setDuree(duree);
     }
 
     public void setTitre(String titre) {
-        this.titre = titre;
+        sound.setTitre(titre);
     }
 
     public String calculTempsRestant() {

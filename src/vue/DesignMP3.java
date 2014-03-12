@@ -60,9 +60,13 @@ public class DesignMP3 extends Applet implements Observateur {
     private Bibliotheque biblio;
     public Thread threadLecture;
     public JPanel maBibli;
+    public ArrayList<Musique> test;
+    public int i;
 
-    public DesignMP3() {
+    public DesignMP3() throws Exception {
 
+        this.i=0;
+        this.test = new ArrayList<Musique>();
         this.biblio = new Bibliotheque("test");
         this.maBibli = new JPanel();
 
@@ -291,6 +295,8 @@ public class DesignMP3 extends Applet implements Observateur {
 //             actualiserInformations();
                 } catch (SQLException ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 actualiserBiblio(biblio);
@@ -371,6 +377,8 @@ public class DesignMP3 extends Applet implements Observateur {
                     biblio.recupererMusique();
 //             actualiserInformations();
                 } catch (SQLException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 actualiserBiblio(biblio);
@@ -521,25 +529,30 @@ public class DesignMP3 extends Applet implements Observateur {
     }
 
     private void actualiserBiblio(Bibliotheque b) {
-        System.out.println("actualiserBiblio(Bibliotheque b)");
+  
         maBibli.removeAll();
 
-        ArrayList<Musique> test = new ArrayList<Musique>();
         test = biblio.label();
 
-        for (int i = 0; i < test.size(); i++) {
+        for (i = 0; i < test.size(); i++) {
 
-            System.out.println("sa marche");
-            
-                    
-                    final JButton bou = new JButton(test.get(i).getTitre()+" de "+test.get(i).getAuteur()+" nbEcoute "+test.get(i).getNbEcoute());
+
+                final JButton bou = new JButton(test.get(i).getTitre()+" de "+test.get(i).getAuteur()+" nbEcoute "+test.get(i).getNbEcoute());
 
                 bou.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent event) {
 
                     System.out.println(bou.getText());
+                    System.out.println(test.get(i).getTitre());
+                    operations.setTitre(test.get(i).getTitre());
+                    operations.setAuteur(test.get(i).getAuteur());
+                    operations.setAlbum(test.get(i).getAlbum());
+                    operations.setDuree(test.get(i).getDuree());
                     
+                    operations.setGenre(test.get(i).getGenre());
+                    operations.setChemin(test.get(i).getChemin());
+            
                     actualiserInformations();
                     
                 }

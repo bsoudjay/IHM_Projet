@@ -29,7 +29,7 @@ public class Bibliotheque {
 
     }
 
-    public void recupererMusique() throws SQLException {
+    public void recupererMusique() throws SQLException, Exception {
         this.bibliotheque.clear();
         Operations op = new Operations();
         this.bibliotheque=op.bibliotheque();
