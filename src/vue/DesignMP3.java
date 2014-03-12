@@ -104,7 +104,7 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                      Barre Musique
          *-------------------------------------------------------------------------------------------------------
          */
-        JPanel barreMusiq = new JPanel();
+        ImagePanel barreMusiq = new ImagePanel("bas");
         // barreMusique.setSize(400, 400);
         barreMusiq.setLayout((new BoxLayout(barreMusiq, BoxLayout.LINE_AXIS)));
         barreMusiq.add(tempsRestant);
@@ -127,7 +127,7 @@ public class DesignMP3 extends Applet implements Observateur {
          *-------------------------------------------------------------------------------------------------------
          */
         JPanel lesBoutons = new JPanel();
-        lesBoutons.setLayout((new BoxLayout(lesBoutons, BoxLayout.LINE_AXIS)));
+        //lesBoutons.setLayout((new BoxLayout(lesBoutons, BoxLayout.LINE_AXIS)));
 
         JButton precedent = new JButton(new ImageIcon("Design/Boutons/precedent.png"));
         JButton lecture = new JButton(new ImageIcon("Design/Boutons/lecture.png"));
@@ -160,7 +160,7 @@ public class DesignMP3 extends Applet implements Observateur {
         lesBoutons.add(lecture);
         lesBoutons.add(suivant);
         lesBoutons.add(diminuer);
-        lesBoutons.add(augmenter);
+
 
         //lesBoutons.add(this.affichageVolume);
         //barreSon.setSize(20, 2);
@@ -178,6 +178,8 @@ public class DesignMP3 extends Applet implements Observateur {
         });
         barreSon.add(slide);
         lesBoutons.add(barreSon);
+
+        lesBoutons.add(augmenter);
 
 
 
@@ -243,7 +245,7 @@ public class DesignMP3 extends Applet implements Observateur {
     public void lesOnglets() {
 
         final CardLayout cl = new CardLayout();
-        JPanel lesOnglets = new JPanel();
+        ImagePanel lesOnglets = new ImagePanel("haut");
         Font font = new Font("Courier", Font.BOLD, 26);
         lesOnglets.setLayout(new BoxLayout(lesOnglets, BoxLayout.LINE_AXIS));
         final JPanel content = new JPanel();
@@ -441,8 +443,8 @@ public class DesignMP3 extends Applet implements Observateur {
 
     public void coteEst() {
 
-        JPanel est = new JPanel();
-        est.setLayout(new BoxLayout(est, BoxLayout.PAGE_AXIS));
+        //  JPanel est = new JPanel();
+        ImagePanel est = new ImagePanel("est");
         est.setPreferredSize(new Dimension(250, 1000));
 
         Font fontBoldG = new Font("Times New Roman", Font.BOLD, 24);
@@ -473,12 +475,17 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                      Informations musique
          *-------------------------------------------------------------------------------------------------------
          */
-        est.add(auteur);
-        est.add(duree);
-        est.add(album);
-        est.add(annee);
-        est.add(genre);
-        est.add(qualite);
+        JPanel informations = new JPanel();
+        informations.setLayout(new BoxLayout(informations, BoxLayout.PAGE_AXIS));
+        
+        informations.add(auteur);
+        informations.add(duree);
+        informations.add(album);
+        informations.add(annee);
+        informations.add(genre);
+        informations.add(qualite);
+        
+        est.add(informations);
 
         this.monPanel.add(est, BorderLayout.EAST);
     }
