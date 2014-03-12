@@ -164,8 +164,18 @@ public class Sound implements Comparable<Sound> {
 
             FloatControl gainControl =
                     (FloatControl) line.getControl(FloatControl.Type.VOLUME);
-            System.out.println("Volume avt : " + gainControl.getValue());
-             gainControl.setValue(-10.0f); // Reduce volume by 10 decibels.
+            
+            float min = gainControl.getMinimum();
+            float max = gainControl.getMaximum();
+            float range = max - min;
+            float offsetV = gainControl.getValue()-min;
+            float percent = 0.0f;
+            
+            if (range != 0.0) 
+                percent = offsetV / range;
+            
+            gainControl.setValue(-0.5f); // Reduce volume by 10 decibels.
+             
              System.out.println("Volume apres : " + gainControl.getValue());
             //line.
             
@@ -183,17 +193,14 @@ public class Sound implements Comparable<Sound> {
     public void augmenterSon() {
 
         try {
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(chemin);
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioIn);
+            Line line = AudioSystem.getLine(Port.Info.SPEAKER);
+            line.open();
+
             FloatControl gainControl =
-                    (FloatControl) clip.getControl(FloatControl.Type.VOLUME);
-            gainControl.setValue(gainControl.getValue() + 10.0f); // Reduce volume by 10 decibels.
-            clip.start();
-        } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(Sound.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Sound.class.getName()).log(Level.SEVERE, null, ex);
+                    (FloatControl) line.getControl(FloatControl.Type.VOLUME);
+            System.out.println("Volume avt : " + gainControl.getValue());
+             gainControl.setValue(0.5f); // Reduce volume by 10 decibels.
+             System.out.println("Volume apres : " + gainControl.getValue());
         } catch (LineUnavailableException ex) {
             Logger.getLogger(Sound.class.getName()).log(Level.SEVERE, null, ex);
         }

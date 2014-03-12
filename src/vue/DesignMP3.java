@@ -20,7 +20,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Port;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -182,6 +186,7 @@ public class DesignMP3 extends Applet implements Observateur {
         slide.setMajorTickSpacing(20);
         slide.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
+                setControlFromSlider();
             }
         });
         barreSon.add(slide);
@@ -540,27 +545,27 @@ public class DesignMP3 extends Applet implements Observateur {
         titre.setFont(fontBoldG);
         titre.setText(operations.getTitre());
         titre.setPreferredSize(new Dimension(230, 40));
-        
+
         auteur.setFont(fontBold);
         auteur.setText("Auteur : " + operations.getAuteur());
         auteur.setPreferredSize(new Dimension(230, 40));
-        
+
         duree.setFont(fontBold);
         duree.setText("Durée : " + operations.getDuree());
         duree.setPreferredSize(new Dimension(230, 40));
-        
+
         album.setFont(fontBold);
         album.setText("Album : " + operations.getAlbum());
         album.setPreferredSize(new Dimension(230, 40));
-        
+
         annee.setFont(fontBold);
         annee.setText("Année : " + operations.getAnnee());
         annee.setPreferredSize(new Dimension(230, 40));
-        
+
         genre.setFont(fontBold);
         genre.setText("Genre : " + operations.getGenre());
         genre.setPreferredSize(new Dimension(230, 40));
-        
+
         qualite.setFont(fontBold);
         qualite.setText("Qualité : " + operations.getQualite());
         qualite.setPreferredSize(new Dimension(230, 20));
@@ -653,6 +658,35 @@ public class DesignMP3 extends Applet implements Observateur {
             System.out.println("sa marche");
             maStats.add(new JButton(test.get(i)));
 
+        }
+
+    }
+
+    private void setControlFromSlider() {
+        Line line;
+        try {
+            line = AudioSystem.getLine(Port.Info.SPEAKER);
+            line.open();
+
+            FloatControl gainControl =
+                    (FloatControl) line.getControl(FloatControl.Type.VOLUME);
+
+            int slider_range = slide.getMaximum() - slide.getMinimum();
+            float max = gainControl.getMaximum();
+            float min = gainControl.getMinimum();
+            float range = max - min;
+            // figure out slider percentage
+            float sliderPercentage = (float) slide.getValue() / slider_range;
+            // System.out.println ("new slider value = " + slider.getValue() +
+            //                    ", percentage= " + sliderPercentage);
+            // figure out value for that percentage of range
+            float rangeOffset = sliderPercentage * range;
+            float newValue = rangeOffset + min;
+            // System.out.println ("rangeOffset = " + rangeOffset +
+            //                     ", newValue = " + newValue);
+            gainControl.setValue(newValue);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
