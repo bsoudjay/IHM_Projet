@@ -4,8 +4,11 @@
  */
 package model;
 
+import java.rmi.server.Operation;
 import java.util.ArrayList;
 import java.util.Collections;
+import controller.Operations;
+import java.sql.SQLException;
 
 /**
  *
@@ -13,7 +16,7 @@ import java.util.Collections;
  */
 public class Bibliotheque {
 
-    private ArrayList<Sound> bibliotheque;
+    private ArrayList<String> bibliotheque;
     private String nom;
     private ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 
@@ -21,13 +24,13 @@ public class Bibliotheque {
 
         this.observateurs = new ArrayList<Observateur>();
         this.nom = nom;
-        this.bibliotheque = new ArrayList<Sound>();
+        this.bibliotheque = new ArrayList<String>();
 
     }
 
-    public void ajouterMusique(Sound m) {
-
-        this.bibliotheque.add(m);
+    public void recupererMusique() throws SQLException {
+        Operations op = new Operations();
+        this.bibliotheque=op.bibliotheque();
         this.notifierObservateursNouveauVolume();
     }
 
@@ -42,7 +45,7 @@ public class Bibliotheque {
         return this.bibliotheque.size();
     }
 
-    public ArrayList<Sound> label() {
+    public ArrayList<String> label() {
 
         trierBibliothequeOrdreAlpha();
 

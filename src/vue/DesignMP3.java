@@ -255,7 +255,7 @@ public class DesignMP3 extends Applet implements Observateur {
                     }
                     enCoursDeLecture = 0;
                 }
-                biblio.ajouterMusique(operations.getSound());
+                
                 actualiserInformations();
             }
         });
@@ -455,13 +455,13 @@ public class DesignMP3 extends Applet implements Observateur {
     private void actualiserBiblio(Bibliotheque b) {
 
         maBibli.removeAll();
-        ArrayList<Sound> test = new ArrayList<Sound>();
+        ArrayList<String> test = new ArrayList<String>();
         test = biblio.label();
 
         for (int i = 0; i < test.size(); i++) {
 
 
-            maBibli.add(new JButton(test.get(i).getTitre().toString() + " - " + test.get(i).getAuteur().toString()));
+            maBibli.add(new JButton(test.get(i)));
 
         }
 
