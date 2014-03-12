@@ -32,8 +32,7 @@ public class Fenetre extends JFrame {
     
     public Fenetre(String text) throws SQLException{
         
-      
-
+        
         this.setTitle(text);
         this.setSize(1300,700);       
         Operations op=new Operations();
@@ -46,6 +45,7 @@ public class Fenetre extends JFrame {
         this.getContentPane().add(leDesign.initialisation());
        
         this.setVisible(true); 
+        this.setResizable(true);
         
     }    
 
