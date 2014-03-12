@@ -34,6 +34,7 @@ import javax.swing.event.ChangeListener;
 import model.Bibliotheque;
 import model.Musique;
 import model.Observateur;
+import model.Statistiques;
 
 /**
  *
@@ -61,17 +62,23 @@ public class DesignMP3 extends Applet implements Observateur {
     public JPanel maBibli;
     public ArrayList<Musique> test;
     public int i;
+    private Statistiques stats;
+    public JPanel maStats;
 
     public DesignMP3() throws Exception {
 
+        this.maStats = new JPanel();
+
+        this.stats = new Statistiques("test");
         this.i = 0;
         this.test = new ArrayList<Musique>();
         this.biblio = new Bibliotheque("test");
         this.maBibli = new JPanel();
 
-//        GridLayout gl = new GridLayout(20, 1);
-//        gl.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
-//        gl.setVgap(5);
+        GridLayout gl = new GridLayout(20, 1);
+        gl.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
+        gl.setVgap(5);
+        this.maStats.setLayout(gl);
         this.maBibli.setLayout((new BoxLayout(maBibli, BoxLayout.PAGE_AXIS)));
 
         try {
@@ -139,7 +146,6 @@ public class DesignMP3 extends Applet implements Observateur {
         JButton diminuer = new JButton(new ImageIcon("Design/Boutons/baisserSon.png"));
         JButton augmenter = new JButton(new ImageIcon("Design/Boutons/augmenterSon.png"));
 
-
         precedent.setOpaque(false);
         precedent.setContentAreaFilled(false);
         precedent.setBorderPainted(false);
@@ -165,10 +171,8 @@ public class DesignMP3 extends Applet implements Observateur {
         lesBoutons.add(suivant);
         lesBoutons.add(diminuer);
 
-
         //lesBoutons.add(this.affichageVolume);
         //barreSon.setSize(20, 2);
-
         slide.setMaximum(100);
         slide.setMinimum(0);
         slide.setValue(50);
@@ -184,8 +188,6 @@ public class DesignMP3 extends Applet implements Observateur {
         lesBoutons.add(barreSon);
 
         lesBoutons.add(augmenter);
-
-
 
         augmenter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -272,17 +274,12 @@ public class DesignMP3 extends Applet implements Observateur {
          */
         JButton ajouterMusique = new JButton(new ImageIcon("Design/Boutons/ajoutMusique.png"));
 
-
-
         ajouterMusique.setOpaque(false);
         ajouterMusique.setContentAreaFilled(false);
         ajouterMusique.setBorderPainted(false);
 
-
-
         ajouterMusique.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
 
                 try {
                     operations.ouvrirFenetre();
@@ -356,8 +353,6 @@ public class DesignMP3 extends Applet implements Observateur {
         bibliothèqe.setContentAreaFilled(false);
         bibliothèqe.setBorderPainted(false);
 
-
-
         JLabel txtBibliothèque = new JLabel();
         txtBibliothèque.setLayout(new BoxLayout(txtBibliothèque, BoxLayout.LINE_AXIS));
         txtBibliothèque.setText("<html><body><font color='white'>Bibliothèque</body></html>");
@@ -404,24 +399,40 @@ public class DesignMP3 extends Applet implements Observateur {
          *-------------------------------------------------------------------------------------------------------
          */
         JPanel card3 = new JPanel();
-        card3.setBackground(Color.GRAY);
+        card3.setBackground(Color.BLUE);
         JButton statistiques = new JButton(new ImageIcon("Design/Boutons/MesStat.png"));
 
         statistiques.setOpaque(false);
         statistiques.setContentAreaFilled(false);
         statistiques.setBorderPainted(false);
 
-
-
         JLabel txtStatistiques = new JLabel();
         txtStatistiques.setText("<html><body><font color='white'>Statistiques</body></html>");
         txtStatistiques.setToolTipText(txtStatistiques.getText());
         txtStatistiques.setFont(font);
-        card3.add(txtStatistiques);
+
+        JPanel stat = new JPanel();
+        stat.setLayout(new BoxLayout(stat, BoxLayout.PAGE_AXIS));
+        stat.add(txtStatistiques);
+        stat.add(maStats);
+
+        card3.add(stat);
         statistiques.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 cl.show(content, listContent[2]);
+
+                try {
+                    stats.recupererGenre();
+//             actualiserInformations();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                actualiserStats(stats);
+                actualiserInformations();
+                monPanel.revalidate();
             }
         });
 
@@ -449,7 +460,6 @@ public class DesignMP3 extends Applet implements Observateur {
         content.add(card1, listContent[0]);
         content.add(scroll, listContent[1]);
         content.add(card3, listContent[2]);
-
 
         lesOnglets.add(ajouterMusique);
         lesOnglets.add(musiqueEnCours);
@@ -546,22 +556,22 @@ public class DesignMP3 extends Applet implements Observateur {
     private void actualiserBiblio(Bibliotheque b) {
 
         maBibli.removeAll();
-         /* ArrayList<String> test = new ArrayList<String>();
-        test = operations.bibliothequeComplete();
+        /* ArrayList<String> test = new ArrayList<String>();
+         test = operations.bibliothequeComplete();
         
-        for (int i = 0; i < test.size(); i += 3) {
-            maBibli.add(new JLabel(" "));
-            maBibli.add(new JButton(test.get(i)));
-            maBibli.add(new JLabel("Artiste: " + test.get(i + 1)));
-            maBibli.add(new JLabel("Duree: " + test.get(i + 2)));
-            maBibli.add(new JLabel("  ___________________________________ "));
-        }
+         for (int i = 0; i < test.size(); i += 3) {
+         maBibli.add(new JLabel(" "));
+         maBibli.add(new JButton(test.get(i)));
+         maBibli.add(new JLabel("Artiste: " + test.get(i + 1)));
+         maBibli.add(new JLabel("Duree: " + test.get(i + 2)));
+         maBibli.add(new JLabel("  ___________________________________ "));
+         }
          */
-       
-         test = biblio.label();
-         
+
+        test = biblio.label();
+
         for (i = 0; i < test.size(); i++) {
-       
+
             final JButton bou = new JButton(test.get(i).getTitre());
 
             bou.setIconTextGap(i);
@@ -571,9 +581,9 @@ public class DesignMP3 extends Applet implements Observateur {
 
                     operations.setTitre(test.get(bou.getIconTextGap()).getTitre());
                     operations.setAuteur(test.get(bou.getIconTextGap()).getAuteur());
-                   operations.setAlbum(test.get(bou.getIconTextGap()).getAlbum());
-                    
-                    operations.setDuree(test.get(bou.getIconTextGap()).getDuree()); 
+                    operations.setAlbum(test.get(bou.getIconTextGap()).getAlbum());
+
+                    operations.setDuree(test.get(bou.getIconTextGap()).getDuree());
                     operations.setGenre(test.get(bou.getIconTextGap()).getGenre());
                     operations.setChemin(test.get(bou.getIconTextGap()).getChemin());
 
@@ -581,7 +591,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
                 }
             });
-            
+
             maBibli.add(bou);
             maBibli.add(new JLabel("Artiste: " + test.get(bou.getIconTextGap()).getAuteur()));
             maBibli.add(new JLabel("Duree: " + (test.get(bou.getIconTextGap()).getDuree())));
@@ -616,6 +626,21 @@ public class DesignMP3 extends Applet implements Observateur {
         actualiserPanelCoteEst(titre, auteur, duree, album, annee, genre, qualite, new Font("Times New Roman", Font.PLAIN, 16), new Font("Times New Roman", Font.BOLD, 24));
         this.monPanel.revalidate();
         System.out.println("mis a jour du panel");
+
+    }
+
+    private void actualiserStats(Statistiques s) {
+        maStats.removeAll();
+
+        ArrayList<String> test = new ArrayList<String>();
+        test = stats.label();
+
+        for (int i = 0; i < test.size(); i++) {
+
+            System.out.println("sa marche");
+            maStats.add(new JButton(test.get(i)));
+
+        }
 
     }
 }
