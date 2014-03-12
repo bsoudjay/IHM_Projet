@@ -4,6 +4,7 @@
  */
 package controller;
 
+import model.Sound;
 import BDD.DOA;
 import java.io.File;
 import java.sql.Connection;

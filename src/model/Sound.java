@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 import javazoom.jl.player.advanced.*;
 import java.io.*;

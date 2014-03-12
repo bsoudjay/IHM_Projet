@@ -4,7 +4,7 @@
  */
 
 
-import controller.Sound;
+import model.Sound;
 import vue.DesignMP3;
 import vue.Fenetre;
 

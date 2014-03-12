@@ -4,7 +4,6 @@
  */
 package model;
 
-import controller.Sound;
 import java.util.ArrayList;
 import java.util.Collections;
 
