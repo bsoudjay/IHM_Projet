@@ -50,7 +50,7 @@ public class Operations {
 
 
         //kevin
-        this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
+         this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
         if (this.doa.connexion()) {
             this.con = DriverManager.getConnection(doa.getURL(), doa.getUser(), doa.getPassword());
         }
@@ -136,7 +136,7 @@ public class Operations {
                 Sound s = new Sound("chemin");
             }
         } catch (Exception e1) {
-            System.out.println("etape 2m");
+
             e1.printStackTrace();
         }
     }
@@ -152,7 +152,7 @@ public class Operations {
                 String titre2 = result.getString(1);
                 String auteur2 = result.getString(2);
                 String album2 = result.getString(3);
-                Long duree2 = result.getLong(4);
+                String duree2 = result.getString(4);
                 int nbEcoute2 = result.getInt(5);
                 String genre2 = result.getString(6);
                 String chemin2 = result.getString(7);
@@ -161,7 +161,7 @@ public class Operations {
 
             }
         } catch (Exception e1) {
-            System.out.println("etape 2m");
+            
             e1.printStackTrace();
         }
         return biblio;
@@ -183,7 +183,7 @@ public class Operations {
                 biblio.add(duration);
             }
         } catch (Exception e1) {
-            System.out.println("etape 2m2");
+     
             e1.printStackTrace();
         }
         return biblio;
@@ -359,9 +359,10 @@ public class Operations {
         sound.setAuteur(auteur);
     }
 
-    public void setDuree(Long duree) {
-        sound.setDuree(duree);
-    }
+    public void setDuree(String duree) {
+        try {
+        sound.setDuree(Long.parseLong(duree));} catch (NumberFormatException nfe) {System.out.println("NumberFormatException: " + nfe.getMessage());
+     }}
 
     public void setTitre(String titre) {
         sound.setTitre(titre);
