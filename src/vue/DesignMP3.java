@@ -135,34 +135,35 @@ public class DesignMP3 extends Applet implements Observateur {
         JButton diminuer = new JButton(new ImageIcon("Design/Boutons/baisserSon.png"));
         JButton augmenter = new JButton(new ImageIcon("Design/Boutons/augmenterSon.png"));
 
-        
+
         precedent.setOpaque(false);
         precedent.setContentAreaFilled(false);
         precedent.setBorderPainted(false);
-        
+
         lecture.setOpaque(false);
         lecture.setContentAreaFilled(false);
         lecture.setBorderPainted(false);
-        
+
         suivant.setOpaque(false);
         suivant.setContentAreaFilled(false);
         suivant.setBorderPainted(false);
-        
+
         diminuer.setOpaque(false);
         diminuer.setContentAreaFilled(false);
         diminuer.setBorderPainted(false);
-        
+
         augmenter.setOpaque(false);
         augmenter.setContentAreaFilled(false);
         augmenter.setBorderPainted(false);
-        
+
         lesBoutons.add(precedent);
         lesBoutons.add(lecture);
         lesBoutons.add(suivant);
         lesBoutons.add(diminuer);
+        lesBoutons.add(augmenter);
 
         //lesBoutons.add(this.affichageVolume);
-        barreSon.setSize(20, 2);
+        //barreSon.setSize(20, 2);
 
         slide.setMaximum(100);
         slide.setMinimum(0);
@@ -178,7 +179,7 @@ public class DesignMP3 extends Applet implements Observateur {
         barreSon.add(slide);
         lesBoutons.add(barreSon);
 
-        lesBoutons.add(augmenter);
+
 
         augmenter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -253,24 +254,20 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                     Ajout de musique
          *-------------------------------------------------------------------------------------------------------
          */
-         JButton ajouterMusique = new JButton(new ImageIcon("Design/Boutons/ajoutMusique.png"));
-        
-        
-
-    ajouterMusique.setOpaque(false);
-    ajouterMusique.setContentAreaFilled(false);
-    ajouterMusique.setBorderPainted(false);
+        JButton ajouterMusique = new JButton(new ImageIcon("Design/Boutons/ajoutMusique.png"));
 
 
-        
+
+        ajouterMusique.setOpaque(false);
+        ajouterMusique.setContentAreaFilled(false);
+        ajouterMusique.setBorderPainted(false);
+
+
+
         ajouterMusique.addActionListener(new ActionListener() {
-            
-
-            
-            
             public void actionPerformed(ActionEvent e) {
-                
-                
+
+
                 try {
                     operations.ouvrirFenetre();
                 } catch (Exception ex) {
@@ -311,9 +308,9 @@ public class DesignMP3 extends Applet implements Observateur {
         JButton musiqueEnCours = new JButton(new ImageIcon("Design/Boutons/lectureEnCours.png"));
 
         musiqueEnCours.setOpaque(false);
-    musiqueEnCours.setContentAreaFilled(false);
-    musiqueEnCours.setBorderPainted(false);
-        
+        musiqueEnCours.setContentAreaFilled(false);
+        musiqueEnCours.setBorderPainted(false);
+
         JLabel txtMusiqueEnCours = new JLabel();
         txtMusiqueEnCours.setText("<html><body><font color='white'>Musique en cours</body></html>");
         txtMusiqueEnCours.setToolTipText(txtMusiqueEnCours.getText());
@@ -332,19 +329,19 @@ public class DesignMP3 extends Applet implements Observateur {
          *-------------------------------------------------------------------------------------------------------
          */
         JPanel card2 = new JPanel();
-        card2.setBackground(Color.GREEN);
+        card2.setBackground(Color.GRAY);
 
         JButton bibliothèqe = new JButton(new ImageIcon("Design/Boutons/MaBibli.png"));
 
-            bibliothèqe.setOpaque(false);
-    bibliothèqe.setContentAreaFilled(false);
-    bibliothèqe.setBorderPainted(false);
-    
-        
-        
+        bibliothèqe.setOpaque(false);
+        bibliothèqe.setContentAreaFilled(false);
+        bibliothèqe.setBorderPainted(false);
+
+
+
         JLabel txtBibliothèque = new JLabel();
         txtBibliothèque.setLayout(new BoxLayout(txtBibliothèque, BoxLayout.LINE_AXIS));
-        txtBibliothèque.setText("<html><body><font color='black'>Bibliothèque</body></html>");
+        txtBibliothèque.setText("<html><body><font color='white'>Bibliothèque</body></html>");
         txtBibliothèque.setToolTipText(txtBibliothèque.getText());
         txtBibliothèque.setFont(font);
         card2.add(txtBibliothèque);
@@ -388,12 +385,12 @@ public class DesignMP3 extends Applet implements Observateur {
         card3.setBackground(Color.BLUE);
         JButton statistiques = new JButton(new ImageIcon("Design/Boutons/MesStat.png"));
 
-                    statistiques.setOpaque(false);
-    statistiques.setContentAreaFilled(false);
-    statistiques.setBorderPainted(false);
-    
-        
-        
+        statistiques.setOpaque(false);
+        statistiques.setContentAreaFilled(false);
+        statistiques.setBorderPainted(false);
+
+
+
         JLabel txtStatistiques = new JLabel();
         txtStatistiques.setText("<html><body><font color='white'>Statistiques</body></html>");
         txtStatistiques.setToolTipText(txtStatistiques.getText());
@@ -406,21 +403,21 @@ public class DesignMP3 extends Applet implements Observateur {
             }
         });
 
-               /*
+        /*
          *-------------------------------------------------------------------------------------------------------
          *                                      Barre de recherche
          *-------------------------------------------------------------------------------------------------------
          */
         final JTextField recherche = new JTextField("Recherche");
-        
-        recherche.addMouseListener(new MouseAdapter(){
+
+        recherche.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e){
+            public void mouseClicked(MouseEvent e) {
                 recherche.setText("");
             }
         });
-        
-        
+
+
         /*
          *-------------------------------------------------------------------------------------------------------
          *                                  Finalisation  
@@ -430,7 +427,7 @@ public class DesignMP3 extends Applet implements Observateur {
         content.add(card1, listContent[0]);
         content.add(card2, listContent[1]);
         content.add(card3, listContent[2]);
-        
+
 
         lesOnglets.add(ajouterMusique);
         lesOnglets.add(musiqueEnCours);
@@ -445,8 +442,8 @@ public class DesignMP3 extends Applet implements Observateur {
     public void coteEst() {
 
         JPanel est = new JPanel();
-        est.setMaximumSize(new Dimension(100, 100));
         est.setLayout(new BoxLayout(est, BoxLayout.PAGE_AXIS));
+        est.setPreferredSize(new Dimension(250, 1000));
 
         Font fontBoldG = new Font("Times New Roman", Font.BOLD, 24);
         Font fontBold = new Font("Times New Roman", Font.PLAIN, 16);
@@ -530,7 +527,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
             System.out.println("sa marche");
             maBibli.add(new JButton(test.get(i)));
-            
+
         }
 
     }
