@@ -103,13 +103,13 @@ public class Operations {
 
     public void ajouterBDD() throws FileNotFoundException {
         String query = null;
-         String chemin_tmp=this.getChemin().toString();
-         chemin_tmp=chemin_tmp.replace("\\", "\\\\"); 
+        String chemin_tmp = this.getChemin().toString();
+        chemin_tmp = chemin_tmp.replace("\\", "\\\\");
         if (!this.verifier()) {
-           
+
             query = "INSERT INTO musique (titre,auteur,album,duree,genre,chemin) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "','" + this.getDuree() + "','" + this.getGenre() + "','" + chemin_tmp + "')";
             System.out.println("insertion");
-        } else{
+        } else {
             query = "UPDATE musique SET nbecoute = " + (this.nbEcoute() + 1) + " WHERE titre = '" + this.getTitre() + "'";
             System.out.println("mise à jour");
         }
@@ -125,11 +125,11 @@ public class Operations {
             e1.printStackTrace();
         }
     }
-    
+
     public void reecouterMusic(String titre) {
         String query = null;
-            query = "SELECT chemin FROM musique WHERE titre = '"+titre+"'";
-            System.out.println("mise à jour");
+        query = "SELECT chemin FROM musique WHERE titre = '" + titre + "'";
+        System.out.println("mise à jour");
         System.out.println("etape 1");
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
@@ -138,14 +138,14 @@ public class Operations {
             while (result.next()) {
                 String chemin = result.getString(1);
                 System.out.println(chemin);
-                Sound s = new Sound ("chemin");
+                Sound s = new Sound("chemin");
             }
         } catch (Exception e1) {
             System.out.println("etape 2m");
             e1.printStackTrace();
         }
     }
-    
+
     public int nbEcoute() {
         String query = "SELECT nbecoute FROM musique WHERE titre = '" + this.getTitre() + "'";
         try {
