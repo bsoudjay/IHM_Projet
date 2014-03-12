@@ -407,4 +407,24 @@ public class Operations {
             this.observateurs.get(i).actualiserInformations();
         }
     }
+        public ArrayList<String> bibliothequeGenre() {
+        String query = null;
+        query = "SELECT genre FROM musique";
+        ArrayList<String> biblio = new ArrayList<String>();
+        try {
+            Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ResultSet result = requete.executeQuery(query);
+            while (result.next()) {
+                String genre = result.getString(1);
+                if (!biblio.contains(genre)) {
+                    biblio.add(genre);
+                }
+
+            }
+        } catch (Exception e1) {
+            System.out.println("etape 2m");
+            e1.printStackTrace();
+        }
+        return biblio;
+    }
 }
