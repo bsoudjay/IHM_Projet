@@ -133,6 +133,7 @@ public class Operations {
         query = "SELECT chemin FROM musique WHERE titre = '" + titre + "'";
         System.out.println("mise à jour");
         System.out.println("etape 1");
+        Sound s=null;
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             System.out.println("test");
@@ -140,7 +141,8 @@ public class Operations {
             while (result.next()) {
                 String chemin = result.getString(1);
                 System.out.println(chemin);
-                Sound s = new Sound("chemin");
+                s = new Sound(chemin);
+                
             }
         } catch (Exception e1) {
             System.out.println("etape 2m");
@@ -150,16 +152,14 @@ public class Operations {
     
       public ArrayList<String> bibliotheque() {
         String query = null;
-        query = "SELECT titre,auteur FROM musique";
+        query = "SELECT titre FROM musique";
        ArrayList<String> biblio = new ArrayList<String>();
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet result = requete.executeQuery(query);
             while (result.next()) {
                 String title = result.getString(1);
-                String auteur = result.getString(2);
-                String chanson=title+" de "+auteur;
-                biblio.add(chanson);
+                biblio.add(title);
             }
         } catch (Exception e1) {
             System.out.println("etape 2m");
