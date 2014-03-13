@@ -558,6 +558,33 @@ public class DesignMP3 extends Applet implements Observateur {
             cancelled = true;
         }
     }
+    
+    class PlaySoundBouton implements Runnable {
+
+        private Sound s;
+
+        public PlaySoundBouton(Sound s) {
+            this.s = s;
+        }
+
+        public void lireMusique() throws Exception {
+            this.s.play();
+            actualiserInformations();
+        }
+
+        @Override
+        public void run() {
+            try {
+                lireMusique();
+                System.out.println("ca roule => lecture en cours");
+            } catch (Exception ex) {
+                System.out.println("la grosse merdee -> veut pas lire");
+            }
+            actualiserInformations();
+            System.out.println("thread");
+        }
+    }
+
 
     private void actualiserPanelCoteEst(JLabel titre, JLabel auteur, JLabel duree, JLabel album, JLabel annee, JLabel genre, JLabel qualite, Font fontBold, Font fontBoldG) {
         titre.setFont(fontBoldG);
@@ -625,10 +652,9 @@ public class DesignMP3 extends Applet implements Observateur {
 
                     String chemin2 = operations.reecouterMusic(test.get(bou.getIconTextGap()).getTitre());
                     try {
-                        s = new Sound(chemin2);
-                        threadLecture = new Thread(new PlaySound());
+                         s = new Sound(chemin2);
+                        threadLecture = new Thread(new PlaySoundBouton(s));
                         threadLecture.start();
-                        //s.play();
                     } catch (Exception ex) {
                         Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                     }
