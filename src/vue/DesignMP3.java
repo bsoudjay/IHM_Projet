@@ -462,6 +462,13 @@ public class DesignMP3 extends Applet implements Observateur {
                 recherche.setText("");
             }
         });
+        
+        recherche.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
 
 
         /*
