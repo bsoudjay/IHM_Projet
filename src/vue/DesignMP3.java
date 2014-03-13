@@ -66,6 +66,7 @@ public class DesignMP3 extends Applet implements Observateur {
     public Thread threadLecture;
     public JPanel maBibli;
     public ArrayList<Musique> test;
+    public ArrayList<Musique> statsAfiiche;
     public ArrayList<String> test2;
     public int i;
     public int jstats;
@@ -699,6 +700,10 @@ public class DesignMP3 extends Applet implements Observateur {
                     String genre = (test2.get(bou2.getIconTextGap()));
                     System.out.println(genre);
                     maStats.removeAll();
+                    statsAfiiche=operations.statsNbEcoute(genre);
+                    for(int j=0;j<statsAfiiche.size();j++){
+                        System.out.println(statsAfiiche.get(j).toString());
+                    }
                     
                 }
             });

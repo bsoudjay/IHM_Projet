@@ -70,7 +70,12 @@ public class Musique {
     public void setAnnee(String annee) {
         this.annee = annee;
     }
-
+    
+    @Override
+    public String toString(){
+        String tmp="titre : "+this.titre+" , auteur : "+this.auteur+" , nb d'ecoute :"+this.nbEcoute;
+        return tmp;
+    }
     public String getGenre() {
         return genre;
     }
