@@ -52,7 +52,7 @@ public class Operations {
 
         //kevin
          this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
-        this.doa = new DOA("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
+        //this.doa = new DOA("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
 
 
         //this.doa = new DOA( "jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");

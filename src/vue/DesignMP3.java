@@ -70,8 +70,9 @@ public class DesignMP3 extends Applet implements Observateur {
     public int i;
     public int jstats;
     private Statistiques stats;
-    private  Sound s;
+    private Sound s;
     public JPanel maStats;
+    public boolean toto;
 
     public DesignMP3() throws Exception {
 
@@ -229,7 +230,7 @@ public class DesignMP3 extends Applet implements Observateur {
                 // operations.ajouterBDD();
                 threadLecture = new Thread(new PlaySound());
                 threadLecture.start();
-                if(operations.getMusiqueLancee() ==1){
+                if (operations.getMusiqueLancee() == 1) {
                     threadLecture.destroy();
                 }
                 actualiserInformations();
@@ -621,8 +622,8 @@ public class DesignMP3 extends Applet implements Observateur {
                     operations.setDuree(test.get(bou.getIconTextGap()).getDuree());
                     operations.setGenre(test.get(bou.getIconTextGap()).getGenre());
                     operations.setChemin(test.get(bou.getIconTextGap()).getChemin());
-                    
-                    String chemin2=operations.reecouterMusic(test.get(bou.getIconTextGap()).getTitre());
+
+                    String chemin2 = operations.reecouterMusic(test.get(bou.getIconTextGap()).getTitre());
                     try {
                         s = new Sound(chemin2);
                         threadLecture = new Thread(new PlaySound());
@@ -631,7 +632,7 @@ public class DesignMP3 extends Applet implements Observateur {
                     } catch (Exception ex) {
                         Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
+
                     actualiserInformations();
 
                 }
@@ -674,8 +675,8 @@ public class DesignMP3 extends Applet implements Observateur {
 
     }
 
-     private void actualiserStats(Statistiques s) {
-         maStats.removeAll();
+    private void actualiserStats(Statistiques s) {
+        maStats.removeAll();
         /* ArrayList<String> test = new ArrayList<String>();
          test = operations.bibliothequeComplete();
         
@@ -689,29 +690,28 @@ public class DesignMP3 extends Applet implements Observateur {
          */
 
         test2 = stats.label();
-       
+        toto = false;
         for (jstats = 0; jstats < test2.size(); jstats++) {
-
+            
             maStats.add(new JButton(test2.get(jstats)));
-             final JButton bou = new JButton(test2.get(jstats));
+            final JButton bou = new JButton(test2.get(jstats));
             bou.setIconTextGap(jstats);
             bou.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-
-                    String genre=(test2.get(jstats));
-
-                    actualiserInformations();
-
+                    System.out.println("kjnbfkdjnfkjsdnfkjsdnfkjsdnf");
+                    String genre = (test2.get(jstats));
+                    toto=true;
                 }
             });
-
-            
+            System.out.println(toto);
+            if(toto == true){
+                maStats.removeAll();
+            }
 
         }
 
     }
-
 
     private void setControlFromSlider() {
         Line line;
@@ -719,8 +719,8 @@ public class DesignMP3 extends Applet implements Observateur {
             line = AudioSystem.getLine(Port.Info.SPEAKER);
             line.open();
 
-            FloatControl gainControl =
-                    (FloatControl) line.getControl(FloatControl.Type.VOLUME);
+            FloatControl gainControl
+                    = (FloatControl) line.getControl(FloatControl.Type.VOLUME);
 
             int slider_range = slide.getMaximum() - slide.getMinimum();
             float max = gainControl.getMaximum();
