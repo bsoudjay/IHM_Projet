@@ -4,6 +4,7 @@
  */
 package vue;
 
+import vue.*;
 import controller.*;
 import java.applet.Applet;
 import java.awt.BorderLayout;
@@ -463,7 +464,7 @@ public class DesignMP3 extends Applet implements Observateur {
                 recherche.setText("");
             }
         });
-        
+
 
         /*
          *-------------------------------------------------------------------------------------------------------
@@ -480,11 +481,11 @@ public class DesignMP3 extends Applet implements Observateur {
         lesOnglets.add(bibliothèqe);
         lesOnglets.add(statistiques);
         lesOnglets.add(recherche);
-        
+
         JButton research = new JButton("Lancer la recherhce");
-        
+
         lesOnglets.add(research);
-        
+
         research.addActionListener(new ActionListener() {
 
             @Override
@@ -493,7 +494,7 @@ public class DesignMP3 extends Applet implements Observateur {
                 contenuRecherche = recherche.getText();
                 ArrayList<Musique> a = new ArrayList<Musique>();
                 a = operations.recherche(contenuRecherche);
-                for(Musique c : a){
+                for (Musique c : a) {
                     System.out.println("dedans");
                     System.out.println(c);
                 }
@@ -578,7 +579,7 @@ public class DesignMP3 extends Applet implements Observateur {
             cancelled = true;
         }
     }
-    
+
     class PlaySoundBouton implements Runnable {
 
         private Sound s;
@@ -604,7 +605,6 @@ public class DesignMP3 extends Applet implements Observateur {
             System.out.println("thread");
         }
     }
-
 
     private void actualiserPanelCoteEst(JLabel titre, JLabel auteur, JLabel duree, JLabel album, JLabel annee, JLabel genre, JLabel qualite, Font fontBold, Font fontBoldG) {
         titre.setFont(fontBoldG);
@@ -672,7 +672,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
                     String chemin2 = operations.reecouterMusic(test.get(bou.getIconTextGap()).getTitre());
                     try {
-                         s = new Sound(chemin2);
+                        s = new Sound(chemin2);
                         threadLecture = new Thread(new PlaySoundBouton(s));
                         threadLecture.start();
                     } catch (Exception ex) {
@@ -737,7 +737,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         test2 = stats.label();
         for (jstats = 0; jstats < test2.size(); jstats++) {
-            
+
             final JButton bou2 = new JButton(test2.get(jstats));
             bou2.setIconTextGap(jstats);
             bou2.addActionListener(new ActionListener() {
@@ -746,11 +746,11 @@ public class DesignMP3 extends Applet implements Observateur {
                     String genre = (test2.get(bou2.getIconTextGap()));
                     System.out.println(genre);
                     maStats.removeAll();
-                    statsAfiiche=operations.statsNbEcoute(genre);
-                    for(int j=0;j<statsAfiiche.size();j++){
-                        System.out.println(statsAfiiche.get(j).toString());
-                    }
-                    
+                    statsAfiiche = operations.statsNbEcoute(genre);
+                    statsGraphe s = new statsGraphe("Stat", "Les stats de "+genre,statsAfiiche);
+                    s.pack();
+                    s.setVisible(true);
+
                 }
             });
             maStats.add(bou2);
