@@ -38,6 +38,7 @@ import javax.swing.event.ChangeListener;
 import model.Bibliotheque;
 import model.Musique;
 import model.Observateur;
+import model.Sound;
 import model.Statistiques;
 
 /**
@@ -67,6 +68,7 @@ public class DesignMP3 extends Applet implements Observateur {
     public ArrayList<Musique> test;
     public int i;
     private Statistiques stats;
+    private  Sound s;
     public JPanel maStats;
 
     public DesignMP3() throws Exception {
@@ -616,7 +618,15 @@ public class DesignMP3 extends Applet implements Observateur {
                     operations.setDuree(test.get(bou.getIconTextGap()).getDuree());
                     operations.setGenre(test.get(bou.getIconTextGap()).getGenre());
                     operations.setChemin(test.get(bou.getIconTextGap()).getChemin());
-
+                    
+                    String chemin2=operations.reecouterMusic(test.get(bou.getIconTextGap()).getTitre());
+                    try {
+                        s = new Sound(chemin2);
+                        s.play();
+                    } catch (Exception ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
                     actualiserInformations();
 
                 }
