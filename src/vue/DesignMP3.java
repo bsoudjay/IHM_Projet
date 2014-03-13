@@ -73,6 +73,7 @@ public class DesignMP3 extends Applet implements Observateur {
     private Statistiques stats;
     private Sound s;
     public JPanel maStats;
+    private String contenuRecherche;
 
     public DesignMP3() throws Exception {
 
@@ -463,13 +464,6 @@ public class DesignMP3 extends Applet implements Observateur {
             }
         });
         
-        recherche.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-            }
-        });
-
 
         /*
          *-------------------------------------------------------------------------------------------------------
@@ -486,6 +480,25 @@ public class DesignMP3 extends Applet implements Observateur {
         lesOnglets.add(bibliothèqe);
         lesOnglets.add(statistiques);
         lesOnglets.add(recherche);
+        
+        JButton research = new JButton("Lancer la recherhce");
+        
+        lesOnglets.add(research);
+        
+        research.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("debut recherhce");
+                contenuRecherche = recherche.getText();
+                ArrayList<Musique> a = new ArrayList<Musique>();
+                a = operations.recherche(contenuRecherche);
+                for(Musique c : a){
+                    System.out.println("dedans");
+                    System.out.println(c);
+                }
+            }
+        });
 
         monPanel.add(lesOnglets, BorderLayout.NORTH);
         monPanel.add(content, BorderLayout.CENTER);

@@ -44,15 +44,7 @@ public class Operations {
 
         // Ilan  
 
-        //this.doa = new DOA("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
-
-
-        //this.doa = new DOA( "jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
-
-
-        //kevin
-         this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
-        //this.doa = new DOA("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
+       //this.doa = new DOA("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
 
 
         //this.doa = new DOA( "jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
@@ -60,6 +52,14 @@ public class Operations {
 
         //kevin
          //this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
+        //this.doa = new DOA("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
+
+
+        //this.doa = new DOA( "jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
+
+
+        //kevin
+        this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
         if (this.doa.connexion()) {
             this.con = DriverManager.getConnection(doa.getURL(), doa.getUser(), doa.getPassword());
         }
@@ -86,6 +86,28 @@ public class Operations {
         doa.connexion();
         this.ajouterBDD();
 
+    }
+    
+    public ArrayList<Musique> recherche(String contenu){
+        ArrayList<Musique> maRecherche = new ArrayList<Musique>();
+        String query = "SELECT * FROM musique WHERE titre LIKE '%" + contenu + "%' OR auteur = '%" + contenu+ "%'";
+        try {
+            Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ResultSet result = requete.executeQuery(query);
+            while (result.next()) {
+               String titre2 = result.getString(1);
+                String auteur2 = result.getString(2);
+                String album2 = result.getString(3);
+                String duree2 = result.getString(4);
+                int nbEcoute2 = result.getInt(5);
+                String genre2 = result.getString(6);
+                String chemin2 = result.getString(7);
+                maRecherche.add(new Musique(titre2, auteur2, album2, duree2, nbEcoute2, genre2, new File(chemin2)));
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return maRecherche;
     }
 
     public int getMusiqueLancee() {
