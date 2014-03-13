@@ -1,5 +1,6 @@
 package model;
 
+import controller.Operations;
 import javazoom.jl.player.advanced.*;
 import java.io.*;
 import java.sql.Connection;
@@ -16,6 +17,7 @@ import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Port;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javazoom.jl.decoder.JavaLayerException;
 import org.tritonus.share.sampled.file.TAudioFileFormat;
 
 // MP3, WMA, MPEG, WAV compatible
@@ -33,6 +35,7 @@ public class Sound implements Comparable<Sound> {
     private boolean isPlaying = false;
     private AdvancedPlayer player = null;
     private long tempsRestant;
+    private Operations operations;
 
     //constructeur
     public Sound() {
@@ -74,10 +77,10 @@ public class Sound implements Comparable<Sound> {
         } else {
             throw new UnsupportedAudioFileException();
         }
+    }
 
-
-
-
+    public void setPlayer(InputStream in) throws JavaLayerException {
+        player = new AdvancedPlayer(in);
     }
 
     public File getChemin() {
@@ -164,21 +167,22 @@ public class Sound implements Comparable<Sound> {
 
             FloatControl gainControl =
                     (FloatControl) line.getControl(FloatControl.Type.VOLUME);
-            
+
             float min = gainControl.getMinimum();
             float max = gainControl.getMaximum();
             float range = max - min;
-            float offsetV = gainControl.getValue()-min;
+            float offsetV = gainControl.getValue() - min;
             float percent = 0.0f;
-            
-            if (range != 0.0) 
+
+            if (range != 0.0) {
                 percent = offsetV / range;
-            
+            }
+
             gainControl.setValue(-0.5f); // Reduce volume by 10 decibels.
-             
-             System.out.println("Volume apres : " + gainControl.getValue());
+
+            System.out.println("Volume apres : " + gainControl.getValue());
             //line.
-            
+
             /*
              * Volume mute
              * BooleanControl muteControl = (BooleanControl) line.getControl(BooleanControl.Type.MUTE);
@@ -199,8 +203,8 @@ public class Sound implements Comparable<Sound> {
             FloatControl gainControl =
                     (FloatControl) line.getControl(FloatControl.Type.VOLUME);
             System.out.println("Volume avt : " + gainControl.getValue());
-             gainControl.setValue(0.5f); // Reduce volume by 10 decibels.
-             System.out.println("Volume apres : " + gainControl.getValue());
+            gainControl.setValue(0.5f); // Reduce volume by 10 decibels.
+            System.out.println("Volume apres : " + gainControl.getValue());
         } catch (LineUnavailableException ex) {
             Logger.getLogger(Sound.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -228,6 +232,7 @@ public class Sound implements Comparable<Sound> {
     public void play(int begin, int end) throws Exception {
         if (player != null) {
             isPlaying = true;
+            operations.setMusiqueLancee(1);
             player.play(begin, end);
         }
     }
@@ -235,6 +240,7 @@ public class Sound implements Comparable<Sound> {
     public void stop() throws Exception {
         if (player != null) {
             isPlaying = false;
+            operations.setMusiqueLancee(2);
             player.stop();
         }
     }

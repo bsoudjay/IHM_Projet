@@ -31,6 +31,7 @@ import vue.DesignMP3;
 public class Operations {
 
     private Sound sound;
+    private int musiqueLancee = 0;
     //private Musique musique;
     private String tempsRestant;
     private Connection con;
@@ -43,14 +44,14 @@ public class Operations {
 
         // Ilan  
 
-        //this.doa = new DOA( "jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
+        this.doa = new DOA("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
 
 
         //this.doa = new DOA( "jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
 
 
         //kevin
-         this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
+        // this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
         if (this.doa.connexion()) {
             this.con = DriverManager.getConnection(doa.getURL(), doa.getUser(), doa.getPassword());
         }
@@ -67,14 +68,24 @@ public class Operations {
         int returnVal = fc.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File fichierMP3 = fc.getSelectedFile();
+            System.out.println("lien " + fichierMP3);
             sound = new Sound(fichierMP3.getPath());
             tempsRestant = sound.calculerTempsRestant() + "";
             System.out.println("L'auteur est " + sound.getAuteur() + " et le titre est " + sound.getTitre());
 
         }
+       
         doa.connexion();
         this.ajouterBDD();
 
+    }
+
+    public int getMusiqueLancee() {
+        return this.musiqueLancee;
+    }
+
+    public void setMusiqueLancee(int i) {
+        this.musiqueLancee = i;
     }
 
     public boolean verifier() {
@@ -161,7 +172,7 @@ public class Operations {
 
             }
         } catch (Exception e1) {
-            
+
             e1.printStackTrace();
         }
         return biblio;
@@ -183,7 +194,7 @@ public class Operations {
                 biblio.add(duration);
             }
         } catch (Exception e1) {
-     
+
             e1.printStackTrace();
         }
         return biblio;
@@ -361,8 +372,11 @@ public class Operations {
 
     public void setDuree(String duree) {
         try {
-        sound.setDuree(Long.parseLong(duree));} catch (NumberFormatException nfe) {System.out.println("NumberFormatException: " + nfe.getMessage());
-     }}
+            sound.setDuree(Long.parseLong(duree));
+        } catch (NumberFormatException nfe) {
+            System.out.println("NumberFormatException: " + nfe.getMessage());
+        }
+    }
 
     public void setTitre(String titre) {
         sound.setTitre(titre);
@@ -382,9 +396,11 @@ public class Operations {
             try {
 
                 if (sound.isPlaying() == false) {
+                    musiqueLancee = 1;
                     sound.play();
                 } else {
                     System.out.println("stop");
+                    musiqueLancee = 2;
                     sound.stop();
                 }
             } catch (Exception ex) {
@@ -407,7 +423,8 @@ public class Operations {
             this.observateurs.get(i).actualiserInformations();
         }
     }
-        public ArrayList<String> bibliothequeGenre() {
+
+    public ArrayList<String> bibliothequeGenre() {
         String query = null;
         query = "SELECT genre FROM musique";
         ArrayList<String> biblio = new ArrayList<String>();

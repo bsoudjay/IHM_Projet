@@ -196,7 +196,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         augmenter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                slide.setValue((slide.getValue() + 10));
+                slide.setValue((slide.getValue() + 3));
                 System.out.println(slide.getValue());
                 try {
                     operations.augmenterSon();
@@ -209,7 +209,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         diminuer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                slide.setValue((slide.getValue() - 10));
+                slide.setValue((slide.getValue() - 3));
                 System.out.println(slide.getValue());
                 try {
                     operations.diminuerSon();
@@ -225,6 +225,9 @@ public class DesignMP3 extends Applet implements Observateur {
                 // operations.ajouterBDD();
                 threadLecture = new Thread(new PlaySound());
                 threadLecture.start();
+                if(operations.getMusiqueLancee() ==1){
+                    threadLecture.destroy();
+                }
                 actualiserInformations();
             }
         });
@@ -291,18 +294,18 @@ public class DesignMP3 extends Applet implements Observateur {
                 } catch (Exception ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                if (enCoursDeLecture == 1) {
-                    try {
-                        threadLecture.sleep(1000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    enCoursDeLecture = 0;
-                }
+//                if (enCoursDeLecture == 1) {
+//                    try {
+//                        threadLecture.sleep(1000);
+//                    } catch (InterruptedException ex) {
+//                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                    enCoursDeLecture = 0;
+//                }
 
                 try {
                     biblio.recupererMusique();
-//             actualiserInformations();
+//                  actualiserInformations();
                 } catch (SQLException ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
@@ -527,6 +530,8 @@ public class DesignMP3 extends Applet implements Observateur {
 
     class PlaySound implements Runnable {
 
+        private volatile boolean cancelled;
+
         @Override
         public void run() {
 //            enCoursDeLecture = 1;
@@ -535,9 +540,16 @@ public class DesignMP3 extends Applet implements Observateur {
 //                barreMusique.setValue((barreMusique.getValue() + 1));
 //                System.out.println("j'avance avec la musique");
 //            }
-            operations.lire();
-            actualiserInformations();
-            System.out.println("thread");
+
+            while (!cancelled) {
+                operations.lire();
+                actualiserInformations();
+                System.out.println("thread");
+            }
+        }
+
+        public void cancel() {
+            cancelled = true;
         }
     }
 
