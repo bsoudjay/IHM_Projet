@@ -132,11 +132,9 @@ public class Operations {
         }
     }
 
-    public void reecouterMusic(String titre) {
+    public String reecouterMusic(String titre) {
         String query = null;
         query = "SELECT chemin FROM musique WHERE titre = '" + titre + "'";
-        System.out.println("mise à jour");
-        System.out.println("etape 1");
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             System.out.println("test");
@@ -144,12 +142,13 @@ public class Operations {
             while (result.next()) {
                 String chemin = result.getString(1);
                 System.out.println(chemin);
-                Sound s = new Sound(chemin);
+                return chemin;
             }
         } catch (Exception e1) {
 
             e1.printStackTrace();
         }
+        return null;
     }
 
     public ArrayList<Musique> bibliotheque() {
