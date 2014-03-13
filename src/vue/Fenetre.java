@@ -36,7 +36,7 @@ public class Fenetre extends JFrame {
         this.setTitle(text);
         this.setSize(1300,700);       
         Operations op=new Operations();
-        op.reecouterMusic("Black And Yellow");
+//        op.reecouterMusic("Black And Yellow");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

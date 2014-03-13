@@ -544,6 +544,7 @@ public class DesignMP3 extends Applet implements Observateur {
 //            }
 
             while (!cancelled) {
+                System.out.println("musique en cours de lecture");
                 operations.lire();
                 actualiserInformations();
                 System.out.println("thread");
@@ -622,7 +623,9 @@ public class DesignMP3 extends Applet implements Observateur {
                     String chemin2=operations.reecouterMusic(test.get(bou.getIconTextGap()).getTitre());
                     try {
                         s = new Sound(chemin2);
-                        s.play();
+                        threadLecture = new Thread(new PlaySound());
+                        threadLecture.start();
+                        //s.play();
                     } catch (Exception ex) {
                         Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                     }
