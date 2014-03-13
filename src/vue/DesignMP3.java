@@ -72,7 +72,6 @@ public class DesignMP3 extends Applet implements Observateur {
     private Statistiques stats;
     private Sound s;
     public JPanel maStats;
-    public boolean toto;
 
     public DesignMP3() throws Exception {
 
@@ -690,25 +689,20 @@ public class DesignMP3 extends Applet implements Observateur {
          */
 
         test2 = stats.label();
-        toto = false;
         for (jstats = 0; jstats < test2.size(); jstats++) {
             
-            maStats.add(new JButton(test2.get(jstats)));
-            final JButton bou = new JButton(test2.get(jstats));
-            bou.setIconTextGap(jstats);
-            bou.addActionListener(new ActionListener() {
+            final JButton bou2 = new JButton(test2.get(jstats));
+            bou2.setIconTextGap(jstats);
+            bou2.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    System.out.println("kjnbfkdjnfkjsdnfkjsdnfkjsdnf");
-                    String genre = (test2.get(jstats));
-                    toto=true;
+                    String genre = (test2.get(bou2.getIconTextGap()));
+                    System.out.println(genre);
+                    maStats.removeAll();
+                    
                 }
             });
-            System.out.println(toto);
-            if(toto == true){
-                maStats.removeAll();
-            }
-
+            maStats.add(bou2);
         }
 
     }

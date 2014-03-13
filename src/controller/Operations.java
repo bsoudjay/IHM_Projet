@@ -451,4 +451,26 @@ public class Operations {
         }
         return biblio;
     }
+    
+       public ArrayList<Musique> statsNbEcoute(String genre) {
+        String query = null;
+        query = "SELECT titre,auteur,nbEcoute FROM musique WHERE genre = '" + genre+ "'";
+        ArrayList<Musique> biblio = new ArrayList<Musique>();
+        try {
+            Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ResultSet result = requete.executeQuery(query);
+            while (result.next()) {
+                String titre2 = result.getString(1);
+                String auteur2 = result.getString(2);
+                int nbEcoute2 = result.getInt(3);
+
+                biblio.add(new Musique(titre2, auteur2, nbEcoute2));
+
+            }
+        } catch (Exception e1) {
+
+            e1.printStackTrace();
+        }
+        return biblio;
+    }
 }

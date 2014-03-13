@@ -31,6 +31,12 @@ public class Musique {
         this.chemin = chemin;
         this.nbEcoute = nbEcoute;
     }
+    
+    public Musique(String titre, String auteur, int nbEcoute) {
+        this.titre = titre;
+        this.auteur = auteur;
+        this.nbEcoute = nbEcoute;
+    }
 
     public String getAlbum() {
         return album;
