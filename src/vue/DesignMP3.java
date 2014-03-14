@@ -519,6 +519,7 @@ public class DesignMP3 extends Applet implements Observateur {
         research.setOpaque(false);
         research.setContentAreaFilled(false);
         research.setBorderPainted(false);
+        
 
         lesOnglets.add(research);
 
