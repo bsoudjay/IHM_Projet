@@ -407,7 +407,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         JLabel txtBibliotheque = new JLabel();
         txtBibliotheque.setLayout(new BoxLayout(txtBibliotheque, BoxLayout.LINE_AXIS));
-        txtBibliotheque.setText("<html><body><font color='white'>Bibliotheque</body></html>");
+        txtBibliotheque.setText("<html><body><font color='white'>-------------------------------------------------BIBLIOTHEQUE-----------------------------------------------------------</body></html>");
         txtBibliotheque.setToolTipText(txtBibliotheque.getText());
         txtBibliotheque.setFont(font);
         card2.add(txtBibliotheque);
@@ -459,7 +459,7 @@ public class DesignMP3 extends Applet implements Observateur {
         statistiques.setBorderPainted(false);
 
         JLabel txtStatistiques = new JLabel();
-        txtStatistiques.setText("<html><body><font color='white'>Statistiques</body></html>");
+        txtStatistiques.setText("<html><body><font color='white'>-------------------------------------------------Statistiques-----------------------------------------</body></html>");
         txtStatistiques.setToolTipText(txtStatistiques.getText());
         txtStatistiques.setFont(font);
 
