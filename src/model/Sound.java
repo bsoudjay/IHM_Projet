@@ -33,7 +33,7 @@ public class Sound implements Comparable<Sound> {
     private Integer qualite;
     private String genre;
     private boolean isPlaying = false;
-    private AdvancedPlayer player = null;
+    public AdvancedPlayer player = null;
     private long tempsRestant;
     private Operations operations;
 
@@ -219,6 +219,8 @@ public class Sound implements Comparable<Sound> {
 
     //methodes
     public void play() throws Exception {
+        System.out.println(this.titre);
+        System.out.println(isPlaying());
         if (player != null) {
             isPlaying = true;
             player.play();
@@ -240,7 +242,7 @@ public class Sound implements Comparable<Sound> {
     public void stop() throws Exception {
         if (player != null) {
             isPlaying = false;
-            operations.setMusiqueLancee(2);
+            //operations.setMusiqueLancee(2);
             player.stop();
         }
     }
@@ -251,6 +253,10 @@ public class Sound implements Comparable<Sound> {
 
     public long calculerTempsRestant() {
         return tempsRestant += System.currentTimeMillis();
+    }
+    
+    public void setIsPlaying(boolean t){
+        isPlaying=t;
     }
 
     @Override

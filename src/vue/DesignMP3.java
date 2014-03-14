@@ -41,6 +41,7 @@ import model.Musique;
 import model.Observateur;
 import model.Sound;
 import model.Statistiques;
+import static sun.audio.AudioPlayer.player;
 
 /**
  *
@@ -72,7 +73,7 @@ public class DesignMP3 extends Applet implements Observateur {
     public int i;
     public int jstats;
     private Statistiques stats;
-    private Sound s;
+    private Sound s=new Sound();
     public JPanel maStats;
     private String contenuRecherche;
 
@@ -661,7 +662,6 @@ public class DesignMP3 extends Applet implements Observateur {
             bou.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-
                     operations.setTitre(test.get(bou.getIconTextGap()).getTitre());
                     operations.setAuteur(test.get(bou.getIconTextGap()).getAuteur());
                     operations.setAlbum(test.get(bou.getIconTextGap()).getAlbum());
@@ -672,15 +672,18 @@ public class DesignMP3 extends Applet implements Observateur {
 
                     String chemin2 = operations.reecouterMusic(test.get(bou.getIconTextGap()).getTitre());
                     try {
+                        if(s.isPlaying()){
+                            s.player.close();
+                        }
                         s = new Sound(chemin2);
                         threadLecture = new Thread(new PlaySoundBouton(s));
                         threadLecture.start();
+                        s.setIsPlaying(true);
                     } catch (Exception ex) {
                         Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     actualiserInformations();
-
                 }
             });
 
