@@ -153,11 +153,16 @@ public class DesignMP3 extends Applet implements Observateur {
         JPanel lesBoutons = new JPanel();
         //lesBoutons.setLayout((new BoxLayout(lesBoutons, BoxLayout.LINE_AXIS)));
 
+        JButton stop = new JButton(new ImageIcon("Design/Boutons/stop.png"));
         JButton precedent = new JButton(new ImageIcon("Design/Boutons/precedent.png"));
         JButton lecture = new JButton(new ImageIcon("Design/Boutons/lecture.png"));
         JButton suivant = new JButton(new ImageIcon("Design/Boutons/suivant.png"));
         JButton diminuer = new JButton(new ImageIcon("Design/Boutons/baisserSon.png"));
         JButton augmenter = new JButton(new ImageIcon("Design/Boutons/augmenterSon.png"));
+        
+        stop.setOpaque(false);
+        stop.setContentAreaFilled(false);
+        stop.setBorderPainted(false);
 
         precedent.setOpaque(false);
         precedent.setContentAreaFilled(false);
@@ -179,6 +184,7 @@ public class DesignMP3 extends Applet implements Observateur {
         augmenter.setContentAreaFilled(false);
         augmenter.setBorderPainted(false);
 
+        lesBoutons.add(stop);
         lesBoutons.add(precedent);
         lesBoutons.add(lecture);
         lesBoutons.add(suivant);
