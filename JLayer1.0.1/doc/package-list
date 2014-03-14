@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 javazoom.jl.converter
 javazoom.jl.decoder
 javazoom.jl.player
 javazoom.jl.player.advanced
+=======
+javazoom.jl.converter
+javazoom.jl.decoder
+javazoom.jl.player
+javazoom.jl.player.advanced
+>>>>>>> branch 'master' of https://github.com/bsoudjay/IHM_Projet.git

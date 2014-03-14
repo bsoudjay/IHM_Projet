@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 grant {
 permission java.security.AllPermission;
 };
+=======
+grant {
+permission java.security.AllPermission;
+};
+>>>>>>> branch 'master' of https://github.com/bsoudjay/IHM_Projet.git

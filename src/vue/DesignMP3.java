@@ -214,11 +214,11 @@ public class DesignMP3 extends Applet implements Observateur {
             public void actionPerformed(ActionEvent e) {
                 slide.setValue((slide.getValue() + 3));
                 System.out.println(slide.getValue());
-                try {
+                /*try {
                     operations.augmenterSon();
                 } catch (LineUnavailableException ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                }*/
                 actualiserInformations();
             }
         });
@@ -227,11 +227,11 @@ public class DesignMP3 extends Applet implements Observateur {
             public void actionPerformed(ActionEvent e) {
                 slide.setValue((slide.getValue() - 3));
                 System.out.println(slide.getValue());
-                try {
+                /*try {
                     operations.diminuerSon();
                 } catch (LineUnavailableException ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                }*/
                 actualiserInformations();
             }
         });
@@ -732,10 +732,10 @@ public class DesignMP3 extends Applet implements Observateur {
                 TimeUnit.MICROSECONDS.toSeconds(duration) - (TimeUnit.MICROSECONDS.toMinutes(duration) * 60)))));
             maBibli.add(new JLabel(" _______________________________"));
 
+            
         }
-
     }
-
+    
     private void modifVolume() {
         this.slide.setValue(this.slide.getValue());
     }
