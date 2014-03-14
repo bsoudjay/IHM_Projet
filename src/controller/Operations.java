@@ -15,6 +15,7 @@ import java.sql.SQLException;
 
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,11 +42,8 @@ public class Operations {
 
     public Operations() throws SQLException, Exception {
 
-
         // Ilan  
-
-       //this.doa = new DOA("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
-
+        //this.doa = new DOA("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
         //kevin
         this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
         if (this.doa.connexion()) {
@@ -70,20 +68,20 @@ public class Operations {
             System.out.println("L'auteur est " + sound.getAuteur() + " et le titre est " + sound.getTitre());
 
         }
-       
+
         doa.connexion();
         this.ajouterBDD();
 
     }
-    
-    public ArrayList<Musique> recherche(String contenu){
+
+    public ArrayList<Musique> recherche(String contenu) {
         ArrayList<Musique> maRecherche = new ArrayList<Musique>();
-        String query = "SELECT * FROM musique WHERE titre LIKE '%" + contenu + "%' OR auteur = '%" + contenu+ "%'";
+        String query = "SELECT * FROM musique WHERE titre LIKE '%" + contenu + "%' OR auteur = '%" + contenu + "%'";
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet result = requete.executeQuery(query);
             while (result.next()) {
-               String titre2 = result.getString(1);
+                String titre2 = result.getString(1);
                 String auteur2 = result.getString(2);
                 String album2 = result.getString(3);
                 Long duree2 = result.getLong(4);
@@ -130,7 +128,6 @@ public class Operations {
         if (!this.verifier()) {
 
             query = "INSERT INTO musique (titre,auteur,album,duree,genre,chemin) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "'," + sound.getDuree() + ",'" + this.getGenre() + "','" + chemin_tmp + "')";
-
 
             System.out.println("insertion");
         } else {
@@ -461,10 +458,10 @@ public class Operations {
         }
         return biblio;
     }
-    
-       public ArrayList<Musique> statsNbEcoute(String genre) {
+
+    public ArrayList<Musique> statsNbEcoute(String genre) {
         String query = null;
-        query = "SELECT titre,auteur,nbEcoute FROM musique WHERE genre = '" + genre+ "'";
+        query = "SELECT titre,auteur,nbEcoute FROM musique WHERE genre = '" + genre + "'";
         ArrayList<Musique> biblio = new ArrayList<Musique>();
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
@@ -482,5 +479,39 @@ public class Operations {
             e1.printStackTrace();
         }
         return biblio;
+    }
+
+    public String Diapo() {
+        String chemin = null;
+        Random r = new Random();
+        int valeur = 1 + r.nextInt(recupDernierId());
+        String query = "SELECT url FROM image WHERE id_image = '" + valeur + "'";
+        try {
+            Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ResultSet result = requete.executeQuery(query);
+            while (result.next()) {
+                chemin = result.getString(1);
+                return chemin;
+            }
+        } catch (Exception e1) {
+
+            e1.printStackTrace();
+        }
+        return null;
+    }
+
+    public int recupDernierId() {
+        String query = "SELECT MAX(id_image) FROM image";
+        try {
+            Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ResultSet result = requete.executeQuery(query);
+            while (result.next()) {
+                int id = result.getInt(1);
+                return id;
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return 0;
     }
 }

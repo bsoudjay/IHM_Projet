@@ -74,6 +74,7 @@ public class DesignMP3 extends Applet implements Observateur {
     public ArrayList<String> test2;
     public int i;
     public int jstats;
+    private JPanel card1 = new JPanel();
     private Statistiques stats;
     private Sound s = new Sound();
     private Sound s2 = new Sound();
@@ -376,8 +377,7 @@ public class DesignMP3 extends Applet implements Observateur {
 //        musiqueEnCours.setOpaque(false);
 //        musiqueEnCours.setContentAreaFilled(false);
 //        musiqueEnCours.setBorderPainted(false);
-        JPanel card1 = new JPanel();
-        card1.setBackground(Color.GRAY);
+        
         JButton musiqueEnCours = new JButton(new ImageIcon("Design/Boutons/lectureEnCours.png"));
 
         musiqueEnCours.setOpaque(false);
@@ -400,17 +400,27 @@ public class DesignMP3 extends Applet implements Observateur {
 //        accueil.setLayout(new BoxLayout(accueil, BoxLayout.PAGE_AXIS));
 //        accueil.add(textaccueil);
 //        accueil.add(t );
-        JLabel lab = new JLabel(new ImageIcon("C:\\Users\\kevin\\Pictures\\1.jpg"));
+        card1.setBackground(Color.GRAY);
+         String img=operations.Diapo();
+        System.out.println(img);
+        JLabel lab = new JLabel(new ImageIcon(img));
+        lab.setBounds(0, 0, 1, 1);
+        card1.add(lab);
+        musiqueEnCours.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                card1.removeAll();
+        card1.setBackground(Color.GRAY);
+                cl.show(content, listContent[0]);
+                String img=operations.Diapo();
+        System.out.println(img);
+        JLabel lab = new JLabel(new ImageIcon(img));
         lab.setBounds(0, 0, 1, 1);
 //        JLabel image = new JLabel(new ImageIcon("C:\\Users\\kevin\\Pictures\\1.jpg"));
 //        this.setLayout(new BorderLayout());
 //        this.add(image, BorderLayout.CENTER);
 
         card1.add(lab);
-        musiqueEnCours.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                cl.show(content, listContent[0]);
             }
         });
 
