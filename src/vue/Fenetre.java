@@ -39,8 +39,8 @@ public class Fenetre extends JFrame {
 //        op.reecouterMusic("Black And Yellow");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+//        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+//        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         this.setExtendedState(this.MAXIMIZED_BOTH); 
       
         this.getContentPane().add(leDesign.initialisation());
