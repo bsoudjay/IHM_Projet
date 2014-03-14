@@ -74,6 +74,7 @@ public class DesignMP3 extends Applet implements Observateur {
     public int jstats;
     private Statistiques stats;
     private Sound s=new Sound();
+    private Sound s2=new Sound();
     public JPanel maStats;
     private String contenuRecherche;
 
@@ -232,11 +233,20 @@ public class DesignMP3 extends Applet implements Observateur {
             public void actionPerformed(ActionEvent e) {
 
                 // operations.ajouterBDD();
+                if(s.isPlaying()){
+                    threadLecture.stop();
+                } else if(s2.isPlaying()){
+                    threadLecture.stop();
+                } 
+                String tmp= operations.reecouterMusic(titre.getText());
+                try {
+                    s=new Sound(tmp);
+                } catch (Exception ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 threadLecture = new Thread(new PlaySound());
                 threadLecture.start();
-                if (operations.getMusiqueLancee() == 1) {
-                    threadLecture.destroy();
-                }
+                s2.setIsPlaying(true);
                 actualiserInformations();
             }
         });
@@ -673,8 +683,12 @@ public class DesignMP3 extends Applet implements Observateur {
 
                     String chemin2 = operations.reecouterMusic(test.get(bou.getIconTextGap()).getTitre());
                     try {
+                        System.out.println("zzzzzzzzzzzzzzzzzz"+s2.isPlaying());
+                        System.out.println("eeeeeeeeeeeeeeeeeeeee"+s.isPlaying());
                         if(s.isPlaying()){
-                            s.player.close();
+                            threadLecture.stop();
+                        } else if (s2.isPlaying()){
+                            threadLecture.stop();
                         }
                         s = new Sound(chemin2);
                         threadLecture = new Thread(new PlaySoundBouton(s));
