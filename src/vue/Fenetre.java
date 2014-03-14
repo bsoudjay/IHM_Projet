@@ -39,7 +39,8 @@ public class Fenetre extends JFrame {
 //        op.reecouterMusic("Black And Yellow");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
-        this.setExtendedState(this.MAXIMIZED_BOTH);
+        this.setExtendedState(this.MAXIMIZED_BOTH);  
+        
       
         this.getContentPane().add(leDesign.initialisation());
        
