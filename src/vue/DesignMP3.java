@@ -37,6 +37,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javazoom.jl.decoder.JavaLayerException;
 import model.Bibliotheque;
 import model.Musique;
 import model.Observateur;
@@ -246,6 +247,7 @@ public class DesignMP3 extends Applet implements Observateur {
                     threadLecture.stop();
                 } 
                 String tmp= operations.reecouterMusic(titre.getText());
+                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+tmp);
                 try {
                     s=new Sound(tmp);
                 } catch (Exception ex) {
@@ -265,9 +267,11 @@ public class DesignMP3 extends Applet implements Observateur {
                  if(s.isPlaying()){
                     threadLecture.stop();
                      System.out.println("tuage de thread");
+                     s.setIsPlaying(false);
                 } else if(s2.isPlaying()){
                     System.out.println("tuage de thread");
                     threadLecture.stop();
+                    s2.setIsPlaying(false);
                 } 
             }
         });
@@ -597,18 +601,17 @@ public class DesignMP3 extends Applet implements Observateur {
 
         @Override
         public void run() {
-//            enCoursDeLecture = 1;
+            try {
+                //            enCoursDeLecture = 1;
 //            System.out.println("totototototto");
 //            if (monSon.isPlaying()) {
 //                barreMusique.setValue((barreMusique.getValue() + 1));
 //                System.out.println("j'avance avec la musique");
 //            }
-
-            while (!cancelled) {
-                System.out.println("musique en cours de lecture");
-                operations.lire();
-                actualiserInformations();
-                System.out.println("thread");
+                
+                s.player.play();
+            } catch (JavaLayerException ex) {
+                Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -708,8 +711,6 @@ public class DesignMP3 extends Applet implements Observateur {
 
                     String chemin2 = operations.reecouterMusic(test.get(bou.getIconTextGap()).getTitre());
                     try {
-                        System.out.println("zzzzzzzzzzzzzzzzzz"+s2.isPlaying());
-                        System.out.println("eeeeeeeeeeeeeeeeeeeee"+s.isPlaying());
                         if(s.isPlaying()){
                             threadLecture.stop();
                         } else if (s2.isPlaying()){
