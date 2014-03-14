@@ -230,6 +230,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         lecture.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
                 // operations.ajouterBDD();
                 threadLecture = new Thread(new PlaySound());
                 threadLecture.start();
