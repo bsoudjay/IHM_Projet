@@ -257,7 +257,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         /*
          *-------------------------------------------------------------------------------------------------------
-         *                          Création du BoxLayout -- superposition des icones  
+         *                          Cr��ation du BoxLayout -- superposition des icones  
          *-------------------------------------------------------------------------------------------------------
          */
         JPanel panneauBas = new JPanel();
@@ -267,7 +267,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         /*
          *-------------------------------------------------------------------------------------------------------
-         *                                  Création du BorderLayout  
+         *                                  Cr��ation du BorderLayout  
          *-------------------------------------------------------------------------------------------------------
          */
         monPanel.add(panneauBas, BorderLayout.SOUTH);
@@ -355,25 +355,25 @@ public class DesignMP3 extends Applet implements Observateur {
 
         /*
          *-------------------------------------------------------------------------------------------------------
-         *                                      Onglet Bibliothèque
+         *                                      Onglet Biblioth��que
          *-------------------------------------------------------------------------------------------------------
          */
         JPanel card2 = new JPanel();
         JScrollPane scroll = new JScrollPane(card2);
         card2.setBackground(Color.GRAY);
 
-        JButton bibliothèqe = new JButton(new ImageIcon("Design/Boutons/MaBibli.png"));
+        JButton bibliotheqe = new JButton(new ImageIcon("Design/Boutons/MaBibli.png"));
 
-        bibliothèqe.setOpaque(false);
-        bibliothèqe.setContentAreaFilled(false);
-        bibliothèqe.setBorderPainted(false);
+        bibliotheqe.setOpaque(false);
+        bibliotheqe.setContentAreaFilled(false);
+        bibliotheqe.setBorderPainted(false);
 
-        JLabel txtBibliothèque = new JLabel();
-        txtBibliothèque.setLayout(new BoxLayout(txtBibliothèque, BoxLayout.LINE_AXIS));
-        txtBibliothèque.setText("<html><body><font color='white'>Bibliothèque</body></html>");
-        txtBibliothèque.setToolTipText(txtBibliothèque.getText());
-        txtBibliothèque.setFont(font);
-        card2.add(txtBibliothèque);
+        JLabel txtBibliotheque = new JLabel();
+        txtBibliotheque.setLayout(new BoxLayout(txtBibliotheque, BoxLayout.LINE_AXIS));
+        txtBibliotheque.setText("<html><body><font color='white'>Bibliotheque</body></html>");
+        txtBibliotheque.setToolTipText(txtBibliotheque.getText());
+        txtBibliotheque.setFont(font);
+        card2.add(txtBibliotheque);
 
         Font fontBold = new Font("Times New Roman", Font.PLAIN, 16);
 
@@ -382,13 +382,13 @@ public class DesignMP3 extends Applet implements Observateur {
         JPanel bibli = new JPanel();
         bibli.setLayout(new BoxLayout(bibli, BoxLayout.PAGE_AXIS));
 
-        bibli.add(txtBibliothèque);
+        bibli.add(txtBibliotheque);
         //maBibli.setLayout(new GridLayout(20, 3));
         bibli.add(maBibli);
 
         card2.add(bibli);
 
-        bibliothèqe.addActionListener(new ActionListener() {
+        bibliotheqe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 cl.show(content, listContent[1]);
@@ -478,7 +478,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         lesOnglets.add(ajouterMusique);
         lesOnglets.add(musiqueEnCours);
-        lesOnglets.add(bibliothèqe);
+        lesOnglets.add(bibliotheqe);
         lesOnglets.add(statistiques);
         lesOnglets.add(recherche);
 
