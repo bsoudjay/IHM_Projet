@@ -389,12 +389,12 @@ public class DesignMP3 extends Applet implements Observateur {
 //        txtMusiqueEnCours.setToolTipText(txtMusiqueEnCours.getText());
 //        txtMusiqueEnCours.setFont(font);
 //        card1.add(txtMusiqueEnCours);
-        JLabel textaccueil = new JLabel();
+//        JLabel textaccueil = new JLabel();
 //        PanelTout t = new PanelTout("C:\\Users\\kevin\\Pictures\\1.jpg");
 //        System.out.println(t.getImg());
-        textaccueil.setText("<html><body><font color='white'>------------------------------------------MUSIQUE EN COUR--------------------------------------------</body></html>");
-        textaccueil.setToolTipText(textaccueil.getText());
-        textaccueil.setFont(font);
+//        textaccueil.setText("<html><body><font color='white'>------------------------------------------MUSIQUE EN COUR--------------------------------------------</body></html>");
+//        textaccueil.setToolTipText(textaccueil.getText());
+//        textaccueil.setFont(font);
 
 //        JPanel accueil = new JPanel();
 //        accueil.setLayout(new BoxLayout(accueil, BoxLayout.PAGE_AXIS));
