@@ -22,19 +22,22 @@ import javax.swing.JPanel;
  * @author ilanmalka
  */
 public class PanelTout extends JPanel {
-    
+
     private String img;
 
-    
-    public PanelTout(String img){
+    public PanelTout(String img) {
         this.img = img;
     }
-    
+
+    public String getImg() {
+        return this.img;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         try {
             Image img_fond = ImageIO.read(new File(img));
-            g.drawImage(img_fond, 800, 500, this);
+            g.drawImage(img_fond, 2800, 2500, this);
             //JPanel PanelSud = panelSud();
             this.revalidate();
             this.repaint();
@@ -43,6 +46,5 @@ public class PanelTout extends JPanel {
             ex.printStackTrace();
         }
     }
-    
-    
+
 }

@@ -75,8 +75,8 @@ public class DesignMP3 extends Applet implements Observateur {
     public int i;
     public int jstats;
     private Statistiques stats;
-    private Sound s=new Sound();
-    private Sound s2=new Sound();
+    private Sound s = new Sound();
+    private Sound s2 = new Sound();
     public JPanel maStats;
     private String contenuRecherche;
 
@@ -161,7 +161,7 @@ public class DesignMP3 extends Applet implements Observateur {
         JButton suivant = new JButton(new ImageIcon("Design/Boutons/suivant.png"));
         JButton diminuer = new JButton(new ImageIcon("Design/Boutons/baisserSon.png"));
         JButton augmenter = new JButton(new ImageIcon("Design/Boutons/augmenterSon.png"));
-        
+
         stop.setOpaque(false);
         stop.setContentAreaFilled(false);
         stop.setBorderPainted(false);
@@ -216,10 +216,10 @@ public class DesignMP3 extends Applet implements Observateur {
                 slide.setValue((slide.getValue() + 3));
                 System.out.println(slide.getValue());
                 /*try {
-                    operations.augmenterSon();
-                } catch (LineUnavailableException ex) {
-                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
+                 operations.augmenterSon();
+                 } catch (LineUnavailableException ex) {
+                 Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                 }*/
                 actualiserInformations();
             }
         });
@@ -229,10 +229,10 @@ public class DesignMP3 extends Applet implements Observateur {
                 slide.setValue((slide.getValue() - 3));
                 System.out.println(slide.getValue());
                 /*try {
-                    operations.diminuerSon();
-                } catch (LineUnavailableException ex) {
-                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
+                 operations.diminuerSon();
+                 } catch (LineUnavailableException ex) {
+                 Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                 }*/
                 actualiserInformations();
             }
         });
@@ -241,15 +241,14 @@ public class DesignMP3 extends Applet implements Observateur {
             public void actionPerformed(ActionEvent e) {
 
                 // operations.ajouterBDD();
-                if(s.isPlaying()){
+                if (s.isPlaying()) {
                     threadLecture.stop();
-                } else if(s2.isPlaying()){
+                } else if (s2.isPlaying()) {
                     threadLecture.stop();
-                } 
-                String tmp= operations.reecouterMusic(titre.getText());
-                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+tmp);
+                }
+                String tmp = operations.reecouterMusic(titre.getText());
                 try {
-                    s=new Sound(tmp);
+                    s = new Sound(tmp);
                 } catch (Exception ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -259,20 +258,20 @@ public class DesignMP3 extends Applet implements Observateur {
                 actualiserInformations();
             }
         });
-        
+
         stop.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                 if(s.isPlaying()){
+                if (s.isPlaying()) {
                     threadLecture.stop();
-                     System.out.println("tuage de thread");
-                     s.setIsPlaying(false);
-                } else if(s2.isPlaying()){
+                    System.out.println("tuage de thread");
+                    s.setIsPlaying(false);
+                } else if (s2.isPlaying()) {
                     System.out.println("tuage de thread");
                     threadLecture.stop();
                     s2.setIsPlaying(false);
-                } 
+                }
             }
         });
 
@@ -369,20 +368,45 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                     Onglet Musique en cours
          *-------------------------------------------------------------------------------------------------------
          */
-        final JPanel card1 = new JPanel();
-        card1.setBackground(Color.GRAY);//kvn image
-
+//        final JPanel card1 = new JPanel();
+//        card1.setBackground(Color.GRAY);//kvn image
+//
+//        JButton musiqueEnCours = new JButton(new ImageIcon("Design/Boutons/lectureEnCours.png"));
+//
+//        musiqueEnCours.setOpaque(false);
+//        musiqueEnCours.setContentAreaFilled(false);
+//        musiqueEnCours.setBorderPainted(false);
+        JPanel card1 = new JPanel();
+        card1.setBackground(Color.GRAY);
         JButton musiqueEnCours = new JButton(new ImageIcon("Design/Boutons/lectureEnCours.png"));
 
         musiqueEnCours.setOpaque(false);
         musiqueEnCours.setContentAreaFilled(false);
         musiqueEnCours.setBorderPainted(false);
 
-        JLabel txtMusiqueEnCours = new JLabel();
-        txtMusiqueEnCours.setText("<html><body><font color='white'>Musique en cours</body></html>");
-        txtMusiqueEnCours.setToolTipText(txtMusiqueEnCours.getText());
-        txtMusiqueEnCours.setFont(font);
-        card1.add(txtMusiqueEnCours);
+//        JLabel txtMusiqueEnCours = new JLabel();
+//        txtMusiqueEnCours.setText("<html><body><font color='white'>Musique en cours</body></html>");
+//        txtMusiqueEnCours.setToolTipText(txtMusiqueEnCours.getText());
+//        txtMusiqueEnCours.setFont(font);
+//        card1.add(txtMusiqueEnCours);
+        JLabel textaccueil = new JLabel();
+//        PanelTout t = new PanelTout("C:\\Users\\kevin\\Pictures\\1.jpg");
+//        System.out.println(t.getImg());
+        textaccueil.setText("<html><body><font color='white'>------------------------------------------MUSIQUE EN COUR--------------------------------------------</body></html>");
+        textaccueil.setToolTipText(textaccueil.getText());
+        textaccueil.setFont(font);
+
+//        JPanel accueil = new JPanel();
+//        accueil.setLayout(new BoxLayout(accueil, BoxLayout.PAGE_AXIS));
+//        accueil.add(textaccueil);
+//        accueil.add(t );
+        JLabel lab = new JLabel(new ImageIcon("C:\\Users\\kevin\\Pictures\\1.jpg"));
+        lab.setBounds(0, 0, 1, 1);
+//        JLabel image = new JLabel(new ImageIcon("C:\\Users\\kevin\\Pictures\\1.jpg"));
+//        this.setLayout(new BorderLayout());
+//        this.add(image, BorderLayout.CENTER);
+
+        card1.add(lab);
         musiqueEnCours.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -407,7 +431,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         JLabel txtBibliotheque = new JLabel();
         txtBibliotheque.setLayout(new BoxLayout(txtBibliotheque, BoxLayout.LINE_AXIS));
-        txtBibliotheque.setText("<html><body><font color='white'>-------------------------------------------------BIBLIOTHEQUE-----------------------------------------------------------</body></html>");
+        txtBibliotheque.setText("<html><body><font color='white'>----------------------------------------------BIBLIOTHEQUE--------------------------------------------</body></html>");
         txtBibliotheque.setToolTipText(txtBibliotheque.getText());
         txtBibliotheque.setFont(font);
         card2.add(txtBibliotheque);
@@ -459,7 +483,7 @@ public class DesignMP3 extends Applet implements Observateur {
         statistiques.setBorderPainted(false);
 
         JLabel txtStatistiques = new JLabel();
-        txtStatistiques.setText("<html><body><font color='white'>-------------------------------------------------Statistiques-----------------------------------------</body></html>");
+        txtStatistiques.setText("<html><body><font color='white'>------------------------------------------STATISTIQUES--------------------------------------------</body></html>");
         txtStatistiques.setToolTipText(txtStatistiques.getText());
         txtStatistiques.setFont(font);
 
@@ -523,7 +547,6 @@ public class DesignMP3 extends Applet implements Observateur {
         research.setOpaque(false);
         research.setContentAreaFilled(false);
         research.setBorderPainted(false);
-        
 
         lesOnglets.add(research);
 
@@ -608,7 +631,7 @@ public class DesignMP3 extends Applet implements Observateur {
 //                barreMusique.setValue((barreMusique.getValue() + 1));
 //                System.out.println("j'avance avec la musique");
 //            }
-                
+
                 s.player.play();
             } catch (JavaLayerException ex) {
                 Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
@@ -711,9 +734,9 @@ public class DesignMP3 extends Applet implements Observateur {
 
                     String chemin2 = operations.reecouterMusic(test.get(bou.getIconTextGap()).getTitre());
                     try {
-                        if(s.isPlaying()){
+                        if (s.isPlaying()) {
                             threadLecture.stop();
-                        } else if (s2.isPlaying()){
+                        } else if (s2.isPlaying()) {
                             threadLecture.stop();
                         }
                         s = new Sound(chemin2);
@@ -732,15 +755,14 @@ public class DesignMP3 extends Applet implements Observateur {
             maBibli.add(new JLabel("Artiste: " + test.get(bou.getIconTextGap()).getAuteur()));
             long duration = test.get(bou.getIconTextGap()).getDuree();
             maBibli.add(new JLabel("Duree: " + (String.format("%02d:%02d:%02d",
-                TimeUnit.MICROSECONDS.toHours(duration) - ((int) TimeUnit.MICROSECONDS.toDays(duration) * 24),
-                TimeUnit.MICROSECONDS.toMinutes(duration) - (TimeUnit.MICROSECONDS.toHours(duration) * 60),
-                TimeUnit.MICROSECONDS.toSeconds(duration) - (TimeUnit.MICROSECONDS.toMinutes(duration) * 60)))));
+                    TimeUnit.MICROSECONDS.toHours(duration) - ((int) TimeUnit.MICROSECONDS.toDays(duration) * 24),
+                    TimeUnit.MICROSECONDS.toMinutes(duration) - (TimeUnit.MICROSECONDS.toHours(duration) * 60),
+                    TimeUnit.MICROSECONDS.toSeconds(duration) - (TimeUnit.MICROSECONDS.toMinutes(duration) * 60)))));
             maBibli.add(new JLabel(" _______________________________"));
 
-            
         }
     }
-    
+
     private void modifVolume() {
         this.slide.setValue(this.slide.getValue());
     }
@@ -796,7 +818,7 @@ public class DesignMP3 extends Applet implements Observateur {
                     System.out.println(genre);
                     maStats.removeAll();
                     statsAfiiche = operations.statsNbEcoute(genre);
-                    statsGraphe s = new statsGraphe("Stat", "Les stats de "+genre,statsAfiiche);
+                    statsGraphe s = new statsGraphe("Stat", "Les stats de " + genre, statsAfiiche);
                     s.pack();
                     s.setVisible(true);
 
