@@ -515,7 +515,10 @@ public class DesignMP3 extends Applet implements Observateur {
         lesOnglets.add(statistiques);
         lesOnglets.add(recherche);
 
-        JButton research = new JButton("Lancer la recherhce");
+        JButton research = new JButton(new ImageIcon("Design/Boutons/recherche.png"));
+        research.setOpaque(false);
+        research.setContentAreaFilled(false);
+        research.setBorderPainted(false);
 
         lesOnglets.add(research);
 
