@@ -256,6 +256,20 @@ public class DesignMP3 extends Applet implements Observateur {
                 actualiserInformations();
             }
         });
+        
+        stop.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                 if(s.isPlaying()){
+                    threadLecture.stop();
+                     System.out.println("tuage de thread");
+                } else if(s2.isPlaying()){
+                    System.out.println("tuage de thread");
+                    threadLecture.stop();
+                } 
+            }
+        });
 
 //        diminuer.addActionListener(new ActionListener() {
 //            public void actionPerformed(ActionEvent e) {
