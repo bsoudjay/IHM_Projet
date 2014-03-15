@@ -532,7 +532,7 @@ public class DesignMP3 extends Applet implements Observateur {
          *-------------------------------------------------------------------------------------------------------
          */
         JPanel card2 = new JPanel();
-        card2.setPreferredSize(new Dimension(700, 1000));
+       
         JScrollPane scroll = new JScrollPane(card2);
         card2.setBackground(Color.GRAY);
 
@@ -544,7 +544,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         JLabel txtBibliotheque = new JLabel();
 
-        txtBibliotheque.setText("                                      BIBLIOTHEQUE                                        ");
+        txtBibliotheque.setText("                     BIBLIOTHEQUE                                                         ");
         txtBibliotheque.setHorizontalAlignment((int) CENTER_ALIGNMENT);
         txtBibliotheque.setToolTipText(txtBibliotheque.getText());
         txtBibliotheque.setFont(font);
@@ -915,18 +915,20 @@ public class DesignMP3 extends Applet implements Observateur {
 
             bou.setBorderPainted(false);
             maBibli.add(bou);
-
+            JLabel l2 = new JLabel(test.get(bou.getIconTextGap()).getAuteur());
             JButton bou2 = new JButton();
             bou2.setBorderPainted(false);
-            JLabel l2 = new JLabel(test.get(bou.getIconTextGap()).getAuteur());
             l2.setHorizontalTextPosition((int) LEFT_ALIGNMENT);
             bou2.add(l2);
             maBibli.add(bou2);
 
             long duration = test.get(bou.getIconTextGap()).getDuree();
-            JButton bou3 = new JButton((String.format("%02d:%02d", TimeUnit.MICROSECONDS.toMinutes(duration) - (TimeUnit.MICROSECONDS.toHours(duration) * 60),
+            JLabel l3 = new JLabel((String.format("%02d:%02d", TimeUnit.MICROSECONDS.toMinutes(duration) - (TimeUnit.MICROSECONDS.toHours(duration) * 60),
                     TimeUnit.MICROSECONDS.toSeconds(duration) - (TimeUnit.MICROSECONDS.toMinutes(duration) * 60))));
+            JButton bou3 = new JButton();
+            l3.setHorizontalTextPosition((int) LEFT_ALIGNMENT);
             bou3.setBorderPainted(false);
+            bou3.add(l3);
             maBibli.add(bou3);
 
         }
