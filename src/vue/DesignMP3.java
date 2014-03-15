@@ -595,6 +595,7 @@ public class DesignMP3 extends Applet implements Observateur {
         //  JPanel est = new JPanel();
         ImagePanel est = new ImagePanel("est");
         est.setPreferredSize(new Dimension(250, 1000));
+        
 
         Font fontBoldG = new Font("Times New Roman", Font.BOLD, 24);
         Font fontBold = new Font("Times New Roman", Font.PLAIN, 16);
@@ -608,7 +609,7 @@ public class DesignMP3 extends Applet implements Observateur {
         //titre.setText("  Titre:  \n" );
         //titre.setFont(fontBoldG);
         //titre.setText(operations.getTitre());
-        est.add(titre);
+        est.add(titre,CENTER_ALIGNMENT);
 
         /*
          *-------------------------------------------------------------------------------------------------------
@@ -630,7 +631,8 @@ public class DesignMP3 extends Applet implements Observateur {
          */
         JPanel informations = new JPanel();
         informations.setLayout(new BoxLayout(informations, BoxLayout.PAGE_AXIS));
-
+        informations.setOpaque(false);
+        
         informations.add(auteur);
         informations.add(duree);
         informations.add(album);
