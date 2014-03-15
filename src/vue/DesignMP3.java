@@ -1058,4 +1058,5 @@ public class DesignMP3 extends Applet implements Observateur {
         
     }
     
+    
 }
