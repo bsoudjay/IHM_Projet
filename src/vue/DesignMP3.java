@@ -255,9 +255,11 @@ public class DesignMP3 extends Applet implements Observateur {
                 } else if (s2.isPlaying()) {
                     threadLecture.stop();
                 }
+                
                 String tmp = operations.reecouterMusic(titre.getText());
                 try {
                     s = new Sound(tmp);
+                    operations.ajouterBDD();
                 } catch (Exception ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -775,6 +777,7 @@ public class DesignMP3 extends Applet implements Observateur {
                             threadLecture.stop();
                         }
                         s = new Sound(chemin2);
+                        operations.ajouterBDD();
                         threadLecture = new Thread(new PlaySoundBouton(s));
                         threadLecture.start();
                         s.setIsPlaying(true);
