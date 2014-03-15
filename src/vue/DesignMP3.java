@@ -820,7 +820,10 @@ public class DesignMP3 extends Applet implements Observateur {
 
         maBibli.removeAll();
 
-        JButton trieTitre = new JButton("Trier par titre");
+        JButton trieTitre = new JButton();
+        JLabel t1 = new JLabel("Trier par titre");
+        t1.setHorizontalTextPosition((int) LEFT_ALIGNMENT);
+        trieTitre.add(t1);
         trieTitre.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -829,7 +832,10 @@ public class DesignMP3 extends Applet implements Observateur {
             }
         });
 
-        JButton trieAuteur = new JButton("Trier par auteur");
+        JButton trieAuteur = new JButton();
+        JLabel t2 = new JLabel("Trier par auteur");
+        t1.setHorizontalTextPosition((int) LEFT_ALIGNMENT);
+        trieAuteur.add(t2);
         trieAuteur.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -838,7 +844,10 @@ public class DesignMP3 extends Applet implements Observateur {
             }
         });
 
-        JButton trieDuree = new JButton("Trier par duree");
+        JButton trieDuree = new JButton();
+        JLabel t3 = new JLabel("Trier par duree");
+        t3.setHorizontalTextPosition((int) LEFT_ALIGNMENT);
+        trieDuree.add(t3);
         trieDuree.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
