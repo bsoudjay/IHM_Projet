@@ -5,12 +5,13 @@
 package model;
 
 import java.io.File;
+import java.util.Comparator;
 
 /**
  *
  * @author utilisateur
  */
-public class Musique {
+public class Musique implements Comparable<Musique>{
     
     private String album;
     private long duree;
@@ -108,9 +109,26 @@ public class Musique {
     public void setNbEcoute(int nbEcoute) {
         this.nbEcoute = nbEcoute;
     }
-    
-    
-    
+
+
+
+    @Override
+        public int compareTo(Musique t) {
+        
+        int result = this.titre.compareTo(t.getTitre());
+        if (result != 0)
+            return result;
+        return this.titre.compareTo(t.getTitre()); 
+        
+    }
+
+
+
+
+
+
+
+ 
     
     
     

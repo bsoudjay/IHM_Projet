@@ -7,6 +7,8 @@ package model;
 import java.util.ArrayList;
 import controller.Operations;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
@@ -49,10 +51,22 @@ public class Bibliotheque {
 
     public ArrayList<Musique> label() {
 
-      
-
         return this.bibliotheque;
 
+    }
+    
+    public void trierParTitre(){
+        Collections.sort(bibliotheque);
+    }
+    
+    public void trierParAuteur(){
+        TrierParAuteur tri2 = new TrierParAuteur();
+        Collections.sort(bibliotheque,tri2);
+    }
+    
+    public void trierParDuree(){
+        TrierParDuree tri3 = new TrierParDuree();
+        Collections.sort(bibliotheque,tri3);
     }
 
     public void ajouterObservateur(Observateur o) {
@@ -69,3 +83,43 @@ public class Bibliotheque {
         }
     }
 }
+
+
+ class TrierParAuteur implements Comparator{
+    
+        
+    @Override
+    public int compare(Object t, Object t1) {
+        
+        Musique p1 = (Musique)t;
+        Musique p2 = (Musique)t1;
+
+        
+         return p1.getAuteur().compareTo(p2.getAuteur());
+        
+}
+}
+    
+ class TrierParDuree implements Comparator{
+    
+        
+    @Override
+    public int compare(Object t, Object t1) {
+        
+        Musique p1 = (Musique)t;
+        Musique p2 = (Musique)t1;
+        
+        if (p1.getDuree() < p2.getDuree()){
+            return -1;
+        }else if (p1.getDuree() > p2.getDuree()){
+            return 1;
+        }else{ 
+            return 0;
+        }
+   }
+ 
+}
+ 
+
+
+
