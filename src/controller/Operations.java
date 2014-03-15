@@ -573,4 +573,19 @@ public class Operations {
         }
         return null;
     }
+    
+     public int recupDernierIdMusique() {
+        String query = "SELECT MAX(id_musique) FROM musique";
+        try {
+            Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ResultSet result = requete.executeQuery(query);
+            while (result.next()) {
+                int id = result.getInt(1);
+                return id;
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return 0;
+    }
 }

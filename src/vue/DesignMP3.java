@@ -274,7 +274,7 @@ public class DesignMP3 extends Applet implements Observateur {
                 int id = operations.recupId(tmp);
                 System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq" + id);
                 if (id == 1) {
-                    id = operations.recupDernierId();
+                    id = operations.recupDernierIdMusique();
                 } else {
                     id--;
                 }
@@ -291,7 +291,25 @@ public class DesignMP3 extends Applet implements Observateur {
                 threadLecture.start();
                 s.setIsPlaying(true);
                 actualiserInformations();
+                operations.setTitre(s.getTitre());
+                    operations.setAuteur(s.getAuteur());
+                    operations.setAlbum(s.getAlbum());
+
+                    operations.setDuree(s.getDuree());
+                    operations.setGenre(s.getGenre());
+                    operations.setChemin(s.getChemin());
+                try {
+                    operations.setImage(s.getChemin());
+                } catch (IOException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedTagException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InvalidDataException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    actualiserInformations();
             }
+            
         });
          
          
@@ -305,10 +323,10 @@ public class DesignMP3 extends Applet implements Observateur {
                     tmp = s2.getTitre();
                     threadLecture.stop();
                 }
-
+                System.out.println("tttttttttttttttttttt"+operations.recupDernierId());
                 int id = operations.recupId(tmp);
-                if (id ==operations.recupDernierId()) {
-                    id = 1;
+                if (id ==operations.recupDernierIdMusique()) {
+                    id = 1;                    
                 } else {
                     id++;
                 }
@@ -324,7 +342,23 @@ public class DesignMP3 extends Applet implements Observateur {
                 threadLecture = new Thread(new PlaySound());
                 threadLecture.start();
                 s.setIsPlaying(true);
-                actualiserInformations();
+                operations.setTitre(s.getTitre());
+                    operations.setAuteur(s.getAuteur());
+                    operations.setAlbum(s.getAlbum());
+
+                    operations.setDuree(s.getDuree());
+                    operations.setGenre(s.getGenre());
+                    operations.setChemin(s.getChemin());
+                try {
+                    operations.setImage(s.getChemin());
+                } catch (IOException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedTagException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InvalidDataException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    actualiserInformations();
             }
         });
 
