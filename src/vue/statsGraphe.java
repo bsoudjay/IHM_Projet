@@ -22,7 +22,7 @@ public class statsGraphe extends JFrame {
         PieDataset dataset = createDataset(liste);
         JFreeChart chart = createChart(dataset, chartTitle);
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(900, 700));
+        chartPanel.setPreferredSize(new java.awt.Dimension(900, 600));
         
         this.setSize(1000,800);     
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

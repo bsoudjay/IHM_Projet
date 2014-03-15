@@ -10,6 +10,7 @@ import javazoom.jl.player.advanced.*;
 import java.io.*;
 import java.sql.Connection;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -315,5 +316,12 @@ public class Sound implements Comparable<Sound> {
 
         return this.album.compareTo(m.getAlbum());
 
+    }
+    public int getTempsSec(){
+        
+                int h= (int) TimeUnit.MICROSECONDS.toHours(duree) - ((int) TimeUnit.MICROSECONDS.toDays(duree) * 24);
+                 int m=(int)   TimeUnit.MICROSECONDS.toMinutes(duree) - (int)(TimeUnit.MICROSECONDS.toHours(duree) * 60);
+                int s=(int)    TimeUnit.MICROSECONDS.toSeconds(duree) - (int)(TimeUnit.MICROSECONDS.toMinutes(duree) * 60);
+        return (h*3600)+(m*60)+s ;
     }
 }
