@@ -40,6 +40,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import static javax.swing.JSplitPane.LEFT;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -104,7 +105,24 @@ public class DesignMP3 extends Applet implements Observateur {
         gl.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
         gl.setVgap(5);
         this.maStats.setLayout(gl);
-        this.maBibli.setLayout((new BoxLayout(maBibli, BoxLayout.PAGE_AXIS)));
+        
+        
+        
+        GridLayout g2 = new GridLayout(10,4);
+        this.maBibli.setLayout(g2);
+        
+        //g2.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
+        g2.setVgap(10);
+        
+            JButton trieTitre = new JButton("Trier par titre");
+            JButton trieAuteur = new JButton("Trier par auteur");
+            JButton trieDuree = new JButton("Trier par duree");
+
+         this.maBibli.add(trieTitre);
+         this.maBibli.add(trieAuteur);
+         this.maBibli.add(trieDuree);
+         
+         
 
         try {
             this.operations = new Operations();
@@ -443,6 +461,7 @@ public class DesignMP3 extends Applet implements Observateur {
          *-------------------------------------------------------------------------------------------------------
          */
         JPanel card2 = new JPanel();
+        card2.setPreferredSize(new Dimension(700, 1000));
         JScrollPane scroll = new JScrollPane(card2);
         card2.setBackground(Color.GRAY);
 
@@ -453,8 +472,9 @@ public class DesignMP3 extends Applet implements Observateur {
         bibliotheqe.setBorderPainted(false);
 
         JLabel txtBibliotheque = new JLabel();
-        txtBibliotheque.setLayout(new BoxLayout(txtBibliotheque, BoxLayout.LINE_AXIS));
-        txtBibliotheque.setText("<html><body><font color='white'>--------------------------------------------------BIBLIOTHEQUE------------------------------------------------</body></html>");
+     
+        txtBibliotheque.setText("BIBLIOTHEQUE");
+        txtBibliotheque.setHorizontalAlignment((int)CENTER_ALIGNMENT);
         txtBibliotheque.setToolTipText(txtBibliotheque.getText());
         txtBibliotheque.setFont(font);
         card2.add(txtBibliotheque);
@@ -467,7 +487,7 @@ public class DesignMP3 extends Applet implements Observateur {
         bibli.setLayout(new BoxLayout(bibli, BoxLayout.PAGE_AXIS));
 
         bibli.add(txtBibliotheque);
-        //maBibli.setLayout(new GridLayout(20, 3));
+ 
         bibli.add(maBibli);
 
         card2.add(bibli);
@@ -747,7 +767,10 @@ public class DesignMP3 extends Applet implements Observateur {
 
         for (i = 0; i < test.size(); i++) {
 
-            final JButton bou = new JButton(test.get(i).getTitre());
+            final JButton bou = new JButton();
+            JLabel l1 = new JLabel(test.get(i).getTitre());
+            l1.setHorizontalTextPosition((int)LEFT_ALIGNMENT);
+            bou.add(l1);
 
             bou.setIconTextGap(i);
             bou.addActionListener(new ActionListener() {
@@ -802,14 +825,23 @@ public class DesignMP3 extends Applet implements Observateur {
                 }
             });
 
+            bou.setBorderPainted(false);
             maBibli.add(bou);
-            maBibli.add(new JLabel("Artiste: " + test.get(bou.getIconTextGap()).getAuteur()));
+            
+            JButton bou2 = new JButton();
+            bou2.setBorderPainted(false);
+            JLabel l2 = new JLabel(test.get(bou.getIconTextGap()).getAuteur());
+            l2.setHorizontalTextPosition((int)LEFT_ALIGNMENT);
+            bou2.add(l2);
+            maBibli.add(bou2);
+            
             long duration = test.get(bou.getIconTextGap()).getDuree();
-            maBibli.add(new JLabel("Duree: " + (String.format("%02d:%02d:%02d",
-                    TimeUnit.MICROSECONDS.toHours(duration) - ((int) TimeUnit.MICROSECONDS.toDays(duration) * 24),
-                    TimeUnit.MICROSECONDS.toMinutes(duration) - (TimeUnit.MICROSECONDS.toHours(duration) * 60),
-                    TimeUnit.MICROSECONDS.toSeconds(duration) - (TimeUnit.MICROSECONDS.toMinutes(duration) * 60)))));
-            maBibli.add(new JLabel(" _______________________________"));
+            JButton bou3 = new JButton((String.format("%02d:%02d"
+                                        ,TimeUnit.MICROSECONDS.toMinutes(duration) - (TimeUnit.MICROSECONDS.toHours(duration) * 60),
+                                        TimeUnit.MICROSECONDS.toSeconds(duration) - (TimeUnit.MICROSECONDS.toMinutes(duration) * 60))));
+            bou3.setBorderPainted(false);
+            maBibli.add(bou3);
+
 
         }
     }
