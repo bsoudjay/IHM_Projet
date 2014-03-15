@@ -27,6 +27,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javazoom.jl.decoder.JavaLayerException;
 import org.tritonus.share.sampled.file.TAudioFileFormat;
+import vue.DesignMP3;
 
 // MP3, WMA, MPEG, WAV compatible
 public class Sound implements Comparable<Sound> {
@@ -45,8 +46,8 @@ public class Sound implements Comparable<Sound> {
     private long tempsRestant;
     private Operations operations;
     private BufferedImage img;
- 
-    
+    private static long chrono;
+
     //constructeur
     public Sound() {
         this.titre = "";
@@ -67,14 +68,14 @@ public class Sound implements Comparable<Sound> {
         } else {
             chemin = new File(path);
         }
-        
+
         chargementSound(chemin);
         chargementImage(this.chemin);
         setGenre(genre);
-        
+
     }
-    
-    public void chargementSound(File chemin) throws FileNotFoundException, JavaLayerException, UnsupportedAudioFileException, IOException{
+
+    public void chargementSound(File chemin) throws FileNotFoundException, JavaLayerException, UnsupportedAudioFileException, IOException {
         //File file = new File(filename);
         InputStream in = (InputStream) new BufferedInputStream(new FileInputStream(chemin));
         player = new AdvancedPlayer(in);
@@ -96,33 +97,33 @@ public class Sound implements Comparable<Sound> {
             throw new UnsupportedAudioFileException();
         }
     }
-    
-    public void setImage(BufferedImage img2) throws IOException, UnsupportedTagException, InvalidDataException{
-        
-        this.img=img2;
+
+    public void setImage(BufferedImage img2) throws IOException, UnsupportedTagException, InvalidDataException {
+
+        this.img = img2;
     }
-     
-    public BufferedImage chargementImage(File chemin2) throws IOException, UnsupportedTagException, InvalidDataException{
-         
+
+    public BufferedImage chargementImage(File chemin2) throws IOException, UnsupportedTagException, InvalidDataException {
+
         Mp3File song = new Mp3File(chemin2.getPath());
-                if (song.hasId3v2Tag()){
-                    ID3v2 id3v2tag = song.getId3v2Tag();
-                    byte[] imageData = id3v2tag.getAlbumImage();
-                    if (imageData!=null){
-                        System.out.println("debug:: imageData is not null");
-                        img = ImageIO.read(new ByteArrayInputStream(imageData));
- 
-                    }  else{
-                        
-                        img=null;
-                    }
-                }
-                 
-                 System.out.println("img : "+img);
-                return img;
+        if (song.hasId3v2Tag()) {
+            ID3v2 id3v2tag = song.getId3v2Tag();
+            byte[] imageData = id3v2tag.getAlbumImage();
+            if (imageData != null) {
+                System.out.println("debug:: imageData is not null");
+                img = ImageIO.read(new ByteArrayInputStream(imageData));
+
+            } else {
+
+                img = null;
+            }
+        }
+
+        System.out.println("img : " + img);
+        return img;
     }
-     
-    public BufferedImage getImage(){
+
+    public BufferedImage getImage() {
         return this.img;
     }
 
@@ -188,17 +189,17 @@ public class Sound implements Comparable<Sound> {
 
     public void setQualite() throws JavaLayerException, UnsupportedAudioFileException, IOException {
         chargementSound(chemin);
-        
+
     }
 
     public String getGenre() {
-        
+
         return genre;
     }
 
     public void setGenre(String genre) {
-        if(genre==null){
-            genre="Autre";
+        if (genre == null) {
+            genre = "Autre";
         }
         this.genre = genre;
     }
@@ -211,12 +212,10 @@ public class Sound implements Comparable<Sound> {
         this.tempsRestant = tempsRestant;
     }
 
-            /*
-             * Volume mute
-             * BooleanControl muteControl = (BooleanControl) line.getControl(BooleanControl.Type.MUTE);
-             muteControl.setValue(true); */
-
-
+    /*
+     * Volume mute
+     * BooleanControl muteControl = (BooleanControl) line.getControl(BooleanControl.Type.MUTE);
+     muteControl.setValue(true); */
     public Sound(String path, PlaybackListener listener) throws Exception {
         InputStream in = (InputStream) new BufferedInputStream(new FileInputStream(new File(path)));
         player = new AdvancedPlayer(in);
@@ -256,9 +255,9 @@ public class Sound implements Comparable<Sound> {
     public long calculerTempsRestant() {
         return tempsRestant += System.currentTimeMillis();
     }
-    
-    public void setIsPlaying(boolean t){
-        isPlaying=t;
+
+    public void setIsPlaying(boolean t) {
+        isPlaying = t;
     }
 
     @Override
@@ -267,11 +266,24 @@ public class Sound implements Comparable<Sound> {
         return this.album.compareTo(m.getAlbum());
 
     }
-    public int getTempsSec(){
-        
-                int h= (int) TimeUnit.MICROSECONDS.toHours(duree) - ((int) TimeUnit.MICROSECONDS.toDays(duree) * 24);
-                 int m=(int)   TimeUnit.MICROSECONDS.toMinutes(duree) - (int)(TimeUnit.MICROSECONDS.toHours(duree) * 60);
-                int s=(int)    TimeUnit.MICROSECONDS.toSeconds(duree) - (int)(TimeUnit.MICROSECONDS.toMinutes(duree) * 60);
-        return (h*3600)+(m*60)+s ;
+
+    public int getTempsSec() {
+
+        int h = (int) TimeUnit.MICROSECONDS.toHours(duree) - ((int) TimeUnit.MICROSECONDS.toDays(duree) * 24);
+        int m = (int) TimeUnit.MICROSECONDS.toMinutes(duree) - (int) (TimeUnit.MICROSECONDS.toHours(duree) * 60);
+        int s = (int) TimeUnit.MICROSECONDS.toSeconds(duree) - (int) (TimeUnit.MICROSECONDS.toMinutes(duree) * 60);
+        return (h * 3600) + (m * 60) + s;
     }
+
+
+
+    public int Pourcent() {
+        return getTempsSec() / 100;
+    }
+
+    public int getPourcent() {
+        return DesignMP3.Sec(DesignMP3.Stop_Chrono())/Pourcent();
+    }
+
+
 }

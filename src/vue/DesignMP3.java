@@ -89,6 +89,8 @@ public class DesignMP3 extends Applet implements Observateur {
     public JPanel maStats;
     private String contenuRecherche;
     private JLabel img;
+    public static long chrono = 0;
+    public Thread threadBarre;
 
     public DesignMP3() throws Exception {
 
@@ -532,7 +534,7 @@ public class DesignMP3 extends Applet implements Observateur {
          *-------------------------------------------------------------------------------------------------------
          */
         JPanel card2 = new JPanel();
-       
+
         JScrollPane scroll = new JScrollPane(card2);
         card2.setBackground(Color.GRAY);
 
@@ -769,7 +771,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         public void lireMusique() throws Exception {
             bougerBarreMusique();
-            this.s.play(); 
+            this.s.play();
             actualiserInformations();
         }
 
@@ -905,10 +907,12 @@ public class DesignMP3 extends Applet implements Observateur {
                         threadLecture = new Thread(new PlaySoundBouton(s));
                         threadLecture.start();
                         s.setIsPlaying(true);
+                        Go_Chrono();
                     } catch (Exception ex) {
                         Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     actualiserImage();
+                    
                     actualiserInformations();
                 }
             });
@@ -955,7 +959,7 @@ public class DesignMP3 extends Applet implements Observateur {
         modifVolume();
         //afficherVolume();
 
-        tempsRestant.setText(barreMusique.getValue()+"");
+        tempsRestant.setText(barreMusique.getValue() + "");
         tempsTotal.setText(operations.getDuree());
         actualiserPanelCoteEst(titre, auteur, duree, album, annee, genre, qualite, new Font("Times New Roman", Font.PLAIN, 16), new Font("Times New Roman", Font.BOLD, 24));
         this.monPanel.revalidate();
@@ -1044,17 +1048,41 @@ public class DesignMP3 extends Applet implements Observateur {
 
     }
 
-    private void bougerBarreMusique() {
+     private void bougerBarreMusique() {
         try {
             System.out.println("Je rentre dans la fonction bougerBarreMusique");
             while (barreMusique.getValue() != 100) {
-                barreMusique.setValue(barreMusique.getValue() + 5);
+                System.out.println(s.getPourcent());
+                barreMusique.setValue(s.getPourcent());
                 System.out.println("LA BARRE DE MUSIQUE BOUGE");
                 actualiserInformations();
-                Thread.sleep(1000);
+                threadBarre.sleep(1000);
             }
         } catch (InterruptedException ex) {
             Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public static long Stop_Chrono() {
+        long chrono2 = java.lang.System.currentTimeMillis();
+        long temps =  chrono2 -  chrono;
+        return temps;
+        
+    }
+    
+    public static int Sec(long temps){
+       long totalSeconds=temps/1000;  
+        int second=(int)(totalSeconds%60);  
+        long totalMinutes=totalSeconds/60;  
+        int minute=(int)(totalMinutes%60);  
+        long totalHours=totalMinutes/60;  
+        int hour=(int)(totalHours%24);
+        return (hour * 3600) + (minute * 60) + second;
+    }
+
+     static void Go_Chrono() {
+         chrono=0;
+        chrono = java.lang.System.currentTimeMillis();
+    }
+
 }
