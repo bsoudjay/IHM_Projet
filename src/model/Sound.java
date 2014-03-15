@@ -211,57 +211,11 @@ public class Sound implements Comparable<Sound> {
         this.tempsRestant = tempsRestant;
     }
 
-    public void diminuerSon() {
-
-        try {
-            Line line = AudioSystem.getLine(Port.Info.SPEAKER);
-            line.open();
-
-            FloatControl gainControl =
-                    (FloatControl) line.getControl(FloatControl.Type.VOLUME);
-
-            float min = gainControl.getMinimum();
-            float max = gainControl.getMaximum();
-            float range = max - min;
-            float offsetV = gainControl.getValue() - min;
-            float percent = 0.0f;
-
-            if (range != 0.0) {
-                percent = offsetV / range;
-            }
-
-            gainControl.setValue(-0.5f); // Reduce volume by 10 decibels.
-
-            System.out.println("Volume apres : " + gainControl.getValue());
-            //line.
-
             /*
              * Volume mute
              * BooleanControl muteControl = (BooleanControl) line.getControl(BooleanControl.Type.MUTE);
              muteControl.setValue(true); */
 
-        } catch (LineUnavailableException ex) {
-            Logger.getLogger(Sound.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void augmenterSon() {
-
-        try {
-            Line line = AudioSystem.getLine(Port.Info.SPEAKER);
-            line.open();
-
-            FloatControl gainControl =
-                    (FloatControl) line.getControl(FloatControl.Type.VOLUME);
-            System.out.println("Volume avt : " + gainControl.getValue());
-            gainControl.setValue(0.5f); // Reduce volume by 10 decibels.
-            System.out.println("Volume apres : " + gainControl.getValue());
-        } catch (LineUnavailableException ex) {
-            Logger.getLogger(Sound.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
 
     public Sound(String path, PlaybackListener listener) throws Exception {
         InputStream in = (InputStream) new BufferedInputStream(new FileInputStream(new File(path)));
@@ -276,10 +230,6 @@ public class Sound implements Comparable<Sound> {
         if (player != null) {
             isPlaying = true;
             player.play();
-            while (tempsRestant != duree) {
-                calculerTempsRestant();
-                Thread.sleep(100);
-            }
         }
     }
 

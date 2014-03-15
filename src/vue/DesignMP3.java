@@ -256,7 +256,7 @@ public class DesignMP3 extends Applet implements Observateur {
 
         precedent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-String tmp = null;
+                String tmp = null;
                 if (s.isPlaying()) {
                     tmp = s.getTitre();
                     threadLecture.stop();
@@ -265,12 +265,12 @@ String tmp = null;
                     threadLecture.stop();
 
                 }
-                if (ibiblio==0){
-                    ibiblio=i-1;
-                }else{
+                if (ibiblio == 0) {
+                    ibiblio = i - 1;
+                } else {
                     ibiblio--;
                 }
-                String musiquePrecedent=biblio.getBiblioTitre(ibiblio);
+                String musiquePrecedent = biblio.getBiblioTitre(ibiblio);
                 System.out.println(musiquePrecedent);
                 tmp = operations.reecouterMusic(musiquePrecedent);
                 System.out.println(tmp);
@@ -315,12 +315,12 @@ String tmp = null;
                     threadLecture.stop();
 
                 }
-                if (ibiblio==i-1){
-                    ibiblio=0;
-                }else{
+                if (ibiblio == i - 1) {
+                    ibiblio = 0;
+                } else {
                     ibiblio++;
                 }
-                String musiqueSuivant=biblio.getBiblioTitre(ibiblio);
+                String musiqueSuivant = biblio.getBiblioTitre(ibiblio);
                 System.out.println(musiqueSuivant);
                 tmp = operations.reecouterMusic(musiqueSuivant);
                 System.out.println(tmp);
@@ -379,7 +379,6 @@ String tmp = null;
         });
 
         stop.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (s.isPlaying()) {
@@ -394,20 +393,6 @@ String tmp = null;
             }
         });
 
-//        diminuer.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                operations.diminuerVolume();
-//                actualiserInformations();
-//            }
-//        });
-//
-//        augmenter.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//
-//                actualiserInformations();
-//                operations.augmenterVolume();
-//            }
-//        });
         //lesBoutons.add(new JButton("barre Son"));
 
         /*
@@ -680,7 +665,6 @@ String tmp = null;
         lesOnglets.add(research);
 
         research.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("debut recherhce");
@@ -784,7 +768,8 @@ String tmp = null;
         }
 
         public void lireMusique() throws Exception {
-            this.s.play();
+            bougerBarreMusique();
+            this.s.play(); 
             actualiserInformations();
         }
 
@@ -879,7 +864,7 @@ String tmp = null;
             bou.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    ibiblio = bou.getComponentCount()-1;
+                    ibiblio = bou.getComponentCount() - 1;
                     operations.setTitre(test.get(bou.getIconTextGap()).getTitre());
                     operations.setAuteur(test.get(bou.getIconTextGap()).getAuteur());
                     operations.setAlbum(test.get(bou.getIconTextGap()).getAlbum());
@@ -968,7 +953,7 @@ String tmp = null;
         modifVolume();
         //afficherVolume();
 
-        this.barreMusique.setValue(WIDTH);
+        tempsRestant.setText(barreMusique.getValue()+"");
         tempsTotal.setText(operations.getDuree());
         actualiserPanelCoteEst(titre, auteur, duree, album, annee, genre, qualite, new Font("Times New Roman", Font.PLAIN, 16), new Font("Times New Roman", Font.BOLD, 24));
         this.monPanel.revalidate();
@@ -1007,7 +992,6 @@ String tmp = null;
                     actualiserInformations();
 
                 }
-
             });
             maStats.add(bou2);
         }
@@ -1020,8 +1004,7 @@ String tmp = null;
             line = AudioSystem.getLine(Port.Info.SPEAKER);
             line.open();
 
-            FloatControl gainControl
-                    = (FloatControl) line.getControl(FloatControl.Type.VOLUME);
+            FloatControl gainControl = (FloatControl) line.getControl(FloatControl.Type.VOLUME);
 
             int slider_range = slide.getMaximum() - slide.getMinimum();
             float max = gainControl.getMaximum();
@@ -1059,4 +1042,17 @@ String tmp = null;
 
     }
 
+    private void bougerBarreMusique() {
+        try {
+            System.out.println("Je rentre dans la fonction bougerBarreMusique");
+            while (barreMusique.getValue() != 100) {
+                barreMusique.setValue(barreMusique.getValue() + 5);
+                System.out.println("LA BARRE DE MUSIQUE BOUGE");
+                actualiserInformations();
+                Thread.sleep(1000);
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

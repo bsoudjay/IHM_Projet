@@ -42,7 +42,6 @@ public class Operations {
     //private Musique musique;
     private String tempsRestant;
     private Connection con;
-    private int volume;
     private DOA doa;
     private ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
 
@@ -60,7 +59,6 @@ public class Operations {
 
     public void ouvrirFenetre() throws Exception {
         this.observateurs = new ArrayList<Observateur>();
-        this.volume = 0;
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Ajouter une musique");
         fc.setApproveButtonText("Ajouter une musique");
@@ -236,48 +234,9 @@ public class Operations {
         return 0;
     }
 
-    public void augmenterSon() throws LineUnavailableException {
-        sound.augmenterSon();
-    }
-
-    public void diminuerSon() throws LineUnavailableException {
-        sound.diminuerSon();
-    }
-
     public Sound getSound() {
 
         return this.sound;
-    }
-
-    public int getVolume() {
-
-        return this.volume;
-    }
-
-    public void setVolume(int volume) {
-
-        this.volume = volume;
-    }
-
-    public void augmenterVolume() {
-        if (this.volume < 10) {
-            this.volume++;
-            this.notifierObservateursNouveauVolume();
-        }
-    }
-
-    public void diminuerVolume() {
-        if (this.volume > 0) {
-            this.volume--;
-            this.notifierObservateursNouveauVolume();
-        }
-    }
-
-    public void silence() {
-        if (this.volume != 0) {
-            this.volume = 0;
-            this.notifierObservateursNouveauVolume();
-        }
     }
 
     public String getAuteur() {
