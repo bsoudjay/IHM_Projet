@@ -108,19 +108,13 @@ public class DesignMP3 extends Applet implements Observateur {
         
         
         
-        GridLayout g2 = new GridLayout(10,4);
+        GridLayout g2 = new GridLayout(15,3);
         this.maBibli.setLayout(g2);
         
         //g2.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
         g2.setVgap(10);
         
-            JButton trieTitre = new JButton("Trier par titre");
-            JButton trieAuteur = new JButton("Trier par auteur");
-            JButton trieDuree = new JButton("Trier par duree");
 
-         this.maBibli.add(trieTitre);
-         this.maBibli.add(trieAuteur);
-         this.maBibli.add(trieDuree);
          
          
 
@@ -749,19 +743,18 @@ public class DesignMP3 extends Applet implements Observateur {
     }
 
     private void actualiserBiblio(Bibliotheque b) {
+        
+         
 
         maBibli.removeAll();
-        /* ArrayList<String> test = new ArrayList<String>();
-         test = operations.bibliothequeComplete();
         
-         for (int i = 0; i < test.size(); i += 3) {
-         maBibli.add(new JLabel(" "));
-         maBibli.add(new JButton(test.get(i)));
-         maBibli.add(new JLabel("Artiste: " + test.get(i + 1)));
-         maBibli.add(new JLabel("Duree: " + test.get(i + 2)));
-         maBibli.add(new JLabel("  ___________________________________ "));
-         }
-         */
+         JButton trieTitre = new JButton("Trier par titre");
+         JButton trieAuteur = new JButton("Trier par auteur");
+         JButton trieDuree = new JButton("Trier par duree");
+
+         this.maBibli.add(trieTitre);
+         this.maBibli.add(trieAuteur);
+         this.maBibli.add(trieDuree);
 
         test = biblio.label();
 
