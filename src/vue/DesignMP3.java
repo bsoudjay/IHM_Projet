@@ -258,6 +258,75 @@ public class DesignMP3 extends Applet implements Observateur {
                 actualiserInformations();
             }
         });
+        
+         precedent.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                  String tmp = null;
+                if (s.isPlaying()) {
+                    tmp = s.getTitre();
+                    threadLecture.stop();
+                } else if (s2.isPlaying()) {
+                    tmp = s2.getTitre();
+                    threadLecture.stop();
+                }
+
+                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" + tmp);
+                int id = operations.recupId(tmp);
+                System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq" + id);
+                if (id == 1) {
+                    id = operations.recupDernierId();
+                } else {
+                    id--;
+                }
+                System.out.println(id);
+                tmp = operations.recupChemin(id);
+                System.out.println(tmp);
+                try {
+                    s = new Sound(tmp);
+                    operations.ajouterBDD();
+                } catch (Exception ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                threadLecture = new Thread(new PlaySound());
+                threadLecture.start();
+                s.setIsPlaying(true);
+                actualiserInformations();
+            }
+        });
+         
+         
+          suivant.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                  String tmp = null;
+                if (s.isPlaying()) {
+                    tmp = s.getTitre();
+                    threadLecture.stop();
+                } else if (s2.isPlaying()) {
+                    tmp = s2.getTitre();
+                    threadLecture.stop();
+                }
+
+                int id = operations.recupId(tmp);
+                if (id ==operations.recupDernierId()) {
+                    id = 1;
+                } else {
+                    id++;
+                }
+                System.out.println(id);
+                tmp = operations.recupChemin(id);
+                System.out.println(tmp);
+                try {
+                    s = new Sound(tmp);
+                    operations.ajouterBDD();
+                } catch (Exception ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                threadLecture = new Thread(new PlaySound());
+                threadLecture.start();
+                s.setIsPlaying(true);
+                actualiserInformations();
+            }
+        });
 
         lecture.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

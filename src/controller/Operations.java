@@ -532,4 +532,45 @@ public class Operations {
          
         sound.setImage(sound.chargementImage(chemin));
     }
+    
+    public int recupId(String chemin_tmp){
+        String query = null;
+        chemin_tmp = this.getChemin().toString();
+        chemin_tmp = chemin_tmp.replace("\\", "\\\\");
+        System.out.println("wwwwwwwwwwwww  "+chemin_tmp);
+        query = "SELECT id_musique FROM musique WHERE chemin = '"+ chemin_tmp +"'";
+        try {
+            Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            System.out.println("test");
+            ResultSet result = requete.executeQuery(query);
+            while (result.next()){
+                System.out.println("aeaee1");
+                int id = result.getInt(1);
+                System.out.println("aeaeaeae2   "+id);
+                return id;
+            }
+        } catch (Exception e1) {
+
+            e1.printStackTrace();
+        }
+        System.out.println("azzazazazazazazazazazazazazzazazazazzazaza");
+        return 0;
+    }
+    
+    public String recupChemin(int id){
+        String query = null;
+        query = "SELECT chemin FROM musique WHERE id_musique = " + id + "";
+        try {
+            Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ResultSet result = requete.executeQuery(query);
+            while (result.next()) {
+                String chemin = result.getString(1);
+                return chemin;
+            }
+        } catch (Exception e1) {
+
+            e1.printStackTrace();
+        }
+        return null;
+    }
 }
