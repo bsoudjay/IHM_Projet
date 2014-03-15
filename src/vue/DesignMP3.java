@@ -80,6 +80,7 @@ public class DesignMP3 extends Applet implements Observateur {
     public ArrayList<Musique> statsAfiiche;
     public ArrayList<String> test2;
     public int i;
+    public int ibiblio;
     public int jstats;
     private JPanel card1 = new JPanel();
     private Statistiques stats;
@@ -255,25 +256,23 @@ public class DesignMP3 extends Applet implements Observateur {
 
         precedent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String tmp = null;
+String tmp = null;
                 if (s.isPlaying()) {
                     tmp = s.getTitre();
                     threadLecture.stop();
                 } else if (s2.isPlaying()) {
                     tmp = s2.getTitre();
                     threadLecture.stop();
-                }
 
-                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" + tmp);
-                int id = operations.recupId(tmp);
-                System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq" + id);
-                if (id == 1) {
-                    id = operations.recupDernierIdMusique();
-                } else {
-                    id--;
                 }
-                System.out.println(id);
-                tmp = operations.recupChemin(id);
+                if (ibiblio==0){
+                    ibiblio=i-1;
+                }else{
+                    ibiblio--;
+                }
+                String musiquePrecedent=biblio.getBiblioTitre(ibiblio);
+                System.out.println(musiquePrecedent);
+                tmp = operations.reecouterMusic(musiquePrecedent);
                 System.out.println(tmp);
                 try {
                     s = new Sound(tmp);
@@ -284,7 +283,6 @@ public class DesignMP3 extends Applet implements Observateur {
                 threadLecture = new Thread(new PlaySound());
                 threadLecture.start();
                 s.setIsPlaying(true);
-                actualiserInformations();
                 operations.setTitre(s.getTitre());
                 operations.setAuteur(s.getAuteur());
                 operations.setAlbum(s.getAlbum());
@@ -301,9 +299,9 @@ public class DesignMP3 extends Applet implements Observateur {
                 } catch (InvalidDataException ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                actualiserImage();
                 actualiserInformations();
             }
-
         });
 
         suivant.addActionListener(new ActionListener() {
@@ -315,17 +313,16 @@ public class DesignMP3 extends Applet implements Observateur {
                 } else if (s2.isPlaying()) {
                     tmp = s2.getTitre();
                     threadLecture.stop();
- 
+
                 }
-                System.out.println("tttttttttttttttttttt" + operations.recupDernierId());
-                int id = operations.recupId(tmp);
-                if (id == operations.recupDernierIdMusique()) {
-                    id = 1;
-                } else {
-                    id++;
+                if (ibiblio==i-1){
+                    ibiblio=0;
+                }else{
+                    ibiblio++;
                 }
-                System.out.println(id);
-                tmp = operations.recupChemin(id);
+                String musiqueSuivant=biblio.getBiblioTitre(ibiblio);
+                System.out.println(musiqueSuivant);
+                tmp = operations.reecouterMusic(musiqueSuivant);
                 System.out.println(tmp);
                 try {
                     s = new Sound(tmp);
@@ -882,6 +879,7 @@ public class DesignMP3 extends Applet implements Observateur {
             bou.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
+                    ibiblio = bou.getComponentCount()-1;
                     operations.setTitre(test.get(bou.getIconTextGap()).getTitre());
                     operations.setAuteur(test.get(bou.getIconTextGap()).getAuteur());
                     operations.setAlbum(test.get(bou.getIconTextGap()).getAlbum());

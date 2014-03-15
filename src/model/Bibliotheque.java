@@ -36,6 +36,20 @@ public class Bibliotheque {
         this.notifierObservateursNouveauVolume();
     }
     
+        public String getBiblioTitre(int i) {
+
+            return bibliotheque.get(i).getTitre();
+        
+    }
+    
+    public String biblioPrecendent(int i) {
+        if (i == 1) {
+            return bibliotheque.get(bibliotheque.size()).getTitre();
+        } else {
+            return bibliotheque.get(i + 1).getTitre();
+        }
+    }
+    
     public void recupererMusiqueComplete() throws SQLException, Exception {
         this.bibliotheque.clear();
         Operations op = new Operations();
