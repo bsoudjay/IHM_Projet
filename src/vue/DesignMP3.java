@@ -4,6 +4,8 @@
  */
 package vue;
 
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
 import vue.*;
 import controller.*;
 import java.applet.Applet;
@@ -13,10 +15,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
+import static java.awt.Image.SCALE_SMOOTH;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -80,9 +85,12 @@ public class DesignMP3 extends Applet implements Observateur {
     private Sound s2 = new Sound();
     public JPanel maStats;
     private String contenuRecherche;
+    private JLabel img;
 
     public DesignMP3() throws Exception {
 
+        this.img = new JLabel();
+        this.img.setSize(50, 50);
         this.maStats = new JPanel();
 
         this.stats = new Statistiques("test");
@@ -604,7 +612,11 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                          Photo
          *-------------------------------------------------------------------------------------------------------
          */
-        JLabel img = new JLabel(new ImageIcon("Design/Boutons/imgSon.png"));
+        
+        
+        ImageIcon icon = new ImageIcon("Design/Boutons/imgSon.png");
+        img.setIcon(icon);
+        
         est.add(img);
 
 
@@ -742,6 +754,19 @@ public class DesignMP3 extends Applet implements Observateur {
                     operations.setGenre(test.get(bou.getIconTextGap()).getGenre());
                     operations.setChemin(test.get(bou.getIconTextGap()).getChemin());
 
+                    
+                    try {
+                     
+                        operations.setImage(test.get(bou.getIconTextGap()).getChemin());
+                    } catch (IOException ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (UnsupportedTagException ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InvalidDataException ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    
                     String chemin2 = operations.reecouterMusic(test.get(bou.getIconTextGap()).getTitre());
                     try {
                         if (s.isPlaying()) {
@@ -756,7 +781,7 @@ public class DesignMP3 extends Applet implements Observateur {
                     } catch (Exception ex) {
                         Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
+                    actualiserImage();
                     actualiserInformations();
                 }
             });
@@ -793,7 +818,8 @@ public class DesignMP3 extends Applet implements Observateur {
         modifBarreSon();
         modifVolume();
         //afficherVolume();
-
+ 
+    
         this.barreMusique.setValue(WIDTH);
         tempsTotal.setText(operations.getDuree());
         actualiserPanelCoteEst(titre, auteur, duree, album, annee, genre, qualite, new Font("Times New Roman", Font.PLAIN, 16), new Font("Times New Roman", Font.BOLD, 24));
@@ -867,4 +893,20 @@ public class DesignMP3 extends Applet implements Observateur {
         }
 
     }
+    
+    public void actualiserImage() {
+        
+        if(operations.getPicture()==null){
+            img = new JLabel(new ImageIcon("Design/Boutons/imgSon.png"));
+            
+        }else{
+            
+            Image resizedImage = operations.getPicture().getScaledInstance(200, 200, 0);
+           System.out.println("ldslldsllds");
+            img.setIcon(new ImageIcon(resizedImage));
+
+}
+        
+    }
+    
 }

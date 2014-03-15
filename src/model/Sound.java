@@ -1,12 +1,18 @@
 package model;
 
+import com.mpatric.mp3agic.ID3v2;
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.Mp3File;
+import com.mpatric.mp3agic.UnsupportedTagException;
 import controller.Operations;
+import java.awt.image.BufferedImage;
 import javazoom.jl.player.advanced.*;
 import java.io.*;
 import java.sql.Connection;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -17,6 +23,7 @@ import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Port;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.ImageIcon;
 import javazoom.jl.decoder.JavaLayerException;
 import org.tritonus.share.sampled.file.TAudioFileFormat;
 
@@ -36,7 +43,9 @@ public class Sound implements Comparable<Sound> {
     public AdvancedPlayer player = null;
     private long tempsRestant;
     private Operations operations;
-
+    private BufferedImage img;
+ 
+    
     //constructeur
     public Sound() {
         this.titre = "";
@@ -77,6 +86,38 @@ public class Sound implements Comparable<Sound> {
         } else {
             throw new UnsupportedAudioFileException();
         }
+        
+        chargementImage(this.chemin);
+        
+    }
+    
+    public void setImage(BufferedImage img2) throws IOException, UnsupportedTagException, InvalidDataException{
+        
+        this.img=img2;
+    }
+     
+    public BufferedImage chargementImage(File chemin2) throws IOException, UnsupportedTagException, InvalidDataException{
+         
+        Mp3File song = new Mp3File(chemin2.getPath());
+                if (song.hasId3v2Tag()){
+                    ID3v2 id3v2tag = song.getId3v2Tag();
+                    byte[] imageData = id3v2tag.getAlbumImage();
+                    if (imageData!=null){
+                        System.out.println("debug:: imageData is not null");
+                        img = ImageIO.read(new ByteArrayInputStream(imageData));
+ 
+                    }  else{
+                        
+                        img=null;
+                    }
+                }
+                 
+                 
+                return img;
+    }
+     
+    public BufferedImage getImage(){
+        return this.img;
     }
 
     public void setPlayer(InputStream in) throws JavaLayerException {

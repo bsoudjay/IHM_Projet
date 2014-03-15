@@ -6,8 +6,12 @@ package controller;
 
 import model.Sound;
 import BDD.DOA;
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -513,5 +517,17 @@ public class Operations {
             e1.printStackTrace();
         }
         return 0;
+    }
+    
+           public BufferedImage getPicture(){
+           if(sound.getImage()==null){
+               System.out.println("pas dimage");
+           }
+            return sound.getImage();
+    }
+     
+    public void setImage(File chemin) throws IOException, UnsupportedTagException, InvalidDataException{
+         
+        sound.setImage(sound.chargementImage(chemin));
     }
 }
