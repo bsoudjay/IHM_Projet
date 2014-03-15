@@ -819,7 +819,7 @@ public class DesignMP3 extends Applet implements Observateur {
         modifVolume();
         //afficherVolume();
  
-    
+      
         this.barreMusique.setValue(WIDTH);
         tempsTotal.setText(operations.getDuree());
         actualiserPanelCoteEst(titre, auteur, duree, album, annee, genre, qualite, new Font("Times New Roman", Font.PLAIN, 16), new Font("Times New Roman", Font.BOLD, 24));
@@ -897,12 +897,13 @@ public class DesignMP3 extends Applet implements Observateur {
     public void actualiserImage() {
         
         if(operations.getPicture()==null){
-            img = new JLabel(new ImageIcon("Design/Boutons/imgSon.png"));
+            
+            img.setIcon(new ImageIcon("Design/Boutons/imgSon.png"));
             
         }else{
             
             Image resizedImage = operations.getPicture().getScaledInstance(200, 200, 0);
-           System.out.println("ldslldsllds");
+          
             img.setIcon(new ImageIcon(resizedImage));
 
 }
