@@ -32,6 +32,7 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Port;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -755,8 +756,16 @@ public class DesignMP3 extends Applet implements Observateur {
                     operations.setDuree(test.get(bou.getIconTextGap()).getDuree());
                     operations.setGenre(test.get(bou.getIconTextGap()).getGenre());
                     operations.setChemin(test.get(bou.getIconTextGap()).getChemin());
-
-                    
+                    try {
+                        operations.setQualite();
+                    } catch (JavaLayerException ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (UnsupportedAudioFileException ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                     
                     try {
                      
                         operations.setImage(test.get(bou.getIconTextGap()).getChemin());

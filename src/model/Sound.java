@@ -66,6 +66,13 @@ public class Sound implements Comparable<Sound> {
         } else {
             chemin = new File(path);
         }
+        
+        chargementSound(chemin);
+        chargementImage(this.chemin);
+        
+    }
+    
+    public void chargementSound(File chemin) throws FileNotFoundException, JavaLayerException, UnsupportedAudioFileException, IOException{
         //File file = new File(filename);
         InputStream in = (InputStream) new BufferedInputStream(new FileInputStream(chemin));
         player = new AdvancedPlayer(in);
@@ -86,9 +93,6 @@ public class Sound implements Comparable<Sound> {
         } else {
             throw new UnsupportedAudioFileException();
         }
-        
-        chargementImage(this.chemin);
-        
     }
     
     public void setImage(BufferedImage img2) throws IOException, UnsupportedTagException, InvalidDataException{
@@ -180,8 +184,9 @@ public class Sound implements Comparable<Sound> {
         return qualite;
     }
 
-    public void setQualite(Integer qualite) {
-        this.qualite = qualite;
+    public void setQualite() throws JavaLayerException, UnsupportedAudioFileException, IOException {
+        chargementSound(chemin);
+        
     }
 
     public String getGenre() {

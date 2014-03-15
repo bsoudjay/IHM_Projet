@@ -24,8 +24,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javazoom.jl.decoder.JavaLayerException;
 import model.*;
 import vue.DesignMP3;
 
@@ -364,8 +366,8 @@ public class Operations {
 
     }
 
-    public void setQualite(Integer qualite) {
-        sound.setQualite(qualite);
+    public void setQualite() throws JavaLayerException, UnsupportedAudioFileException, IOException {
+        sound.setQualite();
     }
 
     public String getTempsRestant() {
