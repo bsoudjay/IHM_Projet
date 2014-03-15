@@ -69,6 +69,7 @@ public class Sound implements Comparable<Sound> {
         
         chargementSound(chemin);
         chargementImage(this.chemin);
+        setGenre(genre);
         
     }
     
@@ -196,7 +197,7 @@ public class Sound implements Comparable<Sound> {
 
     public void setGenre(String genre) {
         if(genre==null){
-            genre=" ";
+            genre="Autre";
         }
         this.genre = genre;
     }
