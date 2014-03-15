@@ -112,7 +112,7 @@ public class Sound implements Comparable<Sound> {
                     }
                 }
                  
-                 
+                 System.out.println("img : "+img);
                 return img;
     }
      
