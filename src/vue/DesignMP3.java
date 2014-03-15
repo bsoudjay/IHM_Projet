@@ -368,9 +368,11 @@ public class DesignMP3 extends Applet implements Observateur {
                 }
 
                 actualiserBiblio(biblio);
+                actualiserStats(stats);
                 actualiserInformations();
                 monPanel.revalidate();
 
+                
             }
         });
 
@@ -844,17 +846,15 @@ public class DesignMP3 extends Applet implements Observateur {
 
     private void actualiserStats(Statistiques s) {
         maStats.removeAll();
-        /* ArrayList<String> test = new ArrayList<String>();
-         test = operations.bibliothequeComplete();
         
-         for (int i = 0; i < test.size(); i += 3) {
-         maBibli.add(new JLabel(" "));
-         maBibli.add(new JButton(test.get(i)));
-         maBibli.add(new JLabel("Artiste: " + test.get(i + 1)));
-         maBibli.add(new JLabel("Duree: " + test.get(i + 2)));
-         maBibli.add(new JLabel("  ___________________________________ "));
-         }
-         */
+         try {
+                    stats.recupererGenre();
+//             actualiserInformations();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
         test2 = stats.label();
         for (jstats = 0; jstats < test2.size(); jstats++) {
@@ -866,16 +866,22 @@ public class DesignMP3 extends Applet implements Observateur {
                 public void actionPerformed(ActionEvent event) {
                     String genre = (test2.get(bou2.getIconTextGap()));
                     System.out.println(genre);
-                    maStats.removeAll();
+                     
                     statsAfiiche = operations.statsNbEcoute(genre);
                     statsGraphe s = new statsGraphe("Stat", "Les stats de " + genre, statsAfiiche);
                     s.pack();
                     s.setVisible(true);
 
+                    actualiserInformations();
+                    
                 }
+                
+                
             });
             maStats.add(bou2);
         }
+        
+        
 
     }
 
