@@ -339,10 +339,10 @@ public class Operations {
     }
 
     public String getGenre() {
-        if (sound != null) {
-            return sound.getGenre();
-        } else {
-            return "";
+        if(sound.getGenre()==null){
+            return " ";
+        }else{
+        return sound.getGenre();
         }
     }
 

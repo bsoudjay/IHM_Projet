@@ -1,5 +1,7 @@
 package vue;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import model.Musique;
@@ -20,8 +22,17 @@ public class statsGraphe extends JFrame {
         PieDataset dataset = createDataset(liste);
         JFreeChart chart = createChart(dataset, chartTitle);
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(900, 970));
+        chartPanel.setPreferredSize(new java.awt.Dimension(900, 700));
+        
+        this.setSize(1000,800);     
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        
+        
         setContentPane(chartPanel);
+        
+        
+        
 
     }
 

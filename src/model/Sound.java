@@ -185,10 +185,14 @@ public class Sound implements Comparable<Sound> {
     }
 
     public String getGenre() {
+        
         return genre;
     }
 
     public void setGenre(String genre) {
+        if(genre==null){
+            genre=" ";
+        }
         this.genre = genre;
     }
 

@@ -20,6 +20,7 @@ public class Musique {
     private String auteur;
     private File chemin;
     private int nbEcoute;
+    
 
     public Musique(String titre, String auteur, String album, long duree, int nbEcoute, String genre, File chemin) {
         this.album = album;
