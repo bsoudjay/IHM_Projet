@@ -281,9 +281,7 @@ public class Sound implements Comparable<Sound> {
         return getTempsSec() / 100;
     }
 
-    public int getPourcent() {
-        return ThreadDemo2.Sec(ThreadDemo2.Stop_Chrono())/Pourcent();
-    }
+
 
 
 }

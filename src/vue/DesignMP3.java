@@ -52,8 +52,6 @@ import model.Musique;
 import model.Observateur;
 import model.Sound;
 import model.Statistiques;
-import model.ThreadDemo;
-import model.ThreadDemo2;
 import static sun.audio.AudioPlayer.player;
 
 /**
@@ -79,6 +77,8 @@ public class DesignMP3 extends Applet implements Observateur {
     private int enCoursDeLecture = 0;
     private Bibliotheque biblio;
     public Thread threadLecture;
+    public Thread T1;
+    public Thread T2;
     public JPanel maBibli;
     public ArrayList<Musique> test;
     public ArrayList<Musique> statsAfiiche;
@@ -93,11 +93,10 @@ public class DesignMP3 extends Applet implements Observateur {
     public JPanel maStats;
     private String contenuRecherche;
     private JLabel img;
-    
-    public JSlider getBarreMusique(){
+
+    public JSlider getBarreMusique() {
         return this.barreMusique;
     }
-
 
     public DesignMP3() throws Exception {
 
@@ -267,13 +266,12 @@ public class DesignMP3 extends Applet implements Observateur {
             public void actionPerformed(ActionEvent e) {
                 String tmp = null;
                 if (s.isPlaying()) {
-                    tmp = s.getTitre();
-                    threadLecture.stop();
-                } else if (s2.isPlaying()) {
-                    tmp = s2.getTitre();
-                    threadLecture.stop();
-
-                }
+                            T1.stop();
+                            T2.stop();
+                        } else if (s2.isPlaying()) {
+                            T1.stop();
+                            T2.stop();
+                        }
                 if (ibiblio == 0) {
                     ibiblio = i - 1;
                 } else {
@@ -289,8 +287,11 @@ public class DesignMP3 extends Applet implements Observateur {
                 } catch (Exception ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                threadLecture = new Thread(new PlaySound());
-                threadLecture.start();
+                 T1 = new Thread(new ThreadDemo("Thread-1", s));
+            T1.start();
+
+             T2 = new Thread(new ThreadDemo2("Thread-2", barreMusique, s));
+            T2.start();
                 s.setIsPlaying(true);
                 operations.setTitre(s.getTitre());
                 operations.setAuteur(s.getAuteur());
@@ -317,13 +318,12 @@ public class DesignMP3 extends Applet implements Observateur {
             public void actionPerformed(ActionEvent e) {
                 String tmp = null;
                 if (s.isPlaying()) {
-                    tmp = s.getTitre();
-                    threadLecture.stop();
-                } else if (s2.isPlaying()) {
-                    tmp = s2.getTitre();
-                    threadLecture.stop();
-
-                }
+                            T1.stop();
+                            T2.stop();
+                        } else if (s2.isPlaying()) {
+                            T1.stop();
+                            T2.stop();
+                        }
                 if (ibiblio == i - 1) {
                     ibiblio = 0;
                 } else {
@@ -339,8 +339,11 @@ public class DesignMP3 extends Applet implements Observateur {
                 } catch (Exception ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                threadLecture = new Thread(new PlaySound());
-                threadLecture.start();
+                 T1 = new Thread(new ThreadDemo("Thread-1", s));
+            T1.start();
+
+             T2 = new Thread(new ThreadDemo2("Thread-2", barreMusique, s));
+            T2.start();
                 s.setIsPlaying(true);
                 operations.setTitre(s.getTitre());
                 operations.setAuteur(s.getAuteur());
@@ -368,10 +371,13 @@ public class DesignMP3 extends Applet implements Observateur {
 
                 // operations.ajouterBDD();
                 if (s.isPlaying()) {
-                    threadLecture.stop();
-                } else if (s2.isPlaying()) {
-                    threadLecture.stop();
-                }
+                            T1.stop();
+                            T2.stop();
+                            System.out.println("azertyazertyuzerty");
+                        } else if (s2.isPlaying()) {
+                            T1.stop();
+                            T2.stop();
+                        }
 
                 String tmp = operations.reecouterMusic(titre.getText());
                 try {
@@ -380,8 +386,11 @@ public class DesignMP3 extends Applet implements Observateur {
                 } catch (Exception ex) {
                     Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                threadLecture = new Thread(new PlaySound());
-                threadLecture.start();
+                 T1 = new Thread(new ThreadDemo("Thread-1", s));
+            T1.start();
+
+             T2 = new Thread(new ThreadDemo2("Thread-2", barreMusique, s));
+            T2.start();
                 s2.setIsPlaying(true);
                 actualiserInformations();
             }
@@ -390,15 +399,14 @@ public class DesignMP3 extends Applet implements Observateur {
         stop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (s.isPlaying()) {
-                    threadLecture.stop();
-                    System.out.println("tuage de thread");
-                    s.setIsPlaying(false);
-                } else if (s2.isPlaying()) {
-                    System.out.println("tuage de thread");
-                    threadLecture.stop();
-                    s2.setIsPlaying(false);
-                }
+              if (s.isPlaying()) {
+                            T1.stop();
+                            T2.stop();
+                        } else if (s2.isPlaying()) {
+                            T1.stop();
+                            T2.stop();
+                        }
+              s.setIsPlaying(false);
             }
         });
 
@@ -768,37 +776,43 @@ public class DesignMP3 extends Applet implements Observateur {
         }
     }
 
-    class PlaySoundBouton implements Runnable {
-
-        private Sound s;
-
-        public PlaySoundBouton(Sound s) {
-            this.s = s;
-        }
-
-        public void lireMusique() throws Exception {
-//            bougerBarreMusique();
-//            this.s.play();
-                            ThreadDemo T1 = new ThreadDemo( "Thread-1",s);
-      T1.start();
-      
-      ThreadDemo2 T2 = new ThreadDemo2( "Thread-2",barreMusique,s);
-      T2.start();
-            actualiserInformations();
-        }
-
-        @Override
-        public void run() {
-            try {
-                lireMusique();
-                System.out.println("ca roule => lecture en cours");
-            } catch (Exception ex) {
-                System.out.println("la grosse merdee -> veut pas lire");
-            }
-            actualiserInformations();
-            System.out.println("thread");
-        }
-    }
+//    class PlaySoundBouton implements Runnable {
+//
+//        private Sound s;
+//
+//        public PlaySoundBouton(Sound s) {
+//            this.s = s;
+//        }
+//
+//        public void lireMusique() throws Exception {
+////            bougerBarreMusique();
+////            this.s.play();
+//             if (s.isPlaying()) {
+//                    threadLecture.stop();
+//                } else if (s2.isPlaying()) {
+//                    threadLecture.stop();
+//
+//                }
+//            ThreadDemo T1 = new ThreadDemo("Thread-1", s);
+//            T1.start();
+//
+//            ThreadDemo2 T2 = new ThreadDemo2("Thread-2", barreMusique, s);
+//            T2.start();
+//            actualiserInformations();
+//        }
+//
+//        @Override
+//        public void run() {
+//            try {
+//                lireMusique();
+//                System.out.println("ca roule => lecture en cours");
+//            } catch (Exception ex) {
+//                System.out.println("la grosse merdee -> veut pas lire");
+//            }
+//            actualiserInformations();
+//            System.out.println("thread");
+//        }
+//    }
 
     private void actualiserPanelCoteEst(JLabel titre, JLabel auteur, JLabel duree, JLabel album, JLabel annee, JLabel genre, JLabel qualite, Font fontBold, Font fontBoldG) {
         titre.setFont(fontBoldG);
@@ -918,22 +932,31 @@ public class DesignMP3 extends Applet implements Observateur {
 
                     String chemin2 = operations.reecouterMusic(test.get(bou.getIconTextGap()).getTitre());
                     try {
+                        
                         if (s.isPlaying()) {
-                            threadLecture.stop();
+                            T1.stop();
+                            T2.stop();
                         } else if (s2.isPlaying()) {
-                            threadLecture.stop();
+                            T1.stop();
+                            T2.stop();
                         }
                         s = new Sound(chemin2);
                         operations.ajouterBDD();
-                        threadLecture = new Thread(new PlaySoundBouton(s));
-                        threadLecture.start();
+//                        threadLecture = new Thread(new PlaySoundBouton(s));
+//                        threadLecture.start();
                         s.setIsPlaying(true);
-                        ThreadDemo2.Go_Chrono();
+                                     T1 = new Thread(new ThreadDemo("Thread-1", s));
+            T1.start();
+
+             T2 = new Thread(new ThreadDemo2("Thread-2", barreMusique, s));
+            T2.start();
+            actualiserInformations();
+                        
                     } catch (Exception ex) {
                         Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     actualiserImage();
-                    
+
                     actualiserInformations();
                 }
             });
@@ -1069,5 +1092,115 @@ public class DesignMP3 extends Applet implements Observateur {
 
     }
 
- 
-}
+    public class ThreadDemo extends Thread {
+
+        private Thread t;
+        private String threadName;
+        private Sound s;
+
+        public ThreadDemo(String name, Sound s) {
+            threadName = name;
+            this.s = s;
+            System.out.println("Creating " + threadName);
+        }
+
+        public void run() {
+            try {
+
+                lireMusique();
+                actualiserInformations();
+
+            } catch (Exception ex) {
+                Logger.getLogger(ThreadDemo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        
+               public void lireMusique() throws Exception {
+            this.s.player.play();
+            actualiserInformations();
+               }
+
+        public void start() {
+            System.out.println("Starting " + threadName);
+            if (t == null) {
+                t = new Thread(this, threadName);
+                t.start();
+            }
+        }
+
+    }
+
+    public class ThreadDemo2 extends Thread {
+
+        private Thread t;
+        private String threadName;
+        public long chrono = 0;
+        public Thread threadBarre;
+        public JSlider barreMu;
+        public Sound s;
+
+        public ThreadDemo2(String name, JSlider barreMusique, Sound sound) {
+            threadName = name;
+            this.s = sound;
+            this.barreMu = barreMusique;
+            System.out.println("Creating " + threadName);
+        }
+
+        public void arret(){
+            t.destroy();
+        }
+        public void run() {
+            barreMu.setValue(0);
+            Go_Chrono();
+            bougerBarreMusique();
+            actualiserInformations();
+        }
+
+        public void start() {
+            System.out.println("Starting " + threadName);
+            if (t == null) {
+                t = new Thread(this, threadName);
+                t.start();
+            }
+        }
+        
+        public void bougerBarreMusique() {
+            try {
+                System.out.println("Je rentre dans la fonction bougerBarreMusique");
+                while (this.barreMu.getValue() != 100) {
+                    this.barreMu.setValue(getPourcent());
+                    System.out.println("LA BARRE DE MUSIQUE BOUGE");
+                    threadBarre.sleep(1000);
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+            public int getPourcent() {
+        return Sec(Stop_Chrono())/s.Pourcent();
+    }
+        
+        public  long Stop_Chrono() {
+            long chrono2 = java.lang.System.currentTimeMillis();
+            long temps = chrono2 - chrono;
+            return temps;
+
+        }
+
+        public int Sec(long temps) {
+            long totalSeconds = temps / 1000;
+            int second = (int) (totalSeconds % 60);
+            long totalMinutes = totalSeconds / 60;
+            int minute = (int) (totalMinutes % 60);
+            long totalHours = totalMinutes / 60;
+            int hour = (int) (totalHours % 24);
+            return (hour * 3600) + (minute * 60) + second;
+        }
+
+        public  void Go_Chrono() {
+            chrono = 0;
+            chrono = java.lang.System.currentTimeMillis();
+        }
+
+    }}
