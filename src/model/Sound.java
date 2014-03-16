@@ -282,7 +282,7 @@ public class Sound implements Comparable<Sound> {
     }
 
     public int getPourcent() {
-        return DesignMP3.Sec(DesignMP3.Stop_Chrono())/Pourcent();
+        return ThreadDemo2.Sec(ThreadDemo2.Stop_Chrono())/Pourcent();
     }
 
 

@@ -150,6 +150,27 @@ public class Operations {
             e1.printStackTrace();
         }
     }
+    
+      public void ajouterBDDImage() throws FileNotFoundException {
+        String query = null;
+        String chemin_tmp = this.getChemin().toString();
+        chemin_tmp = chemin_tmp.replace("\\", "\\\\");
+
+            query = "INSERT INTO image (url) VALUES ('" +chemin_tmp+ "')";
+
+            System.out.println("insertion");
+        System.out.println("etape 1");
+        try {
+            System.out.println("etape 2r");
+            Statement requete = con.createStatement();
+            System.out.println("etape 2rprme");
+            requete.executeUpdate(query);
+            System.out.println("etape 3r");
+        } catch (Exception e1) {
+            System.out.println("etape 2m");
+            e1.printStackTrace();
+        }
+    }
 
     public String reecouterMusic(String titre) {
         String query = null;

@@ -12,6 +12,8 @@ import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import static java.awt.Component.CENTER_ALIGNMENT;
+import static java.awt.Component.LEFT_ALIGNMENT;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -50,6 +52,8 @@ import model.Musique;
 import model.Observateur;
 import model.Sound;
 import model.Statistiques;
+import model.ThreadDemo;
+import model.ThreadDemo2;
 import static sun.audio.AudioPlayer.player;
 
 /**
@@ -89,8 +93,11 @@ public class DesignMP3 extends Applet implements Observateur {
     public JPanel maStats;
     private String contenuRecherche;
     private JLabel img;
-    public static long chrono = 0;
-    public Thread threadBarre;
+    
+    public JSlider getBarreMusique(){
+        return this.barreMusique;
+    }
+
 
     public DesignMP3() throws Exception {
 
@@ -770,8 +777,13 @@ public class DesignMP3 extends Applet implements Observateur {
         }
 
         public void lireMusique() throws Exception {
-            bougerBarreMusique();
-            this.s.play();
+//            bougerBarreMusique();
+//            this.s.play();
+                            ThreadDemo T1 = new ThreadDemo( "Thread-1",s);
+      T1.start();
+      
+      ThreadDemo2 T2 = new ThreadDemo2( "Thread-2",barreMusique,s);
+      T2.start();
             actualiserInformations();
         }
 
@@ -916,7 +928,7 @@ public class DesignMP3 extends Applet implements Observateur {
                         threadLecture = new Thread(new PlaySoundBouton(s));
                         threadLecture.start();
                         s.setIsPlaying(true);
-                        Go_Chrono();
+                        ThreadDemo2.Go_Chrono();
                     } catch (Exception ex) {
                         Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -1057,41 +1069,5 @@ public class DesignMP3 extends Applet implements Observateur {
 
     }
 
-     private void bougerBarreMusique() {
-        try {
-            System.out.println("Je rentre dans la fonction bougerBarreMusique");
-            while (barreMusique.getValue() != 100) {
-                System.out.println(s.getPourcent());
-                barreMusique.setValue(s.getPourcent());
-                System.out.println("LA BARRE DE MUSIQUE BOUGE");
-                actualiserInformations();
-                threadBarre.sleep(1000);
-            }
-        } catch (InterruptedException ex) {
-            Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public static long Stop_Chrono() {
-        long chrono2 = java.lang.System.currentTimeMillis();
-        long temps =  chrono2 -  chrono;
-        return temps;
-        
-    }
-    
-    public static int Sec(long temps){
-       long totalSeconds=temps/1000;  
-        int second=(int)(totalSeconds%60);  
-        long totalMinutes=totalSeconds/60;  
-        int minute=(int)(totalMinutes%60);  
-        long totalHours=totalMinutes/60;  
-        int hour=(int)(totalHours%24);
-        return (hour * 3600) + (minute * 60) + second;
-    }
-
-     static void Go_Chrono() {
-         chrono=0;
-        chrono = java.lang.System.currentTimeMillis();
-    }
-
+ 
 }
