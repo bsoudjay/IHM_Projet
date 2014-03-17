@@ -80,7 +80,7 @@ public class Operations {
 
     public ArrayList<Musique> recherche(String contenu) {
         ArrayList<Musique> maRecherche = new ArrayList<Musique>();
-        String query = "SELECT * FROM musique WHERE titre LIKE '%" + contenu + "%' OR auteur = '%" + contenu + "%'";
+        String query = "SELECT titre,auteur,album,duree,nbEcoute,genre,chemin FROM musique WHERE titre LIKE '%" + contenu + "%' OR auteur = '%" + contenu + "%'";
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet result = requete.executeQuery(query);
@@ -88,7 +88,9 @@ public class Operations {
                 String titre2 = result.getString(1);
                 String auteur2 = result.getString(2);
                 String album2 = result.getString(3);
+                System.out.println("testttttt");
                 Long duree2 = result.getLong(4);
+                
                 int nbEcoute2 = result.getInt(5);
                 String genre2 = result.getString(6);
                 String chemin2 = result.getString(7);

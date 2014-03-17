@@ -80,9 +80,11 @@ public class DesignMP3 extends Applet implements Observateur {
     public Thread T1;
     public Thread T2;
     public JPanel maBibli;
+    public JPanel maRecherche;
     public ArrayList<Musique> test;
     public ArrayList<Musique> statsAfiiche;
     public ArrayList<String> test2;
+    public ArrayList<Musique> test3;
     public int i;
     public int ibiblio;
     public int jstats;
@@ -107,9 +109,12 @@ public class DesignMP3 extends Applet implements Observateur {
         this.stats = new Statistiques("test");
         this.i = 0;
         this.test = new ArrayList<Musique>();
+        this.test3 = new ArrayList<Musique>();
+
         this.biblio = new Bibliotheque("test");
         this.maBibli = new JPanel();
-
+        this.maRecherche = new JPanel();
+        
         GridLayout gl = new GridLayout(20, 1);
         gl.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
         gl.setVgap(5);
@@ -117,9 +122,13 @@ public class DesignMP3 extends Applet implements Observateur {
 
         GridLayout g2 = new GridLayout(7, 3);
         this.maBibli.setLayout(g2);
+        
+        GridLayout g3 = new GridLayout(7, 3);
+        this.maRecherche.setLayout(g3);
 
         //g2.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
         g2.setVgap(10);
+        g3.setVgap(10);
 
         try {
             this.operations = new Operations();
@@ -662,11 +671,111 @@ public class DesignMP3 extends Applet implements Observateur {
         
         final JTextField recherche = new JTextField("Recherche");
         card4.add(txtRecherche);
+        card4.add(maRecherche);
+                
 
         researchOnglet.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 cl.show(content, listContent[3]);
+                
+                maRecherche.removeAll();
+         
+            test3 = operations.recherche(recherche.getText());
+
+        for (i = 0; i < test3.size(); i++) {
+
+            final JButton bou = new JButton();
+            JLabel l1 = new JLabel(test3.get(i).getTitre());
+            l1.setHorizontalTextPosition((int) LEFT_ALIGNMENT);
+            bou.add(l1);
+
+            bou.setIconTextGap(i);
+            bou.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    ibiblio = bou.getComponentCount() - 1;
+                    operations.setTitre(test3.get(bou.getIconTextGap()).getTitre());
+                    operations.setAuteur(test3.get(bou.getIconTextGap()).getAuteur());
+                    operations.setAlbum(test3.get(bou.getIconTextGap()).getAlbum());
+
+                    operations.setDuree(test3.get(bou.getIconTextGap()).getDuree());
+                    operations.setGenre(test3.get(bou.getIconTextGap()).getGenre());
+                    operations.setChemin(test3.get(bou.getIconTextGap()).getChemin());
+                    try {
+                        operations.setQualite();
+                    } catch (JavaLayerException ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (UnsupportedAudioFileException ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    try {
+
+                        operations.setImage(test3.get(bou.getIconTextGap()).getChemin());
+                    } catch (IOException ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (UnsupportedTagException ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InvalidDataException ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    String chemin2 = operations.reecouterMusic(test3.get(bou.getIconTextGap()).getTitre());
+                    try {
+                        
+                        if (s.isPlaying()) {
+                            T1.stop();
+                            T2.stop();
+                        } else if (s2.isPlaying()) {
+                            T1.stop();
+                            T2.stop();
+                        }
+                        s = new Sound(chemin2);
+                        operations.ajouterBDD();
+//                        threadLecture = new Thread(new PlaySoundBouton(s));
+//                        threadLecture.start();
+                        s.setIsPlaying(true);
+                                     T1 = new Thread(new ThreadDemo("Thread-1", s));
+            T1.start();
+
+             T2 = new Thread(new ThreadDemo2("Thread-2", barreMusique, s));
+            T2.start();
+            actualiserInformations();
+                        
+                    } catch (Exception ex) {
+                        Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    actualiserImage();
+
+                    actualiserInformations();
+                }
+            });
+
+            bou.setBorderPainted(false);
+            maRecherche.add(bou);
+            JLabel l2 = new JLabel(test3.get(bou.getIconTextGap()).getAuteur());
+            JButton bou2 = new JButton();
+            bou2.setBorderPainted(false);
+            l2.setHorizontalTextPosition((int) LEFT_ALIGNMENT);
+            bou2.add(l2);
+            maRecherche.add(bou2);
+
+            long duration = test3.get(bou.getIconTextGap()).getDuree();
+            JLabel l3 = new JLabel((String.format("%02d:%02d", TimeUnit.MICROSECONDS.toMinutes(duration) - (TimeUnit.MICROSECONDS.toHours(duration) * 60),
+                    TimeUnit.MICROSECONDS.toSeconds(duration) - (TimeUnit.MICROSECONDS.toMinutes(duration) * 60))));
+            JButton bou3 = new JButton();
+            l3.setHorizontalTextPosition((int) LEFT_ALIGNMENT);
+            bou3.setBorderPainted(false);
+            bou3.add(l3);
+            maRecherche.add(bou3);
+
+        }
+            
+            
+            
             }
         });
 
