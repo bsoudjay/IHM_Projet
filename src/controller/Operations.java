@@ -131,6 +131,16 @@ public class Operations {
         String query = null;
         String chemin_tmp = this.getChemin().toString();
         chemin_tmp = chemin_tmp.replace("\\", "\\\\");
+        chemin_tmp = chemin_tmp.replace("'", "\'");
+        String titre_tmp = this.getTitre().toString();
+        titre_tmp = titre_tmp.replace("'", "\'");
+        String auteur_tmp = this.getTitre().toString();
+        auteur_tmp = auteur_tmp.replace("'", "\'");
+        String album_tmp = this.getTitre().toString();
+        album_tmp = album_tmp.replace("'", "\'");
+        String genre_tmp = this.getTitre().toString();
+        genre_tmp = genre_tmp.replace("'", "\'");
+        
         if (!this.verifier()) {
 
             query = "INSERT INTO musique (titre,auteur,album,duree,genre,chemin) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "'," + sound.getDuree() + ",'" + this.getGenre() + "','" + chemin_tmp + "')";
