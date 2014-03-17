@@ -90,6 +90,7 @@ public class DesignMP3 extends Applet implements Observateur {
     public ArrayList<String> test2;
     public ArrayList<Musique> test3;
     public int i;
+    public int nbRes;
     public int ibiblio;
     public int jstats;
     private JPanel card1 = new JPanel();
@@ -124,11 +125,11 @@ public class DesignMP3 extends Applet implements Observateur {
         gl.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
         gl.setVgap(5);
         this.maStats.setLayout(gl);
-
-        GridLayout g2 = new GridLayout(7, 3);
+        
+        GridLayout g2 = new GridLayout(i, 3);
         this.maBibli.setLayout(g2);
 
-        GridLayout g3 = new GridLayout(7, 3);
+        GridLayout g3 = new GridLayout(nbRes, 3);
         this.maRecherche.setLayout(g3);
 
         //g2.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
@@ -630,7 +631,7 @@ public class DesignMP3 extends Applet implements Observateur {
         statistiques.setBorderPainted(false);
 
         JLabel txtStatistiques = new JLabel();
-        txtStatistiques.setText("<html><body><font color='white'>----------------------------------------------STATISTIQUES------------------------------------------------</body></html>");
+        txtStatistiques.setText("                                                       STATISTIQUES                                                       ");
         txtStatistiques.setToolTipText(txtStatistiques.getText());
         txtStatistiques.setFont(font);
 
@@ -672,7 +673,7 @@ public class DesignMP3 extends Applet implements Observateur {
         researchOnglet.setBorderPainted(false);
 
         JLabel txtRecherche = new JLabel();
-        txtRecherche.setText("<html><body><font color='white'>----------------------------------------------RECHERCHE------------------------------------------------</body></html>");
+        txtRecherche.setText("                                                                       RECHERCHE                                                              ");
         txtRecherche.setToolTipText(txtRecherche.getText());
         txtRecherche.setFont(font);
 
@@ -683,12 +684,14 @@ public class DesignMP3 extends Applet implements Observateur {
         researchOnglet.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                
                 cl.show(content, listContent[3]);
 
                 maRecherche.removeAll();
 
                 test3 = operations.recherche(recherche.getText());
-
+                nbRes=test3.size();
+                
                 for (i = 0; i < test3.size(); i++) {
 
                     final JButton bou = new JButton();
