@@ -437,7 +437,7 @@ public class DesignMP3 extends Applet implements Observateur {
         Font font = new Font("Courier", Font.BOLD, 26);
         lesOnglets.setLayout(new BoxLayout(lesOnglets, BoxLayout.LINE_AXIS));
         final JPanel content = new JPanel();
-        final String[] listContent = {"CARD_1", "CARD_2", "CARD_3"};
+        final String[] listContent = {"CARD_1", "CARD_2", "CARD_3", "CARD_4"};
 
         /*
          *-------------------------------------------------------------------------------------------------------
@@ -648,12 +648,37 @@ public class DesignMP3 extends Applet implements Observateur {
          *                                      Barre de recherche
          *-------------------------------------------------------------------------------------------------------
          */
+        JPanel card4  = new JPanel();
+        card4.setBackground(Color.GRAY);
+        JButton researchOnglet = new JButton(new ImageIcon("Design/Boutons/recherche.png"));
+        researchOnglet.setOpaque(false);
+        researchOnglet.setContentAreaFilled(false);
+        researchOnglet.setBorderPainted(false);
+        
+        JLabel txtRecherche = new JLabel();
+        txtRecherche.setText("<html><body><font color='white'>----------------------------------------------RECHERCHE------------------------------------------------</body></html>");
+        txtRecherche.setToolTipText(txtRecherche.getText());
+        txtRecherche.setFont(font);
+        
         final JTextField recherche = new JTextField("Recherche");
+        recherche.setSize(150, 100);
+        JButton researchPanel = new JButton(new ImageIcon("Design/Boutons/recherche.png"));
+        
+        card4.add(txtRecherche);
+        card4.add(recherche);
+        card4.add(researchPanel);
 
-        recherche.addMouseListener(new MouseAdapter() {
+        researchOnglet.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                recherche.setText("");
+                cl.show(content, listContent[3]);
+            }
+        });
+        
+        researchPanel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                recherche.setText("test");
             }
         });
 
@@ -667,21 +692,19 @@ public class DesignMP3 extends Applet implements Observateur {
         content.add(card1, listContent[0]);
         content.add(scroll, listContent[1]);
         content.add(card3, listContent[2]);
+        content.add(card4, listContent[3]);
 
         lesOnglets.add(ajouterMusique);
         lesOnglets.add(musiqueEnCours);
         lesOnglets.add(bibliotheqe);
         lesOnglets.add(statistiques);
-        lesOnglets.add(recherche);
+        //lesOnglets.add(recherche);
 
-        JButton research = new JButton(new ImageIcon("Design/Boutons/recherche.png"));
-        research.setOpaque(false);
-        research.setContentAreaFilled(false);
-        research.setBorderPainted(false);
+        
 
-        lesOnglets.add(research);
+        lesOnglets.add(researchOnglet);
 
-        research.addActionListener(new ActionListener() {
+        researchOnglet.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("debut recherhce");
