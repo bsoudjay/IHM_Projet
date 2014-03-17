@@ -661,24 +661,12 @@ public class DesignMP3 extends Applet implements Observateur {
         txtRecherche.setFont(font);
         
         final JTextField recherche = new JTextField("Recherche");
-        recherche.setSize(150, 100);
-        JButton researchPanel = new JButton(new ImageIcon("Design/Boutons/recherche.png"));
-        
         card4.add(txtRecherche);
-        card4.add(recherche);
-        card4.add(researchPanel);
 
         researchOnglet.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 cl.show(content, listContent[3]);
-            }
-        });
-        
-        researchPanel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                recherche.setText("test");
             }
         });
 
@@ -698,7 +686,7 @@ public class DesignMP3 extends Applet implements Observateur {
         lesOnglets.add(musiqueEnCours);
         lesOnglets.add(bibliotheqe);
         lesOnglets.add(statistiques);
-        //lesOnglets.add(recherche);
+        lesOnglets.add(recherche);
 
         
 
