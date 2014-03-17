@@ -80,7 +80,9 @@ public class Operations {
 
     public ArrayList<Musique> recherche(String contenu) {
         ArrayList<Musique> maRecherche = new ArrayList<Musique>();
-        String query = "SELECT titre,auteur,album,duree,nbEcoute,genre,chemin FROM musique WHERE titre LIKE '%" + contenu + "%' OR auteur = '%" + contenu + "%'";
+        String contenu_tmp = contenu.toString();
+        contenu_tmp = contenu_tmp.replace("'", "''");
+        String query = "SELECT titre,auteur,album,duree,nbEcoute,genre,chemin FROM musique WHERE titre LIKE '%" + contenu_tmp + "%' OR auteur = '%" + contenu_tmp + "%'";
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet result = requete.executeQuery(query);
@@ -110,8 +112,8 @@ public class Operations {
         this.musiqueLancee = i;
     }
 
-    public boolean verifier() {
-        String query = "SELECT * FROM musique WHERE titre = '" + this.getTitre() + "'";
+    public boolean verifier(String titre_tmp) {
+        String query = "SELECT * FROM musique WHERE titre = '" + titre_tmp + "'";
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet result = requete.executeQuery(query);
@@ -131,27 +133,27 @@ public class Operations {
         String query = null;
         String chemin_tmp = this.getChemin().toString();
         chemin_tmp = chemin_tmp.replace("\\", "\\\\");
-        chemin_tmp = chemin_tmp.replace("'", "\'");
+        chemin_tmp = chemin_tmp.replace("'", "''");
         String titre_tmp = this.getTitre().toString();
-        titre_tmp = titre_tmp.replace("'", "\'");
-        String auteur_tmp = this.getTitre().toString();
-        auteur_tmp = auteur_tmp.replace("'", "\'");
-        String album_tmp = this.getTitre().toString();
-        album_tmp = album_tmp.replace("'", "\'");
-        String genre_tmp = this.getTitre().toString();
-        genre_tmp = genre_tmp.replace("'", "\'");
-        
-        if (!this.verifier()) {
+        titre_tmp = titre_tmp.replace("'", "''");
+        String auteur_tmp = this.getAuteur().toString();
+        auteur_tmp = auteur_tmp.replace("'", "''");
+        String album_tmp = this.getAlbum().toString();
+        album_tmp = album_tmp.replace("'", "''");
+        String genre_tmp = this.getGenre().toString();
+        genre_tmp = genre_tmp.replace("'", "''");
+        if (!this.verifier(titre_tmp)) {
 
-            query = "INSERT INTO musique (titre,auteur,album,duree,genre,chemin) VALUES ('" + this.getTitre() + "','" + this.getAuteur() + "','" + this.getAlbum() + "'," + sound.getDuree() + ",'" + this.getGenre() + "','" + chemin_tmp + "')";
+            query = "INSERT INTO musique (titre,auteur,album,duree,genre,chemin) VALUES ('" + titre_tmp + "','" + auteur_tmp + "','" + album_tmp + "'," + sound.getDuree() + ",'" + genre_tmp + "','" + chemin_tmp + "')";
 
             System.out.println("insertion");
         } else {
-            query = "UPDATE musique SET nbecoute = " + (this.nbEcoute() + 1) + " WHERE titre = '" + this.getTitre() + "'";
+            query = "UPDATE musique SET nbecoute = " + (this.nbEcoute() + 1) + " WHERE titre = '" + titre_tmp + "'";
             System.out.println("mise à jour");
         }
         System.out.println("etape 1");
         try {
+            System.out.println(query);
             System.out.println("etape 2r");
             Statement requete = con.createStatement();
             System.out.println("etape 2rprme");
@@ -163,30 +165,14 @@ public class Operations {
         }
     }
     
-      public void ajouterBDDImage() throws FileNotFoundException {
-        String query = null;
-        String chemin_tmp = this.getChemin().toString();
-        chemin_tmp = chemin_tmp.replace("\\", "\\\\");
-
-            query = "INSERT INTO image (url) VALUES ('" +chemin_tmp+ "')";
-
-            System.out.println("insertion");
-        System.out.println("etape 1");
-        try {
-            System.out.println("etape 2r");
-            Statement requete = con.createStatement();
-            System.out.println("etape 2rprme");
-            requete.executeUpdate(query);
-            System.out.println("etape 3r");
-        } catch (Exception e1) {
-            System.out.println("etape 2m");
-            e1.printStackTrace();
-        }
-    }
+      
 
     public String reecouterMusic(String titre) {
         String query = null;
-        query = "SELECT chemin FROM musique WHERE titre = '" + titre + "'";
+        String titre_tmp = titre.toString();
+        titre_tmp = titre_tmp.replace("'", "''");
+        System.out.println(titre_tmp);
+        query = "SELECT chemin FROM musique WHERE titre = '" + titre_tmp +"'";
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             System.out.println("test");
@@ -252,7 +238,9 @@ public class Operations {
     }
 
     public int nbEcoute() {
-        String query = "SELECT nbecoute FROM musique WHERE titre = '" + this.getTitre() + "'";
+        String titre_tmp = this.getTitre().toString();
+        titre_tmp = titre_tmp.replace("'", "''");
+        String query = "SELECT nbecoute FROM musique WHERE titre = '" + titre_tmp + "'";
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet result = requete.executeQuery(query);
@@ -459,7 +447,9 @@ public class Operations {
 
     public ArrayList<Musique> statsNbEcoute(String genre) {
         String query = null;
-        query = "SELECT titre,auteur,nbEcoute FROM musique WHERE genre = '" + genre + "'";
+        String genre_tmp = genre.toString();
+        genre_tmp = genre_tmp.replace("'", "''");
+        query = "SELECT titre,auteur,nbEcoute FROM musique WHERE genre = '" + genre_tmp + "'";
         ArrayList<Musique> biblio = new ArrayList<Musique>();
         try {
             Statement requete = con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
@@ -579,6 +569,27 @@ public class Operations {
             e1.printStackTrace();
         }
         return 0;
+    }
+     
+     public void ajouterBDDImage() throws FileNotFoundException {
+        String query = null;
+        String chemin_tmp = this.getChemin().toString();
+        chemin_tmp = chemin_tmp.replace("\\", "\\\\");
+
+            query = "INSERT INTO image (url) VALUES ('" +chemin_tmp+ "')";
+
+            System.out.println("insertion");
+        System.out.println("etape 1");
+        try {
+            System.out.println("etape 2r");
+            Statement requete = con.createStatement();
+            System.out.println("etape 2rprme");
+            requete.executeUpdate(query);
+            System.out.println("etape 3r");
+        } catch (Exception e1) {
+            System.out.println("etape 2m");
+            e1.printStackTrace();
+        }
     }
      
 }
