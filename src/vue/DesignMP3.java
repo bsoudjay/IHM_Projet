@@ -550,13 +550,11 @@ public class DesignMP3 extends Applet implements Observateur {
                 cl.show(content, listContent[0]);
                 String img = operations.Diapo();
                 System.out.println(img);
-                JLabel lab = new JLabel(new ImageIcon(img));
-                lab.setBounds(0, 0, 1, 1);
-//        JLabel image = new JLabel(new ImageIcon("C:\\Users\\kevin\\Pictures\\1.jpg"));
-//        this.setLayout(new BorderLayout());
-//        this.add(image, BorderLayout.CENTER);
-
-                card1.add(lab);
+        ImageIcon icon = new ImageIcon(img);
+        Image zoom = scaleImage(icon.getImage(), 1100, 580);//taille en pixels
+        iconScaled = new ImageIcon(zoom);
+        final JLabel ball = new JLabel(iconScaled);
+        card1.add(ball);
             }
         });
 
