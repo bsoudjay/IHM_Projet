@@ -194,7 +194,8 @@ public class DesignMP3 extends Applet implements Observateur {
          */
         JPanel lesBoutons = new JPanel();
         //lesBoutons.setLayout((new BoxLayout(lesBoutons, BoxLayout.LINE_AXIS)));
-
+        
+        JButton photo = new JButton(new ImageIcon("Design/Boutons/photo.png"));
         JButton stop = new JButton(new ImageIcon("Design/Boutons/stop.png"));
         JButton precedent = new JButton(new ImageIcon("Design/Boutons/precedent.png"));
         JButton lecture = new JButton(new ImageIcon("Design/Boutons/lecture.png"));
@@ -202,6 +203,10 @@ public class DesignMP3 extends Applet implements Observateur {
         JButton diminuer = new JButton(new ImageIcon("Design/Boutons/baisserSon.png"));
         JButton augmenter = new JButton(new ImageIcon("Design/Boutons/augmenterSon.png"));
 
+        photo.setOpaque(false);
+        photo.setContentAreaFilled(false);
+        photo.setBorderPainted(false);
+        
         stop.setOpaque(false);
         stop.setContentAreaFilled(false);
         stop.setBorderPainted(false);
@@ -226,6 +231,7 @@ public class DesignMP3 extends Applet implements Observateur {
         augmenter.setContentAreaFilled(false);
         augmenter.setBorderPainted(false);
 
+        lesBoutons.add(photo);
         lesBoutons.add(stop);
         lesBoutons.add(precedent);
         lesBoutons.add(lecture);
@@ -250,6 +256,19 @@ public class DesignMP3 extends Applet implements Observateur {
         lesBoutons.add(barreSon);
 
         lesBoutons.add(augmenter);
+        
+        
+        photo.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    operations.ouvrirPhoto();
+                } catch (Exception ex) {
+                    Logger.getLogger(DesignMP3.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
 
         augmenter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

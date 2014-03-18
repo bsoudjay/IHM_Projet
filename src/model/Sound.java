@@ -17,17 +17,9 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.BooleanControl;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.Line;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.Port;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.ImageIcon;
 import javazoom.jl.decoder.JavaLayerException;
 import org.tritonus.share.sampled.file.TAudioFileFormat;
-import vue.DesignMP3;
 
 // MP3, WMA, MPEG, WAV compatible
 public class Sound implements Comparable<Sound> {

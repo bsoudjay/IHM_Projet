@@ -48,9 +48,9 @@ public class Operations {
     public Operations() throws SQLException, Exception {
 
         // Ilan  
-        //this.doa = new DOA("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
+        this.doa = new DOA("jdbc:mysql://localhost:8889/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "root");
         //kevin
-        this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
+        //this.doa = new DOA("jdbc:mysql://localhost:3306/bdd_ihm?zeroDateTimeBehavior=convertToNull", "root", "");
         if (this.doa.connexion()) {
             this.con = DriverManager.getConnection(doa.getURL(), doa.getUser(), doa.getPassword());
         }
@@ -75,6 +75,21 @@ public class Operations {
 
         doa.connexion();
         this.ajouterBDD();
+
+    }
+    
+    public void ouvrirPhoto() throws Exception {
+        this.observateurs = new ArrayList<Observateur>();
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Ajouter une photo");
+        fc.setApproveButtonText("Ajouter une photo");
+        fc.setFileFilter(new FileNameExtensionFilter("Fichier JPEG (.jpg, .jpeg), PNG (.png)", "jpg", "jpeg", "png"));
+        int returnVal = fc.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File image = fc.getSelectedFile();
+        }
+        doa.connexion();
+        this.ajouterBDDImage();
 
     }
 
@@ -296,6 +311,8 @@ public class Operations {
             return null;
         }
     }
+    
+    
 
     public String getTitre() {
         if (sound != null) {
