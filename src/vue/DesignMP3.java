@@ -693,6 +693,11 @@ public class DesignMP3 extends Applet implements Observateur {
         txtRecherche.setFont(font);
 
         final JTextField recherche = new JTextField("Recherche");
+        recherche.addMouseListener(new MouseAdapter() {
+           public void mouseClicked(MouseEvent e) {
+               recherche.setText("");
+           }
+});
         card4.add(txtRecherche);
         card4.add(maRecherche);
 
