@@ -46,7 +46,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
-import static javax.swing.JSplitPane.LEFT;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -56,7 +55,6 @@ import model.Musique;
 import model.Observateur;
 import model.Sound;
 import model.Statistiques;
-import static sun.audio.AudioPlayer.player;
 
 /**
  *

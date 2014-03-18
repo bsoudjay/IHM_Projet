@@ -81,15 +81,16 @@ public class Operations {
     public void ouvrirPhoto() throws Exception {
         this.observateurs = new ArrayList<Observateur>();
         JFileChooser fc = new JFileChooser();
+        File image=null;
         fc.setDialogTitle("Ajouter une photo");
         fc.setApproveButtonText("Ajouter une photo");
         fc.setFileFilter(new FileNameExtensionFilter("Fichier JPEG (.jpg, .jpeg), PNG (.png)", "jpg", "jpeg", "png"));
         int returnVal = fc.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File image = fc.getSelectedFile();
+            image = fc.getSelectedFile();
         }
         doa.connexion();
-        this.ajouterBDDImage();
+        this.ajouterBDDImage(image);
 
     }
 
@@ -588,12 +589,12 @@ public class Operations {
         return 0;
     }
      
-     public void ajouterBDDImage() throws FileNotFoundException {
+     public void ajouterBDDImage(File url) throws FileNotFoundException {
         String query = null;
-        String chemin_tmp = this.getChemin().toString();
-        chemin_tmp = chemin_tmp.replace("\\", "\\\\");
-
-            query = "INSERT INTO image (url) VALUES ('" +chemin_tmp+ "')";
+        String url_tmp = url.toString();
+        url_tmp  = url_tmp .replace("\\", "\\\\");
+        url_tmp = url_tmp.replace("'", "''");
+            query = "INSERT INTO image (url) VALUES ('" +url_tmp + "')";
 
             System.out.println("insertion");
         System.out.println("etape 1");

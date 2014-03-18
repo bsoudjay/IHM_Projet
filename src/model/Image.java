@@ -13,7 +13,10 @@ public class Image {
     public String url;
     
     public Image (){
-        this.url = null;
+        this.url = "";
+    }
+    public String getUrl(){
+        return this.getUrl();
     }
     
 }
